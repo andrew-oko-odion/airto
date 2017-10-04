@@ -1,0 +1,13 @@
+<% flash.each do |key, value| %>
+<script type="text/javascript" >
+  <% if key == 'notice' %>
+  toastr['success']('<%= value %>'); 
+  <% elsif key == 'alert' %>
+ toastr['info']('<%= value %>');
+  <% elsif key == 'error' %>
+ toastr['error']('<%= value %>');
+  <% else %>
+  toastr['<%= "#{key}" %>']('<%= value %>');
+  <% end %>
+</script>
+<% end %>

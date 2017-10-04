@@ -1,0 +1,60 @@
+<style type="text/css">
+ .fixed.text.menu {
+     margin-top: 0px;
+     padding-top: 1.0em;
+     padding-bottom: 3.0em;
+ }
+</style>
+
+<div class="ui fixed stackable text menu "id="header">
+    <div class="ui container">
+
+	<a class="item" href="#">
+	    <div class="ui segment">
+		<i class="big yahoo icon" style="color: #fd5c63"> </i>
+	    </div>
+	</a>
+	
+	<a class="right item" href="#">
+	    Rentals
+	</a>
+	<a class="item" href="#">
+	    Services 
+	</a>
+
+	<a class="item" href="#">
+	    Add a listing
+	</a>
+	
+	<a class="item" href="#">
+	    Sign up
+	</a>
+
+	<a class="item" href="#">
+	    Login
+	</a>	
+
+    </div>
+</div>
+
+
+<br />
+<br />
+<br />
+
+<script>
+ $('.ui.search')
+     .search({
+	 apiSettings: {
+	     url: '//localhost:3000/jobs/autocomplete.json?query={query}'
+	 },
+	 fields: {
+	     results : 'items',
+	     title   : 'title',
+	     url     : 'url'
+	 },
+	 minCharacters : 1,
+	 debug: true
+     })
+ ;
+</script>

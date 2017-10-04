@@ -1,2 +1,53 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+
+<br />
+<br />
+<br />
+
+<div class="ui stackable grid container">
+    <%= render 'search' %>
+    
+    <div data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
+	<div><h3>1</h3></div>
+	<div><h3>2</h3></div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+<script>
+
+ $(".slider").slick({
+
+     // normal options...
+     infinite: false,
+
+     // the magic
+     responsive: [{
+
+	 breakpoint: 1024,
+	 settings: {
+             slidesToShow: 3,
+             infinite: true
+	 }
+
+     }, {
+
+	 breakpoint: 600,
+	 settings: {
+             slidesToShow: 2,
+             dots: true
+	 }
+
+     }, {
+
+	 breakpoint: 300,
+	 settings: "unslick" // destroys slick
+
+     }]
+ });
+ 
+</script>

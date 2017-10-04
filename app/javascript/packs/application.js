@@ -7,17 +7,19 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-console.log('Hello World from Webpacker')
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-// import Index from 'App/Index'
+import Index from './App/Index'
+import { BrowserRouter } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
 
 
 document.addEventListener('DOMContentLoaded', () => {
     ReactDOM.render(
-	<Index />,
+	<BrowserRouter >
+		<Index />
+	</BrowserRouter>,
 	document.body.appendChild(document.createElement('div')),
     )
 });
