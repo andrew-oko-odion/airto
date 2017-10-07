@@ -4,44 +4,28 @@
 <br />
 
 <div class="ui stackable grid container">
-    <%= render 'search' %>    
+  <%= render 'search' %>
+
+  <br />
+  <br />
+  
+
+  <div class='slider'>
+    <div><h3>Hello world man</h3></div>
+    <div><h3>Cool world</h3></div>
+    <div><h3>I dont know what to write here</h3></div>
+    <div><h3>And here too</h3></div>
+    <div><h3>I am done</h3></div>
+    <div><h3>6</h3></div>
+  </div>
+
 </div>
 
 
-
-
-
-
 <script>
-
- $(".slider").slick({
-
-     // normal options...
-     infinite: false,
-
-     // the magic
-     responsive: [{
-
-	 breakpoint: 1024,
-	 settings: {
-             slidesToShow: 3,
-             infinite: true
-	 }
-
-     }, {
-
-	 breakpoint: 600,
-	 settings: {
-             slidesToShow: 2,
-             dots: true
-	 }
-
-     }, {
-
-	 breakpoint: 300,
-	 settings: "unslick" // destroys slick
-
-     }]
- });
- 
+  $(document).ready(function() {
+  $(".slider").slick({
+  infinite: false,
+  autoplay: true }); 
+  });
 </script>

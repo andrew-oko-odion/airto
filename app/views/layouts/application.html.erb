@@ -2,8 +2,9 @@
 <html>
   <head>
     <title>Ives</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'semantic' %>
@@ -11,14 +12,13 @@
     <%#= javascript_pack_tag 'slick' %>
     <%#= stylesheet_pack_tag 'slick' %>
     <%#= javascript_pack_tag 'application' %>
-    <%= javascript_pack_tag 'slick-carousel' %>
     <%= stylesheet_pack_tag 'slick-carousel' %>
+    <%= javascript_pack_tag 'slick-carousel' %>
 
-    <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
-    <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
-
+       <!-- Add the slick-theme.css if you want default styling -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
+<!-- Add the slick-theme.css if you want default styling -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
 
   </head>
 
@@ -26,7 +26,6 @@
       <%= render 'layouts/flash_messages' %>
       <%= render 'layouts/topnav' %>
       <%= yield %>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
   </body>
 </html>
