@@ -11,9 +11,9 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-slick": "^0.15.4",
-    "semantic-ui-css": "^2.2.12",
+    "semantic-ui": "^2.2.13",
     "semantic-ui-react": "^0.74.2",
-    "slick-carousel": "^1.7.1",
+    "slick-carousel": "^1.8.1",
     "toastr": "^2.1.2"
   },
   "devDependencies": {
