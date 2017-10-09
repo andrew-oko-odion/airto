@@ -1,31 +1,221 @@
+<style>
+ .slick-prev:after {
+     content: "<";
+     color: black;
+     font-size: 50px;
+ }
+
+ .slick-next:before {
+     content: ">";
+     color: black;
+     font-family: 'FontAwesome';
+     font-size: 50px;
+ }
+
+ .swiper-container {
+     width: 100%;
+     height: 300px;
+     margin: 20px auto;
+ }
+ .swiper-slide {
+     text-align: center;
+     font-size: 18px;
+     background: #fff;
+     /* Center slide text vertically */
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: -webkit-flex;
+     display: flex;
+     -webkit-box-pack: center;
+     -ms-flex-pack: center;
+     -webkit-justify-content: center;
+     justify-content: center;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     -webkit-align-items: center;
+     align-items: center;
+ }
+ .append-buttons {
+     text-align: center;
+     margin-top: 20px;
+ }
+ .append-buttons a {
+     display: inline-block;
+     border: 1px solid #007aff;
+     color: #007aff;
+     text-decoration: none;
+     padding: 4px 10px;
+     border-radius: 4px;
+     margin: 0 10px;
+     font-size: 13px;
+ }
+</style>
 
 <br />
 <br />
 <br />
+<div class="ui container">
+    <div class="ui two column grid" >
+	<h2 class="ui header" style="color: #fd5c63"> Airtoast </h2>
+	<div class="column"
+	    <h4 class="ui header" style="color: #003040"> Find and Book Awesome Event centers that match your taste for your events 
+		Also book for event services like photographers, decoration etc </h4>
+	</div>
+	<div class="column"> </div>
+    </div>
+    <%= render 'search' %>
+</div>
 
-<div class="ui stackable grid container">
-  <%= render 'search' %>
+<br />
+<br />
 
-  <br />
-  <br />
-  
+<div class="ui container">
+    <div class="swiper-container swiper-container-horizontal">
+	<div class="ui small images swiper-wrapper" style="transform: translate3d(328.333px, 0px, 0px); transition-duration: 0ms;">
+	    
+	    <div class="swiper-slide swiper-slide-active">
+		<%= image_tag 'image.png' %>	
+	    </div>
+	    
+	    <div class="swiper-slide swiper-slide-next">	<%= image_tag 'image.png' %></div>
+	    <div class="swiper-slide"><%= image_tag 'image.png' %></div>
+	    <div class="swiper-slide"><%= image_tag 'image.png' %></div>
+	</div>
 
-  <div class='slider'>
-    <div><h3>Hello world man</h3></div>
-    <div><h3>Cool world</h3></div>
-    <div><h3>I dont know what to write here</h3></div>
-    <div><h3>And here too</h3></div>
-    <div><h3>I am done</h3></div>
-    <div><h3>6</h3></div>
-  </div>
+	
+	<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
 
+	<div class="swiper-button-next"></div>
+	<div class="swiper-button-prev swiper-button-disabled"></div>
+    </div>
 </div>
 
 
+<div class="ui container">
+    <div class="ui header">
+	<a>see all </a>
+    </div>
+    <div class="slide ui small images">
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+    </div>
+</div>
+
+
+<div class="ui container">
+    <div class="ui header">
+	<a>see all </a>
+    </div>
+
+    <div class="slide2 ui small images">
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+    </div>
+</div>
+
+
+<div class="ui container">
+    <div class="ui header">
+	<a>see all </a>
+    </div>
+    <div class="slide ui small images">
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+    </div>
+</div>
+
+
+<div class="ui container">
+
+    <div class="ui header">
+	<a>see all </a>
+    </div>
+    
+    <div class="slide2 ui small images">
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+	<%= image_tag 'image.png' %>
+    </div>
+</div>
+
 <script>
-  $(document).ready(function() {
-  $(".slider").slick({
-  infinite: false,
-  autoplay: true }); 
-  });
+ $(document).ready(function() {
+    $('.slide').slick({
+    infinite: false,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    });
+     
+     $('.slide2').slick({
+	 infinite: false,
+	 speed: 300,
+	 slidesToShow: 4,
+	 slidesToScroll: 1,
+	 autoplay: true,
+     });
+     /* 
+      *      var mySwiper = new Swiper ('.swiper-container', {
+      * 	 // Optional parameters
+      * 	 direction: 'horizontal',
+      * 	 autoplay: true,
+      * 	 loop: true
+      *      });*/
+
+     var appendNumber = 4;
+     var prependNumber = 2;
+     var swiper = new Swiper('.swiper-container', {
+	 pagination: '.swiper-pagination',
+	 nextButton: '.swiper-button-next',
+	 prevButton: '.swiper-button-prev',
+	 slidesPerView: 3,
+	 centeredSlides: true,
+	 paginationClickable: true,
+	 spaceBetween: 3,
+	 preventClicks: true,
+	 preventClicksPropagation: true
+     });
+ });
+
+ 
 </script>

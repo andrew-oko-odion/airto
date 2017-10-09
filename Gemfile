@@ -5,8 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'jquery-rails'
+gem 'swiper-rails'
 
+gem 'jquery-rails'
 # use to run rails locally https://gist.github.com/andrew-oko-odion/4a05d9f327a537f56583b0808314a57f 
 gem 'rails_12factor'
 # Authentication and Authorization
@@ -34,7 +35,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-# gem 'turbolinks', '~> 5'
+gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production

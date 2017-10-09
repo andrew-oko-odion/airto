@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require rails-ujs
+//= require swiper
 //= require_tree .
+
 
