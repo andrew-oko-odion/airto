@@ -1,41 +1,78 @@
+
 <div class="ui tiny modal signup" style="padding: 3em; border-radius: 0em">
     <i class="close icon"></i>
     <div class="content">
 	<div class="description">
 	    <h4 class="ui grey centered header">Sign up with <a href="#"> google</a> or <a href="#">facebook</a></h4>
 	    <div class="ui horizontal divider">Or</div>
-	    <form class="ui big form">
+	    <form class="ui big form signupform" method="POST" onsubmit="event.preventDefault(); handleSignupSubmitClick();" >
 		<div class="field">
 		    <div class="ui icon input">
-			<input type="text" name="firstname" placeholder="First name">
+			<input type="text" name="firstname" id="firstname" placeholder="First name" >
 			<i class="user icon"></i>
 		    </div>
 		</div>
 		<div class="field">
 		    <div class="ui icon input">
-			<input type="text" name="Lastname" placeholder="Last name">
+			<input type="text" name="lastname" id="lastname" placeholder="Last name">
 			<i class="user icon"></i>
 		    </div>
 		</div>
 		<div class="field">
 		    <div class="ui icon input">
-			<input type="text" name="Email" placeholder="Email Address">
+			<input type="text" name="email" id="email" placeholder="Email Address">
 			<i class="mail outline icon"></i>
 		    </div>
 		</div>
 		<div class="field">
 		    <div class="ui icon input">
-			<input type="password" name="password" placeholder="Password">
+			<input type="password" name="password" id="password" placeholder="Password">
 			<i class="lock icon"></i>
 		    </div>
 		</div>
+		<h4 class="ui grey header">Birthday can only be seen by you</h4>
+		<div class="fields">
+		    <div class="five wide field">
+			<label>Day</label>
+			<input type="text" name="day" id="day" maxlength="2" placeholder="Day">
+		    </div>
+		    <div class="six wide field">
+			<label>Month</label>
+			<div class="field">
+			    <div class="field">
+				<select class="ui fluid search dropdown" id="month" name="month">
+				    <option value="">Month</option>
+				    <option value="01">January</option>
+				    <option value="02">February</option>
+				    <option value="03">March</option>
+				    <option value="04">April</option>
+				    <option value="05">May</option>
+				    <option value="06">June</option>
+				    <option value="07">July</option>
+				    <option value="08">August</option>
+				    <option value="09">September</option>
+				    <option value="10">October</option>
+				    <option value="11">November</option>
+				    <option value="12">December</option>
+				</select>
+			    </div>
+			</div>
+		    </div>
+		    <div class="five wide field">
+			<div class="field">
+			    <label>Year</label>
+			    <input type="text" name="year" id="year" maxlength="4" placeholder="Year">
+			</div>
+		    </div>
+		</div>
+		
 		<div class="field">
 		    <div class="ui checkbox">
 			<input type="checkbox" tabindex="0" class="hidden">
 			<label>I Agree to Airtoast terms of agreement </label>
 		    </div>
 		</div>
-		<button class="ui big fluid red button" type="submit">Sign Up</button>
+		<button class="ui big fluid red button" type="submit">Sign up</button>
 	    </form>  
 	</div>
 	<div class="ui divider"> </div>
@@ -44,3 +81,6 @@
 	</h4>
     </div>
 </div>
+
+
+
