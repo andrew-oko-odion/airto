@@ -13,4 +13,14 @@
  *= require_tree .
  *= require_self
  *= require swiper
+ *= require slick
+ *= require slick-theme
  */
+
+ .text.menu {
+     margin-top: 0px;
+     padding-top: 1.2em;
+     padding-bottom: 3.0em;
+ }
+
+

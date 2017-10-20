@@ -16,19 +16,63 @@
     <%= javascript_pack_tag 'slick-carousel' %>
     <%= stylesheet_pack_tag 'swaper' %>
     <%= javascript_pack_tag 'swaper' %>
-
-       <!-- Add the slick-theme.css if you want default styling -->
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
-<!-- Add the slick-theme.css if you want default styling -->
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick-theme.css"/>
-
   </head>
 
   <body>
-      <%= render 'layouts/flash_messages' %>
-      <%= render 'layouts/topnav' %>
-      <%= yield %>
+      
+      <div class="context example">
+	  <div class="ui top attached demo mobile tablet only grid menu">
+
+	      <a class="item" href="/">
+		      <i class="big yahoo icon" style="color: #fd5c63"> </i>
+	      </a>	
+	      <a class="right item">
+		  <i class="sidebar icon"></i>
+	      </a>
+	  </div>
+	  <div class="ui bottom attached segment"> 
+	      <div class="ui very thin top sidebar vertical menu">
+		  <a class="right item rental" href="#">
+		      Rentals
+		  </a>
+		  <a class="item" href="#">
+		      Services 
+		  </a>
+		  <a class="ui top pointing dropdown item" href='/items/new'>
+		      Enlist
+		  </a>
+		  <a class="item" href="#" onClick='signup()' id="navSignup" >
+		      Sign up
+		  </a>
+		  <a class="item" href="#" onClick='login()' id="navLogin">
+		      Login
+		  </a>
+		  <a class="item" href="#" onClick='signOut()' id="navLogout" style="display: none">
+		      Logout
+		  </a>
+	      </div>
+
+	      <%= render 'layouts/flash_messages' %>
+	      <%= render 'layouts/topnav' %>
+	      
+
+	      <div class="pusher" style="padding-bottom: 2em;">
+		  <%= yield %>
+	      </div>
+	  </div>
+      </div>
+
       <%= render 'layouts/footnav' %>
-      <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js"></script>
   </body>
 </html>
+
+
+<script>
+ $('.context.example .ui.sidebar')
+     .sidebar({
+	 context: $('.context.example .bottom.segment'),
+	 transition: 'overlay'
+     })
+     .sidebar('attach events', '.context.example .menu.mobile .item  ')
+ ;
+</script>

@@ -1,5 +1,5 @@
 
-<div class="ui tiny modal signup" style="padding: 3em; border-radius: 0em">
+<div class="ui tiny modal signup" style="padding: 1.5em; padding-right:3em; padding-left: 3em; border-radius: 0em">
     <i class="close icon"></i>
     <div class="content">
 	<div class="description">
@@ -68,11 +68,12 @@
 		
 		<div class="field">
 		    <div class="ui checkbox">
-			<input type="checkbox" tabindex="0" class="hidden">
-			<label>I Agree to Airtoast terms of agreement </label>
+			<input type="checkbox" name="terms" id="terms" tabindex="0" class="hidden">
+			<label>I Agree to terms of agreement </label>
 		    </div>
 		</div>
 		<button class="ui big fluid red button" type="submit">Sign up</button>
+		<div class="ui error message"></div>
 	    </form>  
 	</div>
 	<div class="ui divider"> </div>

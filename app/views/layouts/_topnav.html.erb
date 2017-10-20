@@ -1,416 +1,44 @@
 
-<style type="text/css">
- .text.menu {
-     margin-top: 0px;
-     padding-top: 1.2em;
-     padding-bottom: 3.0em;
- }
-</style>
-
-<script>
- let service = () => {
-     $('.ui.tiny.modal.service')
-	 .modal('setting', 'closable', false)
-	 .modal('show')
-     ;
- }
- let rental = () => {
-     $('.ui.tiny.modal.rental')
-	 .modal('setting', 'closable', false)
-	 .modal('show')
-     ;
- }
- let login = () => {
-     $('.ui.tiny.modal.login')
-	 .modal('setting', 'closable', false)
-	 .modal('show')
-     ;
- }
- let signup = () => {
-     $('.ui.tiny.modal.signup')
-     	 .modal('setting', 'closable', false)
-	 .modal('show')
-     ;
- }
-
- let  isLogin = () => {
-     if ( sessionStorage.getItem("userID")) {
-	 console.log(sessionStorage.getItem("userEmail"));
-	 console.log(sessionStorage.getItem("userID"));
-	 console.log(sessionStorage.getItem("userAuth"));
-	 console.log('User is login');
-	 if( sessionStorage.getItem("userActive") == 'false') {
-	     $('.cookie.nag')
-		 .nag('show')
-	     ;
-	     $('.cookie.nag')
-  		 .nag({
-  		     key      : 'notActivated',
-  		     value    : true
-  		 })
-  	     ;
-	 }	 
-	 return true;
-     }
-     console.log('Error user not login yet');
-     return false;
- }
-
- let signOut = () => {
-     console.log('Logout button Clicked');
-     if ( isLogin() == true ) {
-	 const logoutUrl = '/users/sign_out.json'
-	 fetch(logoutUrl, {
-	     method: 'DELETE',
-	     headers: {
-		 'Accept': 'application/json',
-		 'Content-Type': 'application/json',
-		 'X-User-Token': sessionStorage.getItem("userAuth"),
-		 'X-User-Email': sessionStorage.getItem("userEmail")
-	     }
-	 });
-
-	 sessionStorage.setItem("userEmail","");
-	 sessionStorage.setItem("userAuth","");
-	 sessionStorage.setItem("userID","");
-	 $('#navLogin').show();
-	 $('#navSignup').show();
-	 $('#navLogout').hide();
-
-	 /* Clear Email nag after logout */
-	 $('.cookie.nag')
-	     .hide()
-	 ;
-	 
-	 window.setTimeout( () => window.location.replace = "/", 3000);
-	 console.log('redirected to home completed');
-     }
- }
-
- 
- let login_user = () => {
-     let email = $('.loginform #email').val();
-     let password = $('.loginform #password').val();
-     
-     const loginUrl = '/users/sign_in.json'
-     fetch(loginUrl, {
-	 method: 'POST',
-	 headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-	 },
-	 body: JSON.stringify(
-	     { "user": {
-		 email: email,
-		 password: password
-	     }
-	     })
-     }).then((response) => {	     
-	 response.json().then(function(data) {
-	     sessionStorage.userEmail = data.email;
-	     sessionStorage.userAuth =  data.authentication_token;
-	     sessionStorage.userID = data.id;
-	     sessionStorage.userActive = data.active;
-             console.log(data);
-	     console.log(sessionStorage.getItem("userEmail"));
-	     $('#navLogin').hide();
-	     $('#navSignup').hide();
-	     $('#navLogout').show();
-	     console.log('Form submited successfully');
-	 }); 
-     })
-       .catch((error)  => {
-	   console.log('Request failure: ', error);
-       }
-       );
- }
-
- let handleSignupSubmitClick = () => console.log('Sign up button click');
- let handleLoginSubmitClick = () => console.log("Login form button clicked ")
- 
-
- /* let handleChekBox = () => {
-  *     $('.ui.checkbox')
-    .checkbox();
-  * }*/
-
-
- 
-</script>
 <%= render 'layouts/activate_account_flash' %>
-<div class="ui stackable grid container">
+<div class="ui stackable computer only grid container">
     <div class="ui stackable text menu id="header">
 	<div class="ui container">
-	    <a class="item" href="#">
+	    <a class="item" href="/">
 		<div class="ui segment">
 		    <i class="big yahoo icon" style="color: #fd5c63"> </i>
 		</div>
 	    </a>	
-	    <a class="right item" href="#">
+	    <a class="right item rental" onClick='pictureProfile()' >
 		Rentals
 	    </a>
-	    <a class="item" href="#">
+	    <a class="item" onClick='showPhoneStep()'>
 		Services 
 	    </a>
-	    <div class="ui top pointing dropdown item">
+	    <a class="ui teal button item" href="/items/new">
 		Enlist
-		<i class="large angle down icon"></i>
-		<div class="menu">
-		    <a class="item" onClick="rental()">List a rental for event</a>
-		    <div class="ui divider" style="margin: 0em"> </div>
-		    <a class="item" onClick="service()">List a service for event</a>
-		</div>
-	    </div>
-	    <a class="item" href="#" onClick='signup()' id="navSignup" >
+	    </a>
+	    <a class="ui teal button item" href="/help">
+		Help
+	    </a>
+	    <a class="item" onClick='signup()' id="navSignup" >
 		Sign up
 	    </a>
-	    <a class="item" href="#" onClick='login()' id="navLogin">
+	    <a class="item" onClick='login()' id="navLogin">
 		Login
 	    </a>
-	    <a class="item" href="#" onClick='signOut()' id="navLogout" style="display: none">
+	    <a class="item"  onClick='signOut()' id="navLogout" style="display: none">
 		Logout
 	    </a>
 	</div>
     </div>
 </div>
 
-
+<%= render 'layouts/after_signup/picture_profile' %>
+<%= render 'layouts/after_signup/phone_number' %>
+<%= render 'layouts/password_recovery' %>
 <%= render 'layouts/list_rental' %>
 <%= render 'layouts/list_service' %>
 <%= render 'layouts/login' %>
 <%= render 'layouts/signup' %>
 
-<script>
 
- $('.ui.checkbox')
-     .checkbox();
- 
- $('.ui.search')
-     .search({
-	 apiSettings: {
-	     url: '//localhost:3000/jobs/autocomplete.json?query={query}'
-	 },
-	 fields: {
-	     results : 'items',
-	     title   : 'title',
-	     url     : 'url'
-	 },
-	 minCharacters : 1,
-	 debug: true
-     })
- ;
- 
- $('.dropdown')
-     .dropdown()
- ;
-
-
-/* Validate Login form */
- $('.ui.form.loginform').form({
-     inline : true,
-     onSuccess: login_user,
-     fields: {
-         email: {
-             identifier: 'email',
-             rules: [{
-                 type: 'empty',
-                 prompt: 'Please enter a value'
-             },              {
-		 type: 'email',
-		 prompt: 'Please enter a valid email'
-	     }]
-         },
-	 password: {
-             identifier: 'password',
-             rules: [
-		 {
-		     type   : 'empty',
-		     prompt : 'Please enter a password'
-		 },
-		 {
-		     type   : 'minLength[6]',
-		     prompt : 'Your password must be at least {ruleValue} characters'
-		 }
-             ]
-	 }
-     }
- });
-
-/* format Birthday */
- let formatBirthday = () => {
-     let day = $(".signupform #day").val();
-
-     if ( day.trim().length == 1 ){ 
-	 day = "0".concat(day);	 
-     }
-     let month = $(".signupform #month").val(); 
-     let year = $(".signupform #year").val(); 
-     return year + '-' + month + '-' + day;
- }
-
- let capFirstCharacter = (name) => {
-     name = name.split('');
-     firstCharacter = name.shift();
-     name.unshift(firstCharacter.toUpperCase());
-     name = name.join('');
-     return name; 
- }
-
- /* After user frontend validation Signup user */
- let signup_user  = () => {
-     /* formating values */
-     let firstname = capFirstCharacter(($(".signupform #firstname").val()).trim());
-     let lastname = capFirstCharacter(($(".signupform #lastname").val()).trim());
-     let email = (($(".signupform #email").val()).trim()).toLowerCase();
-     let password = ($(".signupform #password").val()).trim();
-     let birthday = formatBirthday(); 
-
-     console.log('Sign up Form submited');
-     const signupUrl = "/users.json";
-     fetch(signupUrl, {
-	 method: 'POST',
-	 headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-	 },
-	 body: JSON.stringify(
-	     { "user": {
-		 email: email,
-		 password: password,
-		 firstname: firstname,
-		 lastname: lastname,
-		 birthday: birthday
-	     }
-	     })
-     }).then((response) => {	     
-	 response.json().then(function(data) {
-	     sessionStorage.userEmail = data.email;
-	     sessionStorage.userAuth =  data.authentication_token;
-	     sessionStorage.userID = data.id;
-	     sessionStorage.userActive = data.active;
-             console.log(data);
-	     console.log(sessionStorage.getItem("userEmail"));
-	     $('#navLogin').hide();
-	     $('#navSignup').hide();
-	     $('#navLogout').show();
-	     console.log('You account created successfully');
-
-	     /* Show Email accout activation reminder */	     
-	     /* $('.cookie.nag')
-		.nag('show')
-		;*/
-
-	 }); 
-     })
-       .catch((error)  => {
-	   console.log('Request failure: ', error);
-       }
-       );
-}
- 
- $('.ui.form.signupform').form({
-     inline : true,
-     onFailure: () => {console.log('Signup Form validation failed')},
-     onSuccess: signup_user,
-     fields: {
-         lastname: {
-	     identifier: 'lastname',
-	     rules: [{
-                 type: 'empty',
-                 prompt: 'Last name is required'
-	     }]
-         },
-         firstname: {
-	     identifier: 'firstname',
-	     rules: [{
-                 type: 'empty',
-                 prompt: 'First name is required'
-	     }]
-         },
-         email: {
-	     identifier: 'email',
-	     rules: [{
-                 type: 'empty',
-                 prompt: 'Email is required'
-	     },
-             {
-		 type: 'email',
-		 prompt: 'Please enter a valid email'
-	     }]
-         },
-	 day: {
-	     identifier: 'day',
-	     rules: [{
-                 type: 'empty',
-                 prompt: 'Please enter day'
-	     },
-	     { 
-		 type: 'integer',
-		 prompt: 'number digit only'
-	     },
-	     { 
-		 type: 'integer[1..31]',
-		 prompt: 'invalid day'
-	     }]
-         },
-	 month: {
-	     identifier: 'month',
-	     rules: [{
-                 type: 'empty',
-                 prompt: 'Please enter month'
-	     }]
-         },
-	 year: {
-	     identifier: 'year',
-	     rules: [{
-                 type: 'empty',
-                 prompt: 'Please enter year'
-	     },
-	     {
-		type: 'exactLength[4]',
-		prompt: 'should be {ruleValue} characters long'
-	     },
-	     { 
-		 type: 'integer',
-		 prompt: 'Number digits only'
-	     }
-	    ]
-         },
-	 password: {
-	     identifier: 'password',
-	     rules: [
-		 {
-		     type   : 'empty',
-		     prompt : 'Please enter a password'
-		 },		 
-		 {
-		     type   : 'minLength[6]',
-		     prompt : 'Your password must be at least {ruleValue} characters'
-		 }
-	     ]
-	 }
-     }
- });
-
- 
-$(document).ready( () =>  {
-     /* if ( isLogin() == true && sessionStorage.getItem("userActive") == 'false'){
- 	$('#navLogin').hide();
- 	$('#navSignup').hide();
- 	$('#navLogout').show();
-
-	$('.cookie.nag')
-  	.nag({
-  	key      : 'notActivated',
-  	value    : true
-  	})
-  	;
-      * }*/
-     if (isLogin() == true) {
- 	 $('#navLogin').hide();
-  	 $('#navSignup').hide();
-  	 $('#navLogout').show();
-     }
- });
-
-</script>

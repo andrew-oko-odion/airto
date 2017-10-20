@@ -2,6 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   clear_respond_to
   respond_to :json
 
+  
   def create
     build_resource(registration_params)
 
@@ -21,7 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
   end  
 
   private
-
+  
   def registration_params
     params.require(:user).permit(:email, :birthday, :firstname, :lastname, :password)
   end

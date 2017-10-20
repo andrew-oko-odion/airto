@@ -1,0 +1,126 @@
+
+<div class="ui container start-button">
+    <h4 class="ui grey centered header">Add listing </h4>
+    <p> Describe what they stand to benefit </p>
+    <button onClick='startButton()' class="ui teal button "> Start <i class="angle right icon"></i> </button>    
+</div>
+
+<div class="ui container details_form" style="display: none">
+<%= render 'details_form' %>
+</div>
+
+<div class="ui mini modal listing" style="padding: 3em; border-radius: 0em;">
+    <i class="close icon"></i>
+    <div class="description">
+	<center> <i class="circular huge teal thumbs outline up icon"></i>  </center>
+	<div class="ui centered grey header"> Create Listing </div>
+
+	<form class="ui form" method="POST" onSubmit='event.preventDefault(); step1()'>
+	    <div class="field">
+		
+		<div class="ui fluid selection dropdown">
+		    
+		    <input type="hidden" name="type">
+		    <i class="dropdown icon"></i>
+		    <div class="default text">Select type</div>
+		    <div class="menu">
+			<div class="item" data-value="rental" data-text="rental">
+			    Enlist a Rental
+			</div>
+			<div class="item" data-value="service" data-text="service">
+			    Enlist a Service
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <div class="inline fields">
+		<div class="field">
+		    <div class="ui radio checkbox">
+			<input type="radio" name="radio" checked="checked">
+			<label>Pary Venue</label>
+		    </div>
+		</div>
+		
+		<div class="field">
+		    <div class="ui radio checkbox">
+			<input type="radio" name="radio" checked="checked">
+			<label>Other</label>
+		    </div>
+		</div>
+	    </div>
+
+	    <div class="field">
+		<button class="ui fluid teal button"> Continue <i class="angle right icon"></i> </button>
+	    </div>
+	</form>
+	<div class="ui divider"> </div>
+	<center> <a href="#" style="color: grey"> Cancel </a> </center>
+    </div>
+</div>
+
+
+
+
+
+<div class="ui tiny modal step1" style="padding: 3em; border-radius: 0em;">
+    <i class="close icon"></i>
+    <div class="description">
+	<div class="ui centered grey header"> Data</div>
+	<form class="ui form">
+	    <div class="field">
+
+		<div class="ui fluid selection dropdown">
+		    
+		    <input type="hidden" name="type">
+		    <i class="dropdown icon"></i>
+		    <div class="default text">Select type</div>
+		    <div class="menu">
+			<div class="item" data-value="rental" data-text="rental">
+			    Enlist a Rental
+			</div>
+			<div class="item" data-value="service" data-text="service">
+			    Enlist a Service
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <div class="inline fields">
+		<div class="field">
+		    <div class="ui radio checkbox">
+			<input type="radio" name="radio" checked="checked">
+			<label>Pary Venue</label>
+		    </div>
+		</div>
+		
+		<div class="field">
+		    <div class="ui radio checkbox">
+			<input type="radio" name="radio" checked="checked">
+			<label>Other</label>
+		    </div>
+		</div>
+	    </div>
+
+	    
+	    <div class="field">
+		<button  class="ui teal button"> Start <i class="angle right icon"></i> </button>
+	    </div>
+	</form>
+	<div class="ui divider"> </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+ $('.ui.dropdown')
+     .dropdown()
+ ;
+
+ 
+ $('.ui.checkbox')
+     .checkbox()
+ ;
+ 
+</script>
