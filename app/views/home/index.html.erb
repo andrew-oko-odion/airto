@@ -17,7 +17,9 @@
 
 
 <div class="ui container">
-    <div class="ui five doubling cards">
+    <div class="slider">
+    <!-- <div class="owl-carousel owl-theme">   -->
+    <div class="ui five  cards">
 	<div class="card" style="border-radius: 0em; ">
 	    <div class="ui image">
 		<%#= image_tag 'image.png' %>
@@ -173,6 +175,9 @@
 	    </div>
 	</div>
 
+
+
+    
 	<div class="card" style="border-radius: 0em; ">
 	    <div class="ui image">
 		<%#= image_tag 'image.png' %>
@@ -278,48 +283,33 @@
 	    </div>
 	</div>
     </div>
-
+  
 </div>
+  
 
 <script>
- $(document).ready(function() {
-    $('.slide').slick({
-    infinite: false,
-    speed: 300,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    autoplay: true,
-    });
+ function initSlider(){
+     $('.slider').slick({
+         dots: false,
+         infinite: true,
+         speed: 300,
+         slidesToShow: 1,
+         autoplay: true,
+         prevArrow: '<div class="slick-prev"><i class="fa fa-chevron-left"></i></div>',
+         nextArrow: '<div class="slick-next"><i class="fa fa-chevron-right"></i></div>'
+     });
+ }
+ 
+ $(document).ready(function(){
+     initSlider();
+     /* $(".slider").slick({
+	infinite: false
+      * });*/
      
-     $('.slide2').slick({
-	 infinite: false,
-	 speed: 300,
-	 slidesToShow: 4,
-	 slidesToScroll: 1,
-	 autoplay: true,
-     });
-     /* 
-      *      var mySwiper = new Swiper ('.swiper-container', {
-      * 	 // Optional parameters
-      * 	 direction: 'horizontal',
-      * 	 autoplay: true,
-      * 	 loop: true
-      *      });*/
-
-     var appendNumber = 4;
-     var prependNumber = 2;
-     var swiper = new Swiper('.swiper-container', {
-	 pagination: '.swiper-pagination',
-	 nextButton: '.swiper-button-next',
-	 prevButton: '.swiper-button-prev',
-	 slidesPerView: 3,
-	 centeredSlides: true,
-	 paginationClickable: true,
-	 spaceBetween: 3,
-	 preventClicks: true,
-	 preventClicksPropagation: true
-     });
- });
-
+     /* $('.owl-carousel').owlCarousel({
+	margin:20,
+	nav:true
+      * });*/
+});
  
 </script>

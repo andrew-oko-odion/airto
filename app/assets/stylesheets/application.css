@@ -12,9 +12,6 @@
  *
  *= require_tree .
  *= require_self
- *= require swiper
- *= require slick
- *= require slick-theme
  */
 
  .text.menu {

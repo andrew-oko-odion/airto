@@ -6,9 +6,6 @@ git_source(:github) do |repo_name|
 end
 
 ruby '2.4.0'
-gem 'swiper-rails'
-gem 'jquery-slick-rails'
-
 gem 'jquery-rails'
 # use to run rails locally https://gist.github.com/andrew-oko-odion/4a05d9f327a537f56583b0808314a57f 
 gem 'rails_12factor'
