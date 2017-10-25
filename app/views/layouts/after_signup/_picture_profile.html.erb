@@ -1,19 +1,12 @@
 
-<div class="ui mini modal startprofile"  style='padding: 3em; border-radius: 0em; background: url(<%= image_path("background") %>); no-repeat 0 0 scroll; height: 70%;'>
-    <i class="close icon"></i>
-
-    <button class="ui big fluid red button" style="margin-top: 14em"> Continue</button>
-</div>
-
-
-
 <style>
  .profilepic {
      margin-bottom: 4em;
  }
 </style>
 
-<div class="ui mini modal pictureprofile"  style="padding: 3em; padding-top: 2em; border-radius: 0em;">
+  
+<div class="ui mini modal profile picture"  style="padding: 3em; padding-top: 2em; border-radius: 0em;">
     <i class="close icon"></i>
     <div class="content">
 	<div class="description">	    
@@ -23,25 +16,26 @@
 		</div>
 	    </center>
 	    
-	    <form class="ui form profilepicture" method="POST" onsubmit="event.preventDefault(); handlePictureProfileSubmit();">
-		<div class="field">
-		    <label for="file">
-			<div class="ui fluid button">
-			    Open File
-			</div>
-		    </label>
-		    <input type="file" id="file" accept="image/*" style="display:none" onChange='handlePictureProfileChange($(this))' id="profile-pic" name="upload">
-		</div>
-		
-		<div class="field">
-		    <button class="ui fluid red button" type="submit"> Save </button>
-		</div>
+	    <form class="ui form profilepicture"> <!--   method="POST" onsubmit="event.preventDefault(); handlePictureProfileSubmit();"> --> 
+		<!-- <div class="field">
+		     <label for="file">
+		     <div class="ui fluid button">
+		     Open File
+		     </div>
+		     </label>
+		     <input type="file" id="file" accept="image/*" style="display:none" onChange='handlePictureProfileChange($(this))' id="profile-pic" name="upload">
+		     </div>
+		     
+		     <div class="field">
+		     
+		     </div> -->
 		<div class="ui error message"></div>
 	    </form>
+	    <button onClick='afterSignup.phoneNumber()' class="ui fluid red button"> Save <i class="angle right icon"></i> </button>
 	</div>
 	<div class="ui divider"> </div>
 	<h4 class="ui grey centered header">
-	    <a href="#" onClick=''> I will do it later </a>
+	    <a  onClick=''> I will do it later </a>
 	</h4>
     </div>
 </div>

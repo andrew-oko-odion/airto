@@ -1,26 +1,32 @@
 
- let startButton = () => {     
-     $(".ui.mini.modal.listing")
-	//  .modal({inverted: true})
-	 .modal('show')
-     ;
-     console.log('Button Clicked');
- }
+class Items {
+    addNewItem(){     
+	$('.ui.mini.modal.listing.terms')
+	    .modal('show')
+	;
+	console.log('Listing accept terms Clicked');
+    }
 
 
-let step1 = () => {
-    console.log('Step 1 clicked');
-    $(".ui.mini.modal.listing")
-	.modal('hide');
-    
-    $('.start-button')
-	.hide();
-    
-    $('.details_form')
-	.show();
-    ;
-     // $('.ui.tiny.modal.step1')
-     // 	 .modal('show')
-     // ;
- }
+    step1(){
+	console.log('Step 1 clicked');
+	$(".ui.mini.modal.listing")
+	    .modal('hide');
+	
+	$('.start-button')
+	    .hide();
+	
+	$('.details_form')
+	    .show();
+	;
+	// $('.ui.tiny.modal.step1')
+	// 	 .modal('show')
+	// ;
+    }
 
+    acceptTerms() {
+	console.log("Accept terms");
+    }
+
+
+}

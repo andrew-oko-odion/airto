@@ -56,25 +56,89 @@ let service = () => {
       * console.log(pix);*/
  }
 
+let handleSignupSubmitClick = () => console.log('Sign up button click');
+let handleLoginSubmitClick = () => console.log("Login form button clicked ")
+let handlePasswordRecoveryClick = () => console.log("Password reset button clicked")
+let handlePictureProfileSubmit = () => console.log('Picture Profile submit button Clicked');
+
+
+let  isLogin = () => {
+    if ( sessionStorage.getItem("userID")) {
+	console.log(sessionStorage.getItem("userEmail"));
+	console.log(sessionStorage.getItem("userID"));
+	console.log(sessionStorage.getItem("userAuth"));
+	console.log('User is login');
+	console.log(sessionStorage.getItem("userActive"));
+	/* if( sessionStorage.getItem("userActive") == 'false') {
+	   $('.cookie.nag')
+	   .nag('show')
+	   ;
+	   $('.cookie.nag')
+  	   .nag({
+  	   key      : 'notActivated',
+  	   value    : true
+  	   })
+  	   ;
+	   }*/	 
+	return true;
+    }
+    console.log('Error user not login yet');
+    return false;
+}
+
+let signOut = () => {
+    console.log('Logout button Clicked');
+    if ( isLogin()) {
+	const logoutUrl = '/users/sign_out.json'
+	fetch(logoutUrl, {
+	    method: 'DELETE',
+	    cache: false,
+	    headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json',
+		'X-User-Token': sessionStorage.getItem("userAuth"),
+		'X-User-Email': sessionStorage.getItem("userEmail")
+	    }
+	});
+
+	sessionStorage.setItem("userEmail","");
+	sessionStorage.setItem("userAuth","");
+	sessionStorage.setItem("userID","");
+	$('.item.navLogin').show();
+	$('.item.navSignup').show();
+	$('.item.navLogout').hide();
+
+	/* Clear Email nag after logout*/
+	if ( sessionStorage.getItem("userActive") == 'false') {
+	    $('.cookie.nag')
+		.hide()
+	    ;
+	}
+	
+	window.setTimeout( () => window.location.replace = "/", 3000);
+	console.log('redirected to home completed');
+    }
+}
 
 
 
 
+$(document).ready( () =>  {
 
+    /* initialize classes */
+    afterSignup = new AfterSignUp;
+    item = new Items;
+    
+     $.fn.api.settings.api = {
+	 'signin user'   : '/users/sign_in',
+	 'signout user'  : '/users/delete'
+     };
 
-
- let handleSignupSubmitClick = () => console.log('Sign up button click');
- let handleLoginSubmitClick = () => console.log("Login form button clicked ")
- let handlePasswordRecoveryClick = () => console.log("Password reset button clicked")
- let handlePictureProfileSubmit = () => console.log('Picture Profile submit button Clicked');
-
-
-
- $(document).ready( () =>  {
-
-     after_signup =  new AfterSignUp;
-     after_signup.handleSubmit();
-
+     $('.ui .item').on('click', function() {
+         $('.ui .item').removeClass('active');
+         $(this).addClass('active');
+     });
+     
 
      /* 
 	Returns the current_user data from session
@@ -90,64 +154,28 @@ let service = () => {
      /* 
 	Returns false  if user is not login
       */
-     let  isLogin = () => {
-	 if ( sessionStorage.getItem("userID")) {
-	     console.log(sessionStorage.getItem("userEmail"));
-	     console.log(sessionStorage.getItem("userID"));
-	     console.log(sessionStorage.getItem("userAuth"));
-	     console.log('User is login');
-	     console.log(sessionStorage.getItem("userActive"));
-	     /* if( sessionStorage.getItem("userActive") == 'false') {
-		$('.cookie.nag')
-		.nag('show')
-		;
-		$('.cookie.nag')
-  		.nag({
-  		key      : 'notActivated',
-  		value    : true
-  		})
-  		;
-		}*/	 
-	     return true;
-	 }
-	 console.log('Error user not login yet');
-	 return false;
-     }
 
-
-     let signOut = () => {
-	 console.log('Logout button Clicked');
-	 if ( isLogin()) {
-	     const logoutUrl = '/users/sign_out.json'
-	     fetch(logoutUrl, {
-		 method: 'DELETE',
-		 cache: false,
-		 headers: {
-		     'Accept': 'application/json',
-		     'Content-Type': 'application/json',
-		     'X-User-Token': sessionStorage.getItem("userAuth"),
-		     'X-User-Email': sessionStorage.getItem("userEmail")
-		 }
-	     });
-
-	     sessionStorage.setItem("userEmail","");
-	     sessionStorage.setItem("userAuth","");
-	     sessionStorage.setItem("userID","");
-	     $('.item.navLogin').show();
-	     $('.item.navSignup').show();
-	     $('.item.navLogout').hide();
-
-	     /* Clear Email nag after logout*/
-	     if ( sessionStorage.getItem("userActive") == 'false') {
-		 $('.cookie.nag')
-		     .hide()
-		 ;
-	     }
-	     
-	     window.setTimeout( () => window.location.replace = "/", 3000);
-	     console.log('redirected to home completed');
+     
+     if (isLogin() == true) {
+	 $('.item.navLogin').hide();
+	 $('.item.navSignup').hide();
+	 $('.item.navLogout').show();
+	 if (sessionStorage.getItem("userActive") == 'false'){
+	     $('.cookie.nag')
+		 .nag('show')
+	     ;
+	     /* 
+	      * 	     $('.cookie.nag')
+	      * 		 .nag({
+	      * 		     key      : 'notActivated',
+	      * 		     value    : true
+	      * 		 })
+	      * 	     ;
+	      * 	     */
 	 }
      }
+     
+
 
 
      let login_user = () => {
@@ -263,10 +291,10 @@ let service = () => {
 
 
      
-     /* let handleChekBox = () => {
-      *     $('.ui.checkbox')
-	.checkbox();
-      * }*/
+    let handleChekBox = () => {
+	$('.ui.checkbox')
+	    .checkbox();
+    }
 
      /* let sidenav =  () => {
       *      $('.ui.top.sidebar')
@@ -275,10 +303,6 @@ let service = () => {
       *      ;
       *  }*/
 
-
-     $('.dropdown')
-	 .dropdown()
-     ;
 
 
      $('.ui.search')
@@ -388,16 +412,17 @@ let service = () => {
 		 $('#navLogin').hide();
 		 $('#navSignup').hide();
 		 $('#navLogout').show();
+
+		 afterSignup.acceptTerms();
 		 console.log('You account created successfully');
-		 $('.ui.tiny.modal.startprofile')
+		 $('.ui.tiny.modal.signup')
 		     .modal('hide')
 		 ;
-		 startProfile();
-
 		 /* Show Email accout activation reminder */	     
 		 $('.cookie.nag')
 		     .nag('show')
 		 ;
+		 /* Call Accept terms modal */
 
 	     }); 
 	 })
@@ -555,35 +580,7 @@ let service = () => {
 
 	 }
      });
-
-
-
      
-     
-     $('.ui .item').on('click', function() {
-         $('.ui .item').removeClass('active');
-         $(this).addClass('active');
-     });
-
-
-     if (isLogin() == true) {
-	 $('.item.navLogin').hide();
-	 $('.item.navSignup').hide();
-	 $('.item.navLogout').show();
-	 if (sessionStorage.getItem("userActive") == 'false'){
-	     $('.cookie.nag')
-		 .nag('show')
-	     ;
-	     /* 
-	      * 	     $('.cookie.nag')
-	      * 		 .nag({
-	      * 		     key      : 'notActivated',
-	      * 		     value    : true
-	      * 		 })
-	      * 	     ;
-	      * 	     */
-	 }
-     }
  });
 
 

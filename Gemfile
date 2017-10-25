@@ -7,7 +7,7 @@ end
 
 ruby '2.4.0'
 gem 'jquery-rails'
-
+gem 'carrierwave', '~> 1.0'
 # use to run rails locally https://gist.github.com/andrew-oko-odion/4a05d9f327a537f56583b0808314a57f 
 gem 'rails_12factor'
 # Authentication and Authorization

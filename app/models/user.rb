@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # validates_presence_of [:email, :password, :lastname, :firstname, :birthday], on: :create
   # validates_presence_of [:email, :password], on: :
+ #  mount_uploader :avatar, AvatarUploader
+  
   acts_as_token_authenticatable
   rolify
   # Include default devise modules. Others available are:

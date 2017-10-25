@@ -7,16 +7,14 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%#= javascript_pack_tag 'jquery' %>    
-    <%= javascript_pack_tag 'semantic' %>
-    <%= stylesheet_pack_tag 'semantic' %>
-    <%#= javascript_pack_tag 'application' %>
     
-    <!-- App Js-->
-    <%#= javascript_pack_tag 'api' %>
-    <%#= javascript_pack_tag 'app' %>    
+    <%#= javascript_pack_tag 'jquery' %>
+    <%= stylesheet_pack_tag 'semantic' %>
+    <%= javascript_pack_tag 'semantic' %>
+    <%#= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'slick-carousel' %>
     <%= javascript_pack_tag 'slick-carousel' %>
+
   </head>
 
   <body>
@@ -32,27 +30,7 @@
 	      </a>
 	  </div>
 	  <div class="ui bottom attached segment"> 
-	      <div class="ui very thin top sidebar vertical menu">
-		  <a class="right item rental" href="#">
-		      Rentals
-		  </a>
-		  <a class="item" href="#">
-		      Services 
-		  </a>
-		  <a class="ui top pointing dropdown item" href='/items/new'>
-		      Enlist
-		  </a>
-		  <a class="item" href="#" onClick='signup()' id="navSignup" >
-		      Sign up
-		  </a>
-		  <a class="item" href="#" onClick='login()' id="navLogin">
-		      Login
-		  </a>
-		  <a class="item" href="#" onClick='signOut()' id="navLogout" style="display: none">
-		      Logout
-		  </a>
-	      </div>
-
+	      <%= render 'layouts/mobile_topnav' %>
 	      <%= render 'layouts/flash_messages' %>
 	      <%= render 'layouts/topnav' %>
 	      
@@ -64,6 +42,7 @@
       </div>
 
       <%= render 'layouts/footnav' %>
+
   </body>
 </html>
 
