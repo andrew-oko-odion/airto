@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
-  get 'help/index'
-
+  get 'profiles/service'
+  get 'profiles/user'
+  get 'profiles/rental'
+  get 'profiles/update_item'
+  get 'profiles/dashboard'
+  get 'profiles/listing'
+  get 'profiles/update_listing'
+  
   root 'home#index'
   # get '*path',  to: 'home#index'
   devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations', passwords: 'passwords'} 

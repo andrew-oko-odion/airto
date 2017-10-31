@@ -1,0 +1,171 @@
+<style>
+ .cover {
+     background-image: url(<%= image_path("background1") %>); height: 23em !important; background-repeat: no-repeat !important; background-size: cover !important; background-position: 50% 50% !important;"
+ }
+ 
+</style>
+
+
+<div class="ui grid">
+    <div class="sixteen wide column">	
+	<div class="cover">
+	    <div >
+		<!-- <div class="ui button" style="background-color: white;  margin-top: 2em; margin-left: 80em; padding-left:2em; padding-right: 2em"> Add to Party list </div>
+		     </div> -->
+
+
+		<!-- <div class="ui  button" style="background-color: white; margin-top: 7em !important; margin-left:3em; padding-left:2em; padding-right: 2em"> Share </div> -->
+		<div class="ui icon button" style="background-color: white;  margin-top: 17em !important; margin-left: 3em; padding-left:1.8em; padding-right: 1.8em">
+		    View Photos
+		</div>
+
+	    </div>
+	</div>
+    </div>
+</div>
+
+
+<div class="ui grid container">
+    <div class="ten wide column">
+	<div class="ui large secondary pointing menu">
+	    <a class="active item">
+		Overview
+	    </a>
+	    <a class="item">
+		Reviews
+	    </a>
+	    <a class="item">
+		Cost per event
+	    </a>
+	    <a class="ui item">
+		Logout
+	    </a>
+	    <a class="ui item">
+		Money
+	    </a>
+	</div>
+    </div>
+</div>
+
+<div class="ui stackable very relaxed grid container">
+    <div class="row">
+	<div class="ten wide column">
+	    <!-- Info about the Event Space like amenities etc -->
+	    <h1 class="ui teal header"> Hike with me for a Yoga treat </h1>
+	    <p> Get Hooked to the world of Fun with Me and my
+		Yoga friends
+	    </p>
+	    <div class="ui divider"></div>
+	    <%= link_to "#" do %>
+		<%= image_tag "matthew", class: "ui tiny circular image", style: "float: right" %>
+	    <% end %>
+	    <p> Cool </p>
+	    <p>Full name</p>
+	    <p>Hurray</p>
+	    
+	    <p>Kind</p>
+	    <p>Nice path</p>
+	    <p>You are in</p>
+	    <div class="ui divider"></div>
+	    <p>hello</p>
+	    <p></p>
+	    <p>Nice</p>
+	    <p>yes</p>
+	    <p>cool </p>
+	    <p>cool</p>
+	    <p>time</p>
+	    <p>work</p>
+	    <div class="ui divider"></div>
+	    
+	    <!-- Reviews -->
+	    <h3 class="ui header"> Reviews </h3>
+	    <div class="ui divided relaxed items">
+		<div class="item">
+		    <a class="ui tiny circular image">
+			<%= image_tag "stevie" %>
+		    </a>
+		    <div class="content">
+			<a class="header">Stevie Feliciano</a>
+			<div class="description">
+			    <p>Stevie Feliciano is a <a>library scientist</a> living in New York City. She likes to spend her time reading, running, and writing.</p>
+			</div>
+		    </div>
+		</div>
+		<div class="item">
+		    <a class="ui tiny circular image" >
+			<%= image_tag "veronika" %>
+		    </a>
+		    <div class="content">
+
+			<a class="header">Veronika Ossi</a>
+			<div class="description">
+			    <p>Veronika Ossi is a set designer living in New York who <a>enjoys</a> kittens, music, and partying.</p>
+			</div>
+		    </div>
+		</div>
+		<div class="item">
+		    <a class="ui tiny circular image">
+			<%= image_tag "jenny" %>
+		    </a>
+		    <div class="content">
+
+			<a class="header">Jenny Hess</a>
+			<div class="description">
+			    <p>Jenny is a student studying Media Management at <a>the New School</a>.</p>
+			</div>
+			<div> 
+
+			</div>
+		    </div>
+		</div>
+	    </div>
+
+	    <!-- Event Space hoster Info -->
+	    <div class="ui divider"></div>
+	    <%= image_tag "matthew", class: "ui tiny circular image", style: "float: right" %>
+	    <h3 class="ui header">Listed By Mattew </h3>
+	    <p> Yaba, Lagos, Nigeria - Joined in June 2016 </p>
+
+	    <!-- Map of the Location if it is a Rental -->
+	    
+	</div>
+	
+	<div class="six wide computer tablet only column">
+	    <div class="ui top attached black message"> <!-- set color to dark teal color. -->
+		<div class="header"> From N100k per Day </div>
+	    </div>
+	    <div class="ui attached padded raised segment">
+		<form class="ui form">
+		    <div class="field">
+			<label> Date </label>
+			<input type="text" name="first-name" placeholder="Event Date">
+		    </div>
+		    <div class="field">
+			<label>Expected Guest</label>
+			<input type="text" name="last-name" placeholder="Number of Expected Guest">
+		    </div>
+		    <div class="field">
+			<div class="ui checkbox">
+			    <input type="checkbox" tabindex="0" class="hidden">
+			    <label>I agree to the Terms and Conditions</label>
+			</div>
+		    </div>
+		    <div class="ui big fluid red button">Book Now</div>
+		</form>
+	    </div>
+	
+	</div>
+
+
+    </div>
+
+</div>
+
+<div class="ui grid container">
+    <div class="ui images">
+	<h1 class="ui header">  Similar Listings </h1>
+	<%= image_tag "background1", class: "ui medium image" %>
+	<%= image_tag "background1", class: "ui medium image" %>
+	<%= image_tag "background1", class: "ui medium image" %>
+    </div>
+</div>

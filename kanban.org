@@ -1,0 +1,39 @@
+
+
+# Project Structure 
+
+| Stage 1      | Stage 2      | Stage 3       | Stage 4 | Stage 5      |
+|--------------+--------------+---------------+---------+--------------|
+| Mockup UI/UX | Add Features | Seed Database | Deploy  | Invite Users |
+|              |              |               |         |              |
+
+
+
+# Tasks 
+
+| Ongoing                    | Tasks                                         | Done | Stuck | Bugs |
+|----------------------------+-----------------------------------------------+------+-------+------|
+| Create another menu design | Sign-in into application + authenticity token |      |       |      |
+|                            |                                               |      |       |      |
+
+
+# Bugs 
+| UI/UX Bugs | Feature Bug | Design Bug |   |   |
+|------------+-------------+------------+---+---|
+|            |             |            |   |   |
+
+
+
+
+# After_Signup 
+| steps                                                                         | Done                                                                          | stuck |   |   |
+|-------------------------------------------------------------------------------+-------------------------------------------------------------------------------+-------+---+---|
+| [[Create a JS file inside of assets directory and call a class decleared in it.]] | [[Create a JS file inside of assets directory and call a class decleared in it.]] |       |   |   |
+| [[Move inline JS to assets/javascript directory]]                                 | [[Move inline JS to assets/javascript directory]]                                 |       |   |   |
+| [[Create UI flow for After Signup]]                                               | [[Create UI flow for After Signup]]                                               |       |   |   |
+| [[Make app work with turbolinks]]                                                 | [[Make app work with turbolinks]]                                                 |       |   |   |
+| [[mockup addlisting workflow]]                                                |                                                                               |       |   |   |
+
+
+
+

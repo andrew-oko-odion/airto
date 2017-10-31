@@ -1,2 +1,2 @@
-import {} from 'jquery-ujs'
+import {} from 'jquery/dist/jquery.min.js'
 

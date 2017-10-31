@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require api
+//= require jquery.serialize-object
 //= require app
 //= require after_sign_up
 //= require_tree .

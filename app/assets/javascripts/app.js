@@ -13,6 +13,7 @@ let service = () => {
      $('.ui.tiny.modal.login')
 	 .modal('show')
      ;
+     $('form').form('clear')
  }
 
  let resetPassword = () => {
@@ -125,12 +126,39 @@ let signOut = () => {
 
 $(document).ready( () =>  {
 
+    if (isLogin()) {
+	$('.item.navLogin').hide();
+	$('.item.navSignup').hide();
+	$('.item.navLogout').show();
+	if (sessionStorage.getItem("userActive") == 'false'){
+	    $('.cookie.nag')
+		.nag('show')
+	    ;
+	    /* 
+	     * 	     $('.cookie.nag')
+	     * 		 .nag({
+	     * 		     key      : 'notActivated',
+	     * 		     value    : true
+	     * 		 })
+	     * 	     ;
+	     * 	     */
+	}
+    }
+
+    
     /* initialize classes */
     afterSignup = new AfterSignUp;
     item = new Items;
     
+    /* $.fn.api.settings.successTest = function(response) {
+       if (response && response.active) {
+     *         return response.active;
+       }
+       return false;
+     * };*/
+
      $.fn.api.settings.api = {
-	 'signin user'   : '/users/sign_in',
+	 'signin user'   : '/users/sign_in.json',
 	 'signout user'  : '/users/delete'
      };
 
@@ -138,7 +166,6 @@ $(document).ready( () =>  {
          $('.ui .item').removeClass('active');
          $(this).addClass('active');
      });
-     
 
      /* 
 	Returns the current_user data from session
@@ -155,142 +182,147 @@ $(document).ready( () =>  {
 	Returns false  if user is not login
       */
 
-     
-     if (isLogin() == true) {
-	 $('.item.navLogin').hide();
-	 $('.item.navSignup').hide();
-	 $('.item.navLogout').show();
-	 if (sessionStorage.getItem("userActive") == 'false'){
-	     $('.cookie.nag')
-		 .nag('show')
-	     ;
-	     /* 
-	      * 	     $('.cookie.nag')
-	      * 		 .nag({
-	      * 		     key      : 'notActivated',
-	      * 		     value    : true
-	      * 		 })
-	      * 	     ;
-	      * 	     */
-	 }
-     }
-     
 
-
-
-     let login_user = () => {
-	 /* Get Values using Semantic-ui Formvalidation module */
-	 let loginForm =  $('.form .submit.loginform'),
-	     loginEmail = loginForm.form('get value', 'email'),
-	     loginPassword = loginForm.form('get value', 'password');
-	 
-	 console.log(loginEmail);
-
-	 $('form .button.login-button')
-	     .api({
-		 action: 'signin user',
-		 method: 'POST',
-		 data: {		 
-		     headers: {
-			 'Accept': 'application/json',
-			 'Content-Type': 'application/json',
-		     },
-			user: {
-			    email: loginEmail,
-			    password: loginPassword	
-			}
-		 },
-		 onResponse: (response) => {
-		     console.log(response);
-		 },
-		 onSuccess: function (response, element) {
-		     console.log(response);
-		     // console.log(loginEmail);
-		     console.log(email);
-
-		     sessionStorage.userEmail = response.email;
-		     sessionStorage.userAuth =  response.authentication_token;
-		     sessionStorage.userID = response.id;
-		     sessionStorage.userActive = response.active;
-		     $('.item.navLogin').hide();
-		     $('.item.navSignup').hide();
-		     $('.item.navLogout').show();
-		     
-		     if (sessionStorage.getItem("userActive") == 'false'){
-			 $('.cookie.nag')
-			     .nag('show')
-			 ;
-		     }
-		     $('form .loginform').form('clear');
-		     /* Hide modal After successfull network request passed */
-		     $('.ui.tiny.modal.login')
-			 .modal('hide')
-		     ;
-		 },
-		 onFailure: function(response) {
-		     console.log(response);
-		 }
-	     })
-	 ;
-     }
-
-     
-     /* let login_user = () => {
-      *     let email = $('.loginform #email').val();
-      *     let password = $('.loginform #password').val();
-
-      *     
-      *     const loginUrl = '/users/sign_in.json'
-      *     fetch(loginUrl, {
-      * 	 method: 'POST',
-      * 	 cache: false,
-      * 	 headers: {
-      *             'Accept': 'application/json',
-      *             'Content-Type': 'application/json',
-      * 	 },
-      * 	 body: JSON.stringify(
-      * 	     { "user": {
-      * 		 email: email,
-      * 		 password: password
-      * 	     }
-      * 	     })
-      *     }).then((response) => {	     
-      * 	 response.json().then(function(data) {
-      * 	     sessionStorage.userEmail = data.email;
-      * 	     sessionStorage.userAuth =  data.authentication_token;
-      * 	     sessionStorage.userID = data.id;
-      * 	     sessionStorage.userActive = data.active;
-      *             console.log(data);
-      * 	     $('.item.navLogin').hide();
-      * 	     $('.item.navSignup').hide();
-      * 	     $('.item.navLogout').show();
-      * 	     console.log(sessionStorage.getItem("userEmail"));
-      * 	     console.log(sessionStorage.getItem("userActive"));
-      * 	     
-      * 	     if (sessionStorage.getItem("userActive") == 'false'){
-      * 		 $('.cookie.nag')
-      * 		     .nag('show')
-      * 		 ;
-      * 	     }
-      */
-     /* Hide modal After successfull network request passed */
-
-     /* 
-	$('.ui.tiny.modal.login')
-	.modal('hide')
-      * ;
-      * console.log('Form submited successfully');
-	}); 
-	})
-	.catch((error)  => {
-	console.log('Request failure: ', error);
+    $('.form.loginform .submit').form({
+	inline : true,
+	on: 'blur',
+	// onSuccess: login_user,
+	fields: {
+	    email: {
+		identifier: "user[email]",
+		rules: [{
+		    type: 'empty',
+		    prompt: 'Please enter your email address'
+		},              {
+		    type: 'email',
+		    prompt: 'Please enter a valid email'
+		}]
+	    },
+	    password: {
+		identifier: "user[password]",
+		rules: [
+		    {
+			type   : 'empty',
+			prompt : 'Please enter your password'
+		    }
+		]
+	    }
 	}
-	);
-
-	}*/
-
+    })
+				.api({
+				    action: 'signin user',
+				    method: 'POST',
+				    serializeForm: true,
+				    dataType: 'json',
+				    debug: true,
+				    cache: false,
+				    ContentType: "application/json",
+				    verbose: true,
+				    data: {
+				    },
+				    beforeSend: function(settings) {
+					// Create POST Data.
+					    // settings.data = {
+						/* user: JSON.stringify({
+						   // success: true,    // Change this to true|false
+						   // message: 'message',
+						   }),*/
+						// delay: 1
+					// };
+					console.log(settings.data);
+					return settings;
+				    },
+				    onResponse: function(response) {
+					// make some adjustments to response
+					console.log(response.data);
+					return response;
+				    },
+				    onSuccess: function(json) {
+					console.log('Data Available');
+					console.log(json);
+				    },
+				    onFailure: function(json, element, xhr) {
+					console.log('onFailure');
+					console.log(json, 'Failed! Should be an Object.');
+					console.log(json.data, 'Data Failed');
+					console.log(xhr);
+				    },
+				});
+    
+    
 
      
+     
+
+
+    // let loginForm =  $('.form.loginform');
+    // let loginEmail = loginForm.form('get value', 'email');
+    // let loginPassword = loginForm.form('get value', 'password');
+    
+
+    /* let login_user = () => {
+       let email = $('.loginform #email').val();
+       let password = $('.loginform #password').val();
+       
+       const loginUrl = '/users/sign_in.json'
+       fetch(loginUrl, {
+       method: 'POST',
+       cache: false,
+       headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+       },
+       body: JSON.stringify(
+       { "user": {
+       email: email,
+       password: password
+       }
+       })
+       })
+       .then((response) => {
+       if (response.status == 401){
+       // $('.loginform .error.message')	
+       $("#loginError").html('<p> Invalid username or password </p>');
+       console.log('Invalid username or password');
+       console.log('Fighting error messages');
+       }
+       else {	    
+       response.json().then( function(data) {
+       sessionStorage.userEmail = data.email;
+       sessionStorage.userAuth =  data.authentication_token;
+       sessionStorage.userID = data.id;
+       sessionStorage.userActive = data.active;
+       console.log(data);
+       
+       $('.item.navLogin').hide();
+       $('.item.navSignup').hide();
+       $('.item.navLogout').show();
+       console.log(sessionStorage.getItem("userEmail"));
+       console.log(sessionStorage.getItem("userActive"));
+       
+       if (sessionStorage.getItem("userActive") == 'false'){
+       $('.cookie.nag')
+       .nag('show')
+       ;
+       }
+       // Hide modal After successfull network request passe
+       $('.ui.tiny.modal.login')
+       .modal('hide')
+       ;
+       console.log('Form submited successfully');
+       
+       
+       })
+       }	
+       })
+       .catch((error)  => {
+       console.log('Request failure: ', error);
+       }
+       );	
+     * }
+     */
+
+    
     let handleChekBox = () => {
 	$('.ui.checkbox')
 	    .checkbox();
@@ -328,31 +360,32 @@ $(document).ready( () =>  {
 
 
      /* Validate Login form */
-     $('.ui.form.loginform').form({
-	 inline : true,
-	 onSuccess: login_user,
-	 fields: {
-             email: {
-		 identifier: 'email',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Please enter your email address'
-		 },              {
-		     type: 'email',
-		     prompt: 'Please enter a valid email'
-		 }]
-             },
-	     password: {
-		 identifier: 'password',
-		 rules: [
-		     {
-			 type   : 'empty',
-			 prompt : 'Please enter your password'
-		     }
-		 ]
-	     }
-	 }
-     });
+     // $('.ui.form.loginform').form({
+     // 	 inline : true,
+     // 	 on: 'blur',
+     // 	 onSuccess: login_user,
+     // 	 fields: {
+     //         email: {
+     // 		 identifier: 'email',
+     // 		 rules: [{
+     //                 type: 'empty',
+     //                 prompt: 'Please enter your email address'
+     // 		 },              {
+     // 		     type: 'email',
+     // 		     prompt: 'Please enter a valid email'
+     // 		 }]
+     //         },
+     // 	     password: {
+     // 		 identifier: 'password',
+     // 		 rules: [
+     // 		     {
+     // 			 type   : 'empty',
+     // 			 prompt : 'Please enter your password'
+     // 		     }
+     // 		 ]
+     // 	     }
+     // 	 }
+     // });
 
 
      /* format Birthday */

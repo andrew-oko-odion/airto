@@ -5,8 +5,20 @@
     <button onClick='item.addNewItem()' class="ui teal button "> Start <i class="angle right icon"></i> </button>    
 </div>
 
-<div class="ui container details_form" style="display: none">
-<%= render 'details_form' %>
+<div class="ui container grid details_form" style="display: none">
+    <div class="row">
+	<div class="centered column">
+	    <%= render 'step_icons' %>
+	</div>
+    </div>
+    <div class="row">
+	<div class="five wide computer only column">
+	    <%= render 'steps' %>
+	</div>
+	<div class="eight wide centered column">
+	    <%= render 'items/form/details_form' %>
+	</div>
+    </div>
 </div>
 
 <div class="ui mini modal listing" style="padding: 3em; border-radius: 0em;">
@@ -57,9 +69,6 @@
 	<center> <a href="#" style="color: grey"> Cancel </a> </center>
     </div>
 </div>
-
-
-
 
 
 <div class="ui tiny modal step1" style="padding: 3em; border-radius: 0em;">

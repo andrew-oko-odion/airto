@@ -8,7 +8,7 @@
 	<form class="ui form">
 	    <div class="field">
 
-		<button class="ui big red right floated button" onClick='item.acceptTerms()'>Accept</button>
+		<button class="ui big red right floated button" onClick='event.preventDefault(); item.acceptTerms()'>Accept</button>
 		<button class="ui big left floated button">Decline</button>
 	    </div>
 	</form>
