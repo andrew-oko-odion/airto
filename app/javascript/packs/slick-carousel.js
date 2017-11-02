@@ -1,5 +1,5 @@
-import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick.js";
+import $ from 'jquery';
 
- import 'slick-carousel/slick/slick';
-
+import 'slick-carousel';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';

@@ -1,4 +1,5 @@
 
+
 let service = () => {
      $('.ui.tiny.modal.service')
 	 .modal('show')
@@ -126,6 +127,14 @@ let signOut = () => {
 
 $(document).ready( () =>  {
 
+    $('.dropdown')
+	.dropdown()
+    ;
+
+    $('.checkbox')
+	.checkbox()
+    ;
+
     if (isLogin()) {
 	$('.item.navLogin').hide();
 	$('.item.navSignup').hide();
@@ -159,7 +168,8 @@ $(document).ready( () =>  {
 
      $.fn.api.settings.api = {
 	 'signin user'   : '/users/sign_in.json',
-	 'signout user'  : '/users/delete'
+	 'signout user'  : '/users/delete',
+	 'register user' : '/users.json'
      };
 
      $('.ui .item').on('click', function() {
@@ -519,102 +529,161 @@ $(document).ready( () =>  {
 	 }
      });
 
+    
+// Validates and Sign-up New User 
+    $(".form.signupform .submit").form({
+	inline : true,
+	on: 'blur',
+	fields: {
+            lastname: {
+		identifier: 'lastname',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'Last name is required'
+		}]
+            },
+            firstname: {
+		identifier: 'firstname',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'First name is required'
+		}]
+            },
+            email: {
+		identifier: 'email',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'Email is required'
+		},
+			{
+			    type: 'email',
+			    prompt: 'Please enter a valid email'
+			}]
+            },
+	    day: {
+		identifier: 'day',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter day'
+		},
+			{ 
+			    type: 'integer',
+			    prompt: 'number digit only'
+			},
+			{ 
+			    type: 'integer[1..31]',
+			    prompt: 'invalid day'
+			}]
+            },
+	    month: {
+		identifier: 'month',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter month'
+		}]
+            },
+	    year: {
+		identifier: 'year',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter year'
+		},
+			{
+			    type: 'exactLength[4]',
+			    prompt: 'should be {ruleValue} characters long'
+			},
+			{ 
+			    type: 'integer',
+			    prompt: 'Number digits only'
+			}
+		       ]
+            },
+	    password: {
+		identifier: 'password',
+		rules: [
+		    {
+			type   : 'empty',
+			prompt : 'Please enter a password'
+		    },		 
+		    {
+			type   : 'minLength[6]',
+			prompt : 'Your password must be at least {ruleValue} characters'
+		    }
+		]
+	    },	 
+	    terms: {
+		identifier: 'terms',
+		rules: [
+		    {
+			type   : 'checked',
+			prompt : 'Please Check this box'
+		    }
+		]
+	    }
 
-     $('.ui.form.signupform').form({
-	 inline : true,
-	 onFailure: () => {console.log('Signup Form validation failed')},
-	 onSuccess: signup_user,
-	 fields: {
-             lastname: {
-		 identifier: 'lastname',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Last name is required'
-		 }]
-             },
-             firstname: {
-		 identifier: 'firstname',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'First name is required'
-		 }]
-             },
-             email: {
-		 identifier: 'email',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Email is required'
-		 },
-			 {
-			     type: 'email',
-			     prompt: 'Please enter a valid email'
-			 }]
-             },
-	     day: {
-		 identifier: 'day',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Please enter day'
-		 },
-			 { 
-			     type: 'integer',
-			     prompt: 'number digit only'
-			 },
-			 { 
-			     type: 'integer[1..31]',
-			     prompt: 'invalid day'
-			 }]
-             },
-	     month: {
-		 identifier: 'month',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Please enter month'
-		 }]
-             },
-	     year: {
-		 identifier: 'year',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Please enter year'
-		 },
-			 {
-			     type: 'exactLength[4]',
-			     prompt: 'should be {ruleValue} characters long'
-			 },
-			 { 
-			     type: 'integer',
-			     prompt: 'Number digits only'
-			 }
-		 ]
-             },
-	     password: {
-		 identifier: 'password',
-		 rules: [
-		     {
-			 type   : 'empty',
-			 prompt : 'Please enter a password'
-		     },		 
-		     {
-			 type   : 'minLength[6]',
-			 prompt : 'Your password must be at least {ruleValue} characters'
-		     }
-		 ]
-	     },	 
-	     terms: {
-		 identifier: 'terms',
-		 rules: [
-		     {
-			 type   : 'checked',
-			 prompt : 'Please Check this box'
-		     }
-		 ]
-	     }
+	}
+    }).api({
+	action: 'register user',
+	method: 'POST',
+	serializeForm: true,
+	dataType: 'json',
+	debug: true,
+	cache: false,
+	// ContentType: "application/json",
+	verbose: true,
+	data: {
+	},
+	beforeSend: function(settings) {
 
-	 }
-     });
-     
- });
+	    let capFirstCharacter = (name) => {
+		name = name.split('');
+		firstCharacter = name.shift();
+		name.unshift(firstCharacter.toUpperCase());
+		name = name.join('');
+		return name; 
+	    }
+
+	    let birthday = () => {
+		let day = (settings.data.day).trim();
+		let month = (settings.data.month).trim();
+		let year = (settings.data.year).trim();
+		if ( day.length == 1 ){ 
+		    day = "0".concat(day);
+		    console.log("Not Default: " + year + '-' + month + '-' + day);
+		    return (year + '-' + month + '-' + day);
+		}
+		else{
+		    console.log("default: " + year + '-' + month + '-' + day);
+		    return (year + '-' + month + '-' + day);
+		}
+	    }	    
+	    settings.data.user.birthday = birthday();
+	    settings.data.user.firstname = capFirstCharacter(settings.data.user.firstname).trim();
+	    settings.data.user.lastname = capFirstCharacter(settings.data.user.lastname).trim();
+	    settings.data.user.email = settings.data.user.email.trim();
+	    settings.data.user.password = settings.data.user.password.trim();
+	    
+	    console.log(settings.data.user);
+	    console.log(settings.data.user.firstname);
+	    return settings;
+	},
+	onResponse: function(response) {
+	    console.log(response.data);
+	    return response;
+	},
+	onSuccess: function(json) {
+	    console.log('Data Available');
+	    console.log(json);
+	},
+	onFailure: function(json, element, xhr) {
+	    console.log('onFailure');
+	    console.log(json, 'Failed! Should be an Object.');
+	    console.log(json.data, 'Data Failed');
+	    console.log(xhr);
+	},
+    });
+    
+});
 
 
 
