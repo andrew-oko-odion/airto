@@ -1,5 +1,6 @@
 
 
+
 let service = () => {
      $('.ui.tiny.modal.service')
 	 .modal('show')
@@ -684,6 +685,3 @@ $(document).ready( () =>  {
     });
     
 });
-
-
-
