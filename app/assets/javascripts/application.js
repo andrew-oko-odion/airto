@@ -10,10 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require turbolinks
 //= require jquery
 //= require jquery_ujs
 //= require jquery.serialize-object
-//= require turbolinks
 //= require app
 //= require after_sign_up
 //= require_tree .

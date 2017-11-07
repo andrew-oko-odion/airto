@@ -8,6 +8,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     
+    
     <%#= javascript_pack_tag 'jquery' %>
     <%#= javascript_pack_tag 'jquery_form_serializer' %>
     <%= stylesheet_pack_tag 'semantic' %>
@@ -17,7 +18,8 @@
     <%#= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'slick-carousel' %>
     <%= javascript_pack_tag 'slick-carousel' %>
-
+    <%= javascript_pack_tag 'ViewPictures' %>
+    <%= javascript_pack_tag 'nuka_carousel' %>
   </head>
 
   <body>      
@@ -25,7 +27,7 @@
 	  <div class="ui top attached demo mobile tablet only grid menu">
 
 	      <a class="item" href="/">
-		      <i class="big yahoo icon" style="color: #fd5c63"> </i>
+		  <i class="big yahoo icon" style="color: #fd5c63" data-turbolinks="false"> </i>
 	      </a>	
 	      <a class="right item">
 		  <i class="sidebar icon"></i>

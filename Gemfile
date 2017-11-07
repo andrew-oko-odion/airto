@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'omniauth'
+gem 'omniauth-google'
+gem 'omniauth-facebook'
 ruby '2.4.0'
 gem 'jquery-serialize-object-rails'
 gem 'jquery-rails'

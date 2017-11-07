@@ -8,14 +8,14 @@
 
 <div class="ui grid">
     <div class="sixteen wide column">	
-	<div class="cover">
+	<div class="cover" href="#">
 	    <div >
 		<!-- <div class="ui button" style="background-color: white;  margin-top: 2em; margin-left: 80em; padding-left:2em; padding-right: 2em"> Add to Party list </div>
 		     </div> -->
 
 
 		<!-- <div class="ui  button" style="background-color: white; margin-top: 7em !important; margin-left:3em; padding-left:2em; padding-right: 2em"> Share </div> -->
-		<div class="ui icon button" style="background-color: white;  margin-top: 17em !important; margin-left: 3em; padding-left:1.8em; padding-right: 1.8em">
+		<div class="ui icon button" style="background-color: white;  margin-top: 17em !important; margin-left: 3em; padding-left:1.8em; padding-right: 1.8em" data-turbolinks="false" onClick='item.viewPictures()' >
 		    View Photos
 		</div>
 
@@ -23,7 +23,6 @@
 	</div>
     </div>
 </div>
-
 
 <div class="ui grid container">
     <div class="ten wide column">
@@ -56,7 +55,7 @@
 		Yoga friends
 	    </p>
 	    <div class="ui divider"></div>
-	    <%= link_to "#" do %>
+	    <%= link_to "/profiles/user" do %>
 		<%= image_tag "matthew", class: "ui tiny circular image", style: "float: right" %>
 	    <% end %>
 	    <p> Cool </p>
@@ -153,7 +152,7 @@
 		    <div class="ui big fluid red button">Book Now</div>
 		</form>
 	    </div>
-	
+	    
 	</div>
 
 
@@ -168,4 +167,11 @@
 	<%= image_tag "background1", class: "ui medium image" %>
 	<%= image_tag "background1", class: "ui medium image" %>
     </div>
+</div>
+
+
+
+<!-- View Pictures Modal -->
+<div class="ui fullscreen basic modal viewpictures view-pictures">
+
 </div>

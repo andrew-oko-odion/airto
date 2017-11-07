@@ -1,21 +1,17 @@
 
-
-<form class="ui form">
+<h3 class="ui grey header">Describe your event space</h3>
+<form class="ui big form">
 	<div class="field">
-	    <label>Location</label>
-		<input type="text" name="listing[location]" placeholder="Location" autofocus="true">
+	    <input type="text" name="listing[name]" placeholder="Name of your Event space (optional)">
 	</div>
 	<div class="field">
-	    <label>Name</label>
-	    <input type="text" name="listing[name]" placeholder="Name">
+	    <textarea name="listing[description]" placeholder="Describe your event space to your prospective host"> </textarea>
 	</div>
-    
-	<div class="field">
-	    <label>Rate Per Event</label>
-	    <input type="text" name="shipping[address]" placeholder="Street Address">
+	<div class="ui big button" tabindex="0">
+	    Save
+	    <i class="save icon"></i>
 	</div>
-	<div class="ui button" tabindex="0">Save details</div>
 </form>
 
 <div class="ui divider"></div>
-<div class="ui teal right floated button" tabindex="0">Next <i class="angle right icon"></i></div>
+<div class="ui teal right floated button" tabindex="0" onClick='nextStep()'>Next <i class="angle right icon"></i></div>

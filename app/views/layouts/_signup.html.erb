@@ -1,7 +1,10 @@
 
 <div class="ui tiny modal signup" style="padding: 1.5em; padding-right:3em; padding-left: 3em; border-radius: 0em">
+  <i class="big remove link icon" onClick='closeModal()'></i>
     <!-- <i class="close icon"></i> -->
-    <div class="content">
+    <div class="ui stackable grid">
+	<div class="sixteen column wide">
+	    <!-- <div class="content"> -->
 	<h4 class="ui grey centered header">Sign up with <a href="#"> Google</a> or <a href="#">Facebook</a></h4>
 	<div class="ui horizontal divider">Or</div>
 	<form class="ui big form signupform" method="POST" onsubmit="event.preventDefault(); handleSignupSubmitClick();" >
@@ -78,6 +81,7 @@
 	<h4 class="ui grey centered header">
 	    Already have an Airtoast account? <a onClick='login()'> Log in </a>
 	</h4>
+	</div>
     </div>
 </div>
 
