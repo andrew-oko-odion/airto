@@ -1,46 +1,62 @@
 
 <div class="ui tiny modal login"  style="padding: 1.5em; padding-right:3em; padding-left: 3em; border-radius: 0em;">
     <!-- <i class="active close icon"></i> -->
-    <div class="content">
-	<div class="description">
-	    <button class="ui big fluid facebook button">
-		<i class="facebook icon"></i>
-		Login with Facebook
-	    </button>
-	    <button class="ui big fluid basic button" style="margin-top: 0.3em">
-		<i class="red google icon"></i>
-		Login with Google
-	    </button>
-	    <div class="ui horizontal divider">Or</div>
-	    <form class="ui big form loginform">
-		<div class="ui error message"></div>
-		<div class="field">
-		    <div class="ui icon input">
-			<input type="text" name="user[email]"  placeholder="Email Address">
-			<i class="mail outline icon"></i>
-		    </div>
-		</div>
-		<div class="field">
-		    <div class="ui icon input">
-			<input type="password" name="user[password]"  placeholder="Password">
-			<i class="lock icon"></i>
-		    </div>
-		</div>
-		<div class="field">
-		    <div class="ui checkbox">
-			<input type="checkbox" tabindex="0" class="hidden">
-			<label>Remember me</label>
-		    </div>
-		</div>
-		<button class="ui red big fluid submit button">Login</button>
-	    </form>
-	    <h4 class="ui centered header">
-		<a  onClick='resetPassword()'> Forgot Password? </a>
-	    </h4>
+    <i class="big remove link icon" onClick='closeModal()'></i>
+    <div class="ui stackable grid">
+	<h3 class="ui grey header" style="padding-top: 3em;"> Log in With.....</h3>
+	<div class="row">
+	    <div class="eight wide column">
+		<button class="ui big fluid basic button" style="margin-top: 0.3em">
+		    <i class="red google icon"></i>
+		    Google
+		</button>
+	    </div>
+
+	    <div class="eight wide column">
+		<button href="/users/auth/facebook.html" class="ui big fluid facebook button">
+		    <i class="facebook icon"></i>
+		    Facebook
+		</button>
+	    </div>
+	    <div class="ui horizontal divider">	<h4 class="ui grey header">or with</h4> </div>
 	</div>
+
+	<div class="sixteen wide column">
+	    
+	<form class="ui big form loginform">
+	    <div class="ui error message"></div>
+	    <div class="field">
+		<div class="ui icon input">
+		    <input type="text" name="user[email]"  placeholder="Email Address">
+		    <i class="mail outline icon"></i>
+		</div>
+	    </div>
+	    <div class="field">
+		<div class="ui icon input">
+		    <input type="password" name="user[password]"  placeholder="Password">
+		    <i class="lock icon"></i>
+		</div>
+	    </div>
+	    <div class="field">
+		<div class="ui checkbox">
+		    <input type="checkbox" tabindex="0" class="hidden">
+		    <label>Remember me</label>
+		</div>
+	    </div>
+	    <button class="ui red big fluid submit button">Login</button>
+	</form>
+	<h4 class="ui centered header">
+	    <a  onClick='resetPassword()'> Forgot Password? </a>
+	</h4>
+	
 	<div class="ui divider"> </div>
 	<h4 class="ui grey centered header">
 	    Don’t have an account?  <a  onClick='signup()'> Sign up </a>
 	</h4>
+	</div>
     </div>
 </div>
+
+
+
+

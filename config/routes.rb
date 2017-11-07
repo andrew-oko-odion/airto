@@ -8,9 +8,12 @@ Rails.application.routes.draw do
   get 'profiles/listing'
   get 'profiles/update_listing'
   
+  get 'items/categories'
+  
   root 'home#index'
   # get '*path',  to: 'home#index'
-  devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations', passwords: 'passwords'} 
+  devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations', passwords: 'passwords', :omniauth_callbacks => 'omniauth_callbacks'}
+
   resources :reviews
   resources :home
   resources :stores
