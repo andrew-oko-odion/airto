@@ -1,3 +1,10 @@
+ $('.context.example .ui.sidebar')
+     .sidebar({
+	 context: $('.context.example .bottom.segment'),
+	 transition: 'overlay'
+     })
+     .sidebar('attach events', '.context.example .menu.mobile .item  ')
+ ;
 
 let closeModal =  () => {
     $('.modal')
