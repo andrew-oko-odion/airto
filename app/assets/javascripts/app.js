@@ -1,65 +1,66 @@
+
 let closeModal =  () => {
     $('.modal')
 	.modal('hide')
     ;
 }
 let service = () => {
-     $('.ui.tiny.modal.service')
-	 .modal('show')
-     ;
- }
- let rental = () => {
-     $('.ui.tiny.modal.rental')
-	 .modal('show')
-     ;
- }
- let login = () => {
-     $('.ui.tiny.modal.login')
-	 .modal('show')
-     ;
-     $('form').form('clear')
- }
+    $('.ui.tiny.modal.service')
+	.modal('show')
+    ;
+}
+let rental = () => {
+    $('.ui.tiny.modal.rental')
+	.modal('show')
+    ;
+}
+let login = () => {
+    $('.ui.tiny.modal.login')
+	.modal('show')
+    ;
+    $('form').form('clear')
+}
 
- let resetPassword = () => {
-     $('.ui.tiny.modal.password')
-	 .modal('show')
-     ;
- }
+let resetPassword = () => {
+    $('.ui.tiny.modal.password')
+	.modal('show')
+    ;
+}
 
- let signup = () => {
-     $('.ui.tiny.modal.signup')
-	 .modal('show')
-     ;
-     /* clear form data */
-     $('form').form('clear')
+let signup = () => {
+    $('.ui.tiny.modal.signup')
+	.modal('show')
+    ;
+    /* clear form data */
+    $('form').form('clear')
 
- }
+}
 
- let startProfile = () => {
-     $('.ui.mini.modal.startprofile')
-	 .modal('show')
-     ;
- }
+let startProfile = () => {
+    $('.ui.mini.modal.startprofile')
+	.modal('show')
+    ;
+}
 
- let showPhoneStep = () => {
-     $('.ui.mini.modal.profile.pic')
-	 .modal('show')
-     ;
- }
+let showPhoneStep = () => {
+    $('.ui.mini.modal.profile.pic')
+	.modal('show')
+    ;
+}
 
- let pictureProfile = () => {
-     $('.ui.mini.modal.pictureprofile')
-	 .modal('show')
-     ;
- }
+let pictureProfile = () => {
+    $('.ui.mini.modal.pictureprofile')
+	.modal('show')
+    ;
+}
 
- let handlePictureProfileChange = (e) => {
-     /* let pic = $('#profile-pic["value"]');*/
-     console.log('Item selected');
-     console.log(e.value);
-     /* let pix = $("#pix src").val();
-      * console.log(pix);*/
- }
+let handlePictureProfileChange = (e) => {
+    /* let pic = $('#profile-pic["value"]');*/
+    console.log('Item selected');
+    console.log(e.value);
+    /* let pix = $("#pix src").val();
+     * console.log(pix);*/
+}
 
 let handleSignupSubmitClick = () => console.log('Sign up button click');
 let handleLoginSubmitClick = () => console.log("Login form button clicked ")
@@ -128,8 +129,16 @@ let signOut = () => {
 
 
 
-$(document).ready( () =>  {
+/* $(document).ready( () =>  {*/
+document.addEventListener('turbolinks:load', () => {
 
+    $.fn.api.settings.api = {
+	'signin user'   : '/users/sign_in.json',
+	'signout user'  : '/users/delete',
+	'register user' : '/users.json'
+    };
+
+    
     $('.dropdown')
 	.dropdown()
     ;
@@ -163,41 +172,31 @@ $(document).ready( () =>  {
 
     
     /* initialize classes */
+    auth = new Auth;
     afterSignup = new AfterSignUp;
     item = new Items;
     
-    /* $.fn.api.settings.successTest = function(response) {
-       if (response && response.active) {
-     *         return response.active;
-       }
-       return false;
-     * };*/
 
-     $.fn.api.settings.api = {
-	 'signin user'   : '/users/sign_in.json',
-	 'signout user'  : '/users/delete',
-	 'register user' : '/users.json'
-     };
+    
+    /* handle menu changing */
+    $('.ui .item').on('click', function() {
+        $('.ui .item').removeClass('active');
+        $(this).addClass('active');
+    });
 
-     $('.ui .item').on('click', function() {
-         $('.ui .item').removeClass('active');
-         $(this).addClass('active');
-     });
+    /* Returns the current_user data from session
+       eg current_user.firstname; 
+     */
+    /* let current_user = {   
+     *     userEmail  :  sessionStorage.getItem("userEmail"),
+     *     userID     :  sessionStorage.getItem("userID"),
+     *     userAuth   :  sessionStorage.getItem("userAuth"),
+     *     active     :  sessionStorage.getItem("userActive")
+     * }*/
 
-     /* 
-	Returns the current_user data from session
-	eg current_user.firstname; 
-      */
-     /* let current_user = {   
-      *     userEmail  :  sessionStorage.getItem("userEmail"),
-      *     userID     :  sessionStorage.getItem("userID"),
-      *     userAuth   :  sessionStorage.getItem("userAuth"),
-      *     active     :  sessionStorage.getItem("userActive")
-      * }*/
-
-     /* 
-	Returns false  if user is not login
-      */
+    /* 
+       Returns false  if user is not login
+     */
 
 
     $('.form.loginform .submit').form({
@@ -225,51 +224,50 @@ $(document).ready( () =>  {
 		]
 	    }
 	}
-    })
-				.api({
-				    action: 'signin user',
-				    method: 'POST',
-				    serializeForm: true,
-				    dataType: 'json',
-				    debug: true,
-				    cache: false,
-				    ContentType: "application/json",
-				    verbose: true,
-				    data: {
-				    },
-				    beforeSend: function(settings) {
-					// Create POST Data.
-					    // settings.data = {
-						/* user: JSON.stringify({
-						   // success: true,    // Change this to true|false
-						   // message: 'message',
-						   }),*/
-						// delay: 1
-					// };
-					console.log(settings.data);
-					return settings;
-				    },
-				    onResponse: function(response) {
-					// make some adjustments to response
-					console.log(response.data);
-					return response;
-				    },
-				    onSuccess: function(json) {
-					console.log('Data Available');
-					console.log(json);
-				    },
-				    onFailure: function(json, element, xhr) {
-					console.log('onFailure');
-					console.log(json, 'Failed! Should be an Object.');
-					console.log(json.data, 'Data Failed');
-					console.log(xhr);
-				    },
-				});
+    }).api({
+	action: 'signin user',
+	method: 'POST',
+	serializeForm: true,
+	dataType: 'json',
+	debug: true,
+	cache: false,
+	ContentType: "application/json",
+	verbose: true,
+	data: {
+	},
+	beforeSend: function(settings) {
+	    // Create POST Data.
+	    // settings.data = {
+	    /* user: JSON.stringify({
+	       // success: true,    // Change this to true|false
+	       // message: 'message',
+	       }),*/
+	    // delay: 1
+	    // };
+	    console.log(settings.data);
+	    return settings;
+	},
+	onResponse: function(response) {
+	    // make some adjustments to response
+	    console.log(response.data);
+	    return response;
+	},
+	onSuccess: function(json) {
+	    console.log('Data Available');
+	    console.log(json);
+	},
+	onFailure: function(json, element, xhr) {
+	    console.log('onFailure');
+	    console.log(json, 'Failed! Should be an Object.');
+	    console.log(json.data, 'Data Failed');
+	    console.log(xhr);
+	},
+    });
     
     
 
-     
-     
+    
+    
 
 
     // let loginForm =  $('.form.loginform');
@@ -345,199 +343,199 @@ $(document).ready( () =>  {
 	    .checkbox();
     }
 
-     /* let sidenav =  () => {
-      *      $('.ui.top.sidebar')
-      * 	 .sidebar('setting', 'transition', 'overlay')
-      * 	 .sidebar('toggle')
-      *      ;
-      *  }*/
+    /* let sidenav =  () => {
+     *      $('.ui.top.sidebar')
+     * 	 .sidebar('setting', 'transition', 'overlay')
+     * 	 .sidebar('toggle')
+     *      ;
+     *  }*/
 
 
 
-     $('.ui.search')
-	 .search({
-	     apiSettings: {
-		 url: '//localhost:3000/jobs/autocomplete.json?query={query}'
-	     },
-	     fields: {
-		 results : 'items',
-		 title   : 'title',
-		 url     : 'url'
-	     },
-	     minCharacters : 1,
-	     debug: true
-	 })
-     ;
+    $('.ui.search')
+	.search({
+	    apiSettings: {
+		url: '//localhost:3000/jobs/autocomplete.json?query={query}'
+	    },
+	    fields: {
+		results : 'items',
+		title   : 'title',
+		url     : 'url'
+	    },
+	    minCharacters : 1,
+	    debug: true
+	})
+    ;
 
-     $('.ui.checkbox')
-	 .checkbox()
-     ;
-
-
+    $('.ui.checkbox')
+	.checkbox()
+    ;
 
 
-     /* Validate Login form */
-     // $('.ui.form.loginform').form({
-     // 	 inline : true,
-     // 	 on: 'blur',
-     // 	 onSuccess: login_user,
-     // 	 fields: {
-     //         email: {
-     // 		 identifier: 'email',
-     // 		 rules: [{
-     //                 type: 'empty',
-     //                 prompt: 'Please enter your email address'
-     // 		 },              {
-     // 		     type: 'email',
-     // 		     prompt: 'Please enter a valid email'
-     // 		 }]
-     //         },
-     // 	     password: {
-     // 		 identifier: 'password',
-     // 		 rules: [
-     // 		     {
-     // 			 type   : 'empty',
-     // 			 prompt : 'Please enter your password'
-     // 		     }
-     // 		 ]
-     // 	     }
-     // 	 }
-     // });
 
 
-     /* format Birthday */
-     let formatBirthday = () => {
-	 let day = $(".signupform #day").val();
-	 if ( day.trim().length == 1 ){ 
-	     day = "0".concat(day);	 
-	 }
-	 let month = $(".signupform #month").val(); 
-	 let year = $(".signupform #year").val(); 
-	 return year + '-' + month + '-' + day;
-     }
-
-     let capFirstCharacter = (name) => {
-	 name = name.split('');
-	 firstCharacter = name.shift();
-	 name.unshift(firstCharacter.toUpperCase());
-	 name = name.join('');
-	 return name; 
-     }
-
-     /* After user frontend validation Signup user */
-     let signup_user  = () => {
-	 /* formating values */
-	 let firstname = capFirstCharacter(($(".signupform #firstname").val()).trim());
-	 let lastname = capFirstCharacter(($(".signupform #lastname").val()).trim());
-	 let email = (($(".signupform #email").val()).trim()).toLowerCase();
-	 let password = ($(".signupform #password").val()).trim();
-	 let birthday = formatBirthday(); 
-
-	 console.log('Sign up Form submited');
-	 const signupUrl = "/users.json";
-	 fetch(signupUrl, {
-	     method: 'POST',
-	     cache: false,
-	     headers: {
-		 'Accept': 'application/json',
-		 'Content-Type': 'application/json',
-	     },
-	     body: JSON.stringify(
-		 { "user": {
-		     email: email,
-		     password: password,
-		     firstname: firstname,
-		     lastname: lastname,
-		     birthday: birthday
-		 }
-		 })
-	 }).then((response) => {	     
-	     response.json().then(function(data) {
-		 sessionStorage.userEmail = data.email;
-		 sessionStorage.userAuth =  data.authentication_token;
-		 sessionStorage.userID = data.id;
-		 sessionStorage.userActive = data.active;
-		 console.log(data);
-		 console.log(sessionStorage.getItem("userEmail"));
-		 $('#navLogin').hide();
-		 $('#navSignup').hide();
-		 $('#navLogout').show();
-
-		 afterSignup.acceptTerms();
-		 console.log('You account created successfully');
-		 $('.ui.tiny.modal.signup')
-		     .modal('hide')
-		 ;
-		 /* Show Email accout activation reminder */	     
-		 $('.cookie.nag')
-		     .nag('show')
-		 ;
-		 /* Call Accept terms modal */
-
-	     }); 
-	 })
-	   .catch((error)  => {
-	       console.log('Request failure: ', error);
-	   }
-	   );
-     }
+    /* Validate Login form */
+    // $('.ui.form.loginform').form({
+    // 	 inline : true,
+    // 	 on: 'blur',
+    // 	 onSuccess: login_user,
+    // 	 fields: {
+    //         email: {
+    // 		 identifier: 'email',
+    // 		 rules: [{
+    //                 type: 'empty',
+    //                 prompt: 'Please enter your email address'
+    // 		 },              {
+    // 		     type: 'email',
+    // 		     prompt: 'Please enter a valid email'
+    // 		 }]
+    //         },
+    // 	     password: {
+    // 		 identifier: 'password',
+    // 		 rules: [
+    // 		     {
+    // 			 type   : 'empty',
+    // 			 prompt : 'Please enter your password'
+    // 		     }
+    // 		 ]
+    // 	     }
+    // 	 }
+    // });
 
 
-     let passwordResetUser  = () => {
-	 let email = (($(".signupform #email").val()).trim()).toLowerCase();
-	 console.log('Password Reset form sent');
-	 const passwordResetUrl = "/users/password.json";
-	 fetch(passwordResetUrl, {
-	     method: 'POST', 
-	     cache: false,
-	     headers: {
-		 'Accept': 'application/json',
-		 'Content-Type': 'application/json',
-	     },
-	     body: JSON.stringify(
-		 { "user": {
-		     email: email
-		 }
-		 })
-	 }).then((response) => {	     
-	     response.json().then(function(data) {
-		 console.log('An Email with Reset instruction sent successfully');
-		 $('.ui.tiny.modal.passwordReset')
-		     .modal('hide')
-		 ;	    
-		 picture_profile();
+    /* format Birthday */
+    let formatBirthday = () => {
+	let day = $(".signupform #day").val();
+	if ( day.trim().length == 1 ){ 
+	    day = "0".concat(day);	 
+	}
+	let month = $(".signupform #month").val(); 
+	let year = $(".signupform #year").val(); 
+	return year + '-' + month + '-' + day;
+    }
 
-		 /* Show Email accout activation reminder */	     
-		 /* $('.cookie.nag')
+    let capFirstCharacter = (name) => {
+	name = name.split('');
+	firstCharacter = name.shift();
+	name.unshift(firstCharacter.toUpperCase());
+	name = name.join('');
+	return name; 
+    }
+
+    /* After user frontend validation Signup user */
+    let signup_user  = () => {
+	/* formating values */
+	let firstname = capFirstCharacter(($(".signupform #firstname").val()).trim());
+	let lastname = capFirstCharacter(($(".signupform #lastname").val()).trim());
+	let email = (($(".signupform #email").val()).trim()).toLowerCase();
+	let password = ($(".signupform #password").val()).trim();
+	let birthday = formatBirthday(); 
+
+	console.log('Sign up Form submited');
+	const signupUrl = "/users.json";
+	fetch(signupUrl, {
+	    method: 'POST',
+	    cache: false,
+	    headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify(
+		{ "user": {
+		    email: email,
+		    password: password,
+		    firstname: firstname,
+		    lastname: lastname,
+		    birthday: birthday
+		}
+		})
+	}).then((response) => {	     
+	    response.json().then(function(data) {
+		sessionStorage.userEmail = data.email;
+		sessionStorage.userAuth =  data.authentication_token;
+		sessionStorage.userID = data.id;
+		sessionStorage.userActive = data.active;
+		console.log(data);
+		console.log(sessionStorage.getItem("userEmail"));
+		$('#navLogin').hide();
+		$('#navSignup').hide();
+		$('#navLogout').show();
+
+		afterSignup.acceptTerms();
+		console.log('You account created successfully');
+		$('.ui.tiny.modal.signup')
+		    .modal('hide')
+		;
+		/* Show Email accout activation reminder */	     
+		$('.cookie.nag')
 		    .nag('show')
-		    ;*/
-	     }); 
-	 })
-	   .catch((error)  => {
-	       console.log('Request failure: ', error);
-	   }
-	   );
-     }
+		;
+		/* Call Accept terms modal */
 
-     $('.ui.form.passwordresetform').form({
-	 inline : true,
-	 onSuccess: passwordResetUser,
-	 fields: {
-             email: {
-		 identifier: 'email',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Please enter your email address'
-		 },              {
-		     type: 'email',
-		     prompt: 'Please enter a valid email'
-		 }]
-             }
-	 }
-     });
+	    }); 
+	})
+	  .catch((error)  => {
+	      console.log('Request failure: ', error);
+	  }
+	  );
+    }
+
+
+    let passwordResetUser  = () => {
+	let email = (($(".signupform #email").val()).trim()).toLowerCase();
+	console.log('Password Reset form sent');
+	const passwordResetUrl = "/users/password.json";
+	fetch(passwordResetUrl, {
+	    method: 'POST', 
+	    cache: false,
+	    headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify(
+		{ "user": {
+		    email: email
+		}
+		})
+	}).then((response) => {	     
+	    response.json().then(function(data) {
+		console.log('An Email with Reset instruction sent successfully');
+		$('.ui.tiny.modal.passwordReset')
+		    .modal('hide')
+		;	    
+		picture_profile();
+
+		/* Show Email accout activation reminder */	     
+		/* $('.cookie.nag')
+		   .nag('show')
+		   ;*/
+	    }); 
+	})
+	  .catch((error)  => {
+	      console.log('Request failure: ', error);
+	  }
+	  );
+    }
+
+    $('.ui.form.passwordresetform').form({
+	inline : true,
+	onSuccess: passwordResetUser,
+	fields: {
+            email: {
+		identifier: 'email',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter your email address'
+		},              {
+		    type: 'email',
+		    prompt: 'Please enter a valid email'
+		}]
+            }
+	}
+    });
 
     
-// Validates and Sign-up New User 
+    // Validates and Sign-up New User 
     $(".form.signupform .submit").form({
 	inline : true,
 	on: 'blur',
@@ -603,7 +601,7 @@ $(document).ready( () =>  {
 			    type: 'integer',
 			    prompt: 'Number digits only'
 			}
-		       ]
+		]
             },
 	    password: {
 		identifier: 'password',
