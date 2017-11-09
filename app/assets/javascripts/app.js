@@ -10,11 +10,11 @@ let modal = () => {
     console.log('cool Job');
 }
 
-let closeModal =  () => {
-    $('.modal')
-	.modal('hide')
-    ;
-}
+// let closeModal =  () => {
+//     $('.modal')
+// 	.modal('hide')
+//     ;
+// }
 let service = () => {
     $('.ui.tiny.modal.service')
 	.modal('show')
