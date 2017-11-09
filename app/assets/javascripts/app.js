@@ -6,6 +6,10 @@
      .sidebar('attach events', '.context.example .menu.mobile .item  ')
  ;
 
+let modal = () => {
+    console.log('cool Job');
+}
+
 let closeModal =  () => {
     $('.modal')
 	.modal('hide')
