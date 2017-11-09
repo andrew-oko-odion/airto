@@ -183,9 +183,9 @@ document.addEventListener('turbolinks:load', () => {
 
     
     /* initialize classes */
-    auth = new Auth;
     afterSignup = new AfterSignUp;
     item = new Items;
+    auth = new Auth;
     
 
     
