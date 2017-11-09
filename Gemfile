@@ -8,7 +8,7 @@ end
 gem 'omniauth'
 gem 'omniauth-google'
 gem 'omniauth-facebook'
-ruby '2.4.0'
+#ruby '2.4.0'
 gem 'jquery-serialize-object-rails'
 gem 'jquery-rails'
 # use to run rails locally https://gist.github.com/andrew-oko-odion/4a05d9f327a537f56583b0808314a57f 
