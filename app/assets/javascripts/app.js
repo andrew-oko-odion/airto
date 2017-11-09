@@ -15,7 +15,6 @@ let modal = () => {
 // 	.modal('hide')
 //     ;
 // }
-
 let service = () => {
     $('.ui.tiny.modal.service')
 	.modal('show')
