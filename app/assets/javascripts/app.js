@@ -1,4 +1,5 @@
- $('.context.example .ui.sidebar')
+
+$('.context.example .ui.sidebar')
      .sidebar({
 	 context: $('.context.example .bottom.segment'),
 	 transition: 'overlay'
@@ -10,11 +11,12 @@ let modal = () => {
     console.log('cool Job');
 }
 
-// let closeModal =  () => {
-//     $('.modal')
-// 	.modal('hide')
-//     ;
-// }
+let closeModal =  () => {
+    $('.modal')
+	.modal('hide')
+    ;
+}
+
 let service = () => {
     $('.ui.tiny.modal.service')
 	.modal('show')
@@ -29,7 +31,7 @@ let login = () => {
     $('.ui.tiny.modal.login')
 	.modal('show')
     ;
-    $('form').form('clear')
+    $('form').form('clear');
 }
 
 let resetPassword = () => {
@@ -43,7 +45,7 @@ let signup = () => {
 	.modal('show')
     ;
     /* clear form data */
-    $('form').form('clear')
+    $('form').form('clear');
 
 }
 
@@ -141,7 +143,7 @@ let signOut = () => {
 
 
 /* $(document).ready( () =>  {*/
-document.addEventListener('turbolinks:load', () => {
+$(document).ready(() => {
 
     $.fn.api.settings.api = {
 	'signin user'   : '/users/sign_in.json',
