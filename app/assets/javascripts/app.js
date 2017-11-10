@@ -1,22 +1,9 @@
 
-$('.context.example .ui.sidebar')
-     .sidebar({
-	 context: $('.context.example .bottom.segment'),
-	 transition: 'overlay'
-     })
-     .sidebar('attach events', '.context.example .menu.mobile .item  ')
- ;
-
-let modal = () => {
-    console.log('cool Job');
-}
-
 let closeModal =  () => {
     $('.modal')
 	.modal('hide')
     ;
 }
-
 let service = () => {
     $('.ui.tiny.modal.service')
 	.modal('show')
@@ -31,7 +18,7 @@ let login = () => {
     $('.ui.tiny.modal.login')
 	.modal('show')
     ;
-    $('form').form('clear');
+    $('form').form('clear')
 }
 
 let resetPassword = () => {
@@ -45,7 +32,7 @@ let signup = () => {
 	.modal('show')
     ;
     /* clear form data */
-    $('form').form('clear');
+    $('form').form('clear')
 
 }
 
@@ -143,7 +130,7 @@ let signOut = () => {
 
 
 /* $(document).ready( () =>  {*/
-$(document).ready(() => {
+document.addEventListener('turbolinks:load', () => {
 
     $.fn.api.settings.api = {
 	'signin user'   : '/users/sign_in.json',
@@ -185,9 +172,9 @@ $(document).ready(() => {
 
     
     /* initialize classes */
+    auth = new Auth;
     afterSignup = new AfterSignUp;
     item = new Items;
-    auth = new Auth;
     
 
     
