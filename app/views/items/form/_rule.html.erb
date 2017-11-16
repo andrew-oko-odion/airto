@@ -1,0 +1,26 @@
+
+<div class="rule listing" style="display:none"> 
+    <form class="ui big form space" method="post" onSubmit='event.preventDefault();'>
+    <!-- <div class="field">
+	 <label>Name</label>
+	 <input type="text" name="listing[name]" placeholder="Name">
+	 </div> -->
+    <!-- <div class="field">
+	 <label>Shipping Address</label>
+	 <input type="text" name="shipping[address]" placeholder="Street Address">
+	 </div> -->
+	<div class="field">
+	    <select class="ui dropdown" name="space[category_id]">
+		<option value="">Category</option>
+		<option value="1">Office Space</option>
+		<option value="2">Home Space</option>
+		<option value="3">Rooftop</option>
+	    </select>
+	</div>
+	<div class="ui submit button" tabindex="0">Save details</div>
+</form>
+
+<div class="ui divider"></div>
+<div onClick="item.facilityListing()" class="ui basic teal left floated button" tabindex="0"><i class="angle left icon"></i>Back</div>
+<div onClick='item.photoListing()' class="ui teal right floated button" tabindex="0">Next <i class="angle right icon"></i></div>
+</div>

@@ -1,13 +1,15 @@
+<style>
+ .cover {
+     background-image: url("/assets/background1"); height: 70% !important; background-repeat: no-repeat !important; background-size: cover !important; background-position: 50% 50% !important;"
+ }
+</style>
 
-<div class="ui mini modal listing terms"  style='padding: 3em; border-radius: 0em; height: 70%; background: url("/assets/background"); no-repeat 0 0 scroll; height: 70%;'>
+<div class="ui mini modal listing terms" style='padding: 3em; border-radius: 0em; height: 70%; background: url("/assets/background"); background-repeat: no-repeat !important; height: 70%; background-size: cover !important; background-position: 50% 50% !important;'>
     <i class="close icon"></i>
     <div class="description">
-	<center> <i class="circular huge teal sticky note outline icon"></i>  </center>
-	<div class="ui centered grey header"> Terms </div>
-	
+	<div class="ui centered grey header"> Terms </div>	
 	<form class="ui form">
 	    <div class="field">
-
 		<button class="ui big red right floated button" onClick='event.preventDefault(); item.acceptTerms()'>Accept</button>
 		<button class="ui big left floated button">Decline</button>
 	    </div>

@@ -1,5 +1,3 @@
-
-<%= render 'layouts/activate_account_flash' %>
 <div class="ui stackable computer only grid container">
     <div class="ui stackable text menu">
 	<div class="ui container">
@@ -26,9 +24,24 @@
 	    <a class="item navLogin" onClick="login()" >
 		Login
 	    </a>
-	    <a class="item navLogout"  onClick="signOut()" style="display: none">
-		Logout
-	    </a>
+	    <div class="item navLogout" style="display:none">
+		<div class="ui floating top right pointing labeled icon dropdown">
+		    <div class="ui mini circular image">
+			<img src="/assets/matthew"> 
+		    </div>
+		    <div class="ui menu">
+			<a class="item"  href="/profiles">
+			    Profile
+			</a>
+			<a class="item"  href="/profiles/user" >
+			    View Profile
+			</a>
+			<a class="item"  onClick="signOut()" >
+			    Logout
+			</a>
+		    </div>
+		</div>
+	    </div>
 	</div>
     </div>
 </div>

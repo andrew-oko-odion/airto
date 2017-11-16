@@ -1,0 +1,23 @@
+
+<script>
+ $('.field.facility .icon').on('click', () => {
+     $('.field.facility .icon').addClass('teal');
+     console.log('Icon clicked');     
+ });
+</script>
+
+<div class="facility listing" style="display:none"> 
+<form class="ui big form listing">
+
+    <div class="field facility">
+	<i class="big bus link icon"></i>
+	<i class="big car link icon"></i>
+	<i class="big building outline link icon"></i>
+    </div>
+    <div class="ui button" tabindex="0">Save details</div>
+</form>
+
+<div class="ui divider"></div>
+<div onClick="item.locationListing()" class="ui basic teal left floated button" tabindex="0"><i class="angle left icon"></i>Back</div>
+<div onClick='item.ruleListing()' class="ui teal right floated button" tabindex="0">Next <i class="angle right icon"></i></div>
+</div>

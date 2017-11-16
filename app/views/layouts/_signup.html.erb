@@ -1,13 +1,14 @@
 
 <div class="ui tiny modal signup" style="padding: 1.5em; padding-right:3em; padding-left: 3em; border-radius: 0em">
-  <i class="big remove link icon" onClick='closeModal()' ></i>
+      <i class="big remove link icon" onClick='closeModal()' ></i>
     <!-- <i class="close icon"></i> -->
     <div class="ui stackable grid">
 	<div class="sixteen column wide">
 	    <!-- <div class="content"> -->
 	<h4 class="ui grey centered header">Sign up with <a href="#"> Google</a> or <a href="#">Facebook</a></h4>
 	<div class="ui horizontal divider">Or</div>
-	<form class="ui big form signupform" method="POST" onsubmit="event.preventDefault(); handleSignupSubmitClick();" >
+	<form class="ui big form signupform" method="POST" >
+	    <div class="ui tiny error message"></div>
 	    <div class="field">
 		<div class="ui icon input">
 		    <input type="text" name="user[firstname]"  placeholder="First name" >
@@ -75,7 +76,6 @@
 		</div>
 	    </div>
 	    <button class="ui big red fluid submit button" type="submit">Sign up</button>
-	    <div class="ui error message"></div>
 	</form>  
 	<div class="ui divider"> </div>
 	<h4 class="ui grey centered header">

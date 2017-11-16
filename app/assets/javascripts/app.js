@@ -1,4 +1,3 @@
-
 let closeModal =  () => {
     $('.modal')
 	.modal('hide')
@@ -68,13 +67,35 @@ let handlePasswordRecoveryClick = () => console.log("Password reset button click
 let handlePictureProfileSubmit = () => console.log('Picture Profile submit button Clicked');
 
 
+
+/* checks if user is signed in */
+/* returns true if user is signed in or false if otherwise */
+let isSignedIn = () => {	
+    if ( sessionStorage.getItem('user')) {
+	return true;
+    }
+    return false;
+}
+
+/* returns users SESSION data if user is login */
+let ActiveUser = () => {
+    if ( sessionStorage.getItem('user')) {
+	let currentUser = JSON.parse(sessionStorage.user);
+	console.log("CurrentUser: " + currentUser.email);
+	return currentUser;
+    }
+    return false;
+}
+
+let currentUser = ActiveUser();
+
 let  isLogin = () => {
-    if ( sessionStorage.getItem("userID")) {
-	console.log(sessionStorage.getItem("userEmail"));
-	console.log(sessionStorage.getItem("userID"));
-	console.log(sessionStorage.getItem("userAuth"));
-	console.log('User is login');
-	console.log(sessionStorage.getItem("userActive"));
+    if (sessionStorage.getItem('user')) {
+	/* console.log(sessionStorage.getItem("userEmail"));
+	   console.log(sessionStorage.getItem("userID"));
+	   console.log(sessionStorage.getItem("userAuth"));
+	   console.log('User is login');
+	   console.log(sessionStorage.getItem("userActive"));*/
 	/* if( sessionStorage.getItem("userActive") == 'false') {
 	   $('.cookie.nag')
 	   .nag('show')
@@ -102,55 +123,108 @@ let signOut = () => {
 	    headers: {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json',
-		'X-User-Token': sessionStorage.getItem("userAuth"),
-		'X-User-Email': sessionStorage.getItem("userEmail")
+		'X-User-Token': currentUser.authentication_token,
+		'X-User-Email': currentUser.email
 	    }
 	});
-
-	sessionStorage.setItem("userEmail","");
-	sessionStorage.setItem("userAuth","");
-	sessionStorage.setItem("userID","");
+	
+	/* Clear Email nag after logout*/
+	/* if ( currentUser.userActive == false) {
+	   $('.cookie.nag')
+	   .hide()
+	   ;
+	   }*/
+	
+	sessionStorage.setItem('user', '');
+	$('.cookie.nag').hide();
 	$('.item.navLogin').show();
 	$('.item.navSignup').show();
 	$('.item.navLogout').hide();
 
-	/* Clear Email nag after logout*/
-	if ( sessionStorage.getItem("userActive") == 'false') {
-	    $('.cookie.nag')
-		.hide()
-	    ;
-	}
-	
-	window.setTimeout( () => window.location.replace = "/", 3000);
+	window.setTimeout( () => window.location = "/", 10);
 	console.log('redirected to home completed');
     }
 }
 
 
+let login_user = () => {
+    let data = $('.form.loginform').serializeJSON();
+    console.log(data);
+    const loginUrl = '/users/sign_in.json'
+    fetch(loginUrl, {
+	method: 'POST',
+	cache: false,
+	headers: {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json',
+	},
+	body: data
+    }).then((response) => {
+	if (response.status == 401){
+	    $("#loginError").html('<p> Invalid username or password </p>');
+	    console.log('Invalid username or password');
+	    console.log('Fighting error messages');
+	}
+	else {
+	  //  sessionStorage.setItem('user', JSON.stringify(user));
+	    response.json().then( function(data) {
+		console.log(data);
+		sessionStorage.setItem('user', JSON.stringify(data));
+		let currentUser = JSON.parse(sessionStorage.user);
+		console.log(currentUser.email);
+		$('.item.navLogin').hide();
+		$('.item.navSignup').hide();
+		$('.item.navLogout').show();
+		
+		if (sessionStorage.getItem("userActive") == 'false'){
+		    $('.cookie.nag')
+			.nag('show')
+		    ;
+		}
+		// Hide modal After successfull network request passe
+		$('.ui.tiny.modal.login')
+		    .modal('hide')
+		;
+		console.log('Form submited successfully');
+		
+		
+	    })
+	}	
+    })
+      .catch((error)  => {
+	 $('.form.loginform .message.error').show();
+	  console.log('Request failure: ', error);
+      }
+      );	
+}
 
-
-/* $(document).ready( () =>  {*/
-document.addEventListener('turbolinks:load', () => {
-
+document.addEventListener('turbolinks:load', () => {    
     $.fn.api.settings.api = {
-	'signin user'   : '/users/sign_in.json',
+	'signin user'   : "/users/sign_in",
 	'signout user'  : '/users/delete',
-	'register user' : '/users.json'
+	'register user' : '/users.json',
+	'add space'     : '/spaces.json'
     };
-
-    
-    $('.dropdown')
-	.dropdown()
-    ;
-    
-    $('.rating')
-	.rating()
-    ;
+    // Define API success test globally
+    $.fn.api.settings.successTest = function(response) {
+	if(response && response.success){
+	    return response.success;
+	}
+	return false;
+    };
     
     $('.checkbox')
 	.checkbox()
     ;
-
+    $('.dropdown')
+	.dropdown({
+            direction: 'downward'
+	})
+    ;
+    $('.rating')
+	.rating()
+    ;
+    
     if (isLogin()) {
 	$('.item.navLogin').hide();
 	$('.item.navSignup').hide();
@@ -170,13 +244,20 @@ document.addEventListener('turbolinks:load', () => {
 	}
     }
 
-    
     /* initialize classes */
-    auth = new Auth;
-    afterSignup = new AfterSignUp;
-    item = new Items;
-    
 
+    // Handle Login of user
+    console.log("Hello User");
+    auth = new Auth;
+    if (!auth.isSignedIn() ){
+	console.log("User is not Signed In Yet");
+	// auth.loginUserByEmail();
+    }
+
+    
+    afterSignup = new AfterSignUp; // After Signup Initialization
+    item = new Items;  // Listing creation Initalization 
+    item.checkAccepted(); // Check if user has accepted Listing terms
     
     /* handle menu changing */
     $('.ui .item').on('click', function() {
@@ -184,22 +265,8 @@ document.addEventListener('turbolinks:load', () => {
         $(this).addClass('active');
     });
 
-    /* Returns the current_user data from session
-       eg current_user.firstname; 
-     */
-    /* let current_user = {   
-     *     userEmail  :  sessionStorage.getItem("userEmail"),
-     *     userID     :  sessionStorage.getItem("userID"),
-     *     userAuth   :  sessionStorage.getItem("userAuth"),
-     *     active     :  sessionStorage.getItem("userActive")
-     * }*/
-
-    /* 
-       Returns false  if user is not login
-     */
-
-
-    $('.form.loginform .submit').form({
+    
+    $('.form.loginform').form({
 	inline : true,
 	on: 'blur',
 	// onSuccess: login_user,
@@ -224,119 +291,49 @@ document.addEventListener('turbolinks:load', () => {
 		]
 	    }
 	}
-    }).api({
-	action: 'signin user',
-	method: 'POST',
-	serializeForm: true,
-	dataType: 'json',
-	debug: true,
-	cache: false,
-	ContentType: "application/json",
-	verbose: true,
-	data: {
-	},
-	beforeSend: function(settings) {
-	    // Create POST Data.
-	    // settings.data = {
-	    /* user: JSON.stringify({
-	       // success: true,    // Change this to true|false
-	       // message: 'message',
-	       }),*/
-	    // delay: 1
-	    // };
-	    console.log(settings.data);
-	    return settings;
-	},
-	onResponse: function(response) {
-	    // make some adjustments to response
-	    console.log(response.data);
-	    return response;
-	},
-	onSuccess: function(json) {
-	    console.log('Data Available');
-	    console.log(json);
-	},
-	onFailure: function(json, element, xhr) {
-	    console.log('onFailure');
-	    console.log(json, 'Failed! Should be an Object.');
-	    console.log(json.data, 'Data Failed');
-	    console.log(xhr);
-	},
     });
     
-    
-
-    
-    
-
-
-    // let loginForm =  $('.form.loginform');
-    // let loginEmail = loginForm.form('get value', 'email');
-    // let loginPassword = loginForm.form('get value', 'password');
-    
-
-    /* let login_user = () => {
-       let email = $('.loginform #email').val();
-       let password = $('.loginform #password').val();
-       
-       const loginUrl = '/users/sign_in.json'
-       fetch(loginUrl, {
+    /* $('.form.loginform .submit').api({
+       action: 'signin user',
        method: 'POST',
+       serializeForm: true,
+       dataType: 'json',
+       debug: true,
        cache: false,
-       headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json',
+       // verbose: true,
+       defaultData: false,
+       data: {
        },
-       body: JSON.stringify(
-       { "user": {
-       email: email,
-       password: password
-       }
-       })
-       })
-       .then((response) => {
-       if (response.status == 401){
-       // $('.loginform .error.message')	
-       $("#loginError").html('<p> Invalid username or password </p>');
-       console.log('Invalid username or password');
-       console.log('Fighting error messages');
-       }
-       else {	    
-       response.json().then( function(data) {
-       sessionStorage.userEmail = data.email;
-       sessionStorage.userAuth =  data.authentication_token;
-       sessionStorage.userID = data.id;
-       sessionStorage.userActive = data.active;
-       console.log(data);
-       
-       $('.item.navLogin').hide();
-       $('.item.navSignup').hide();
-       $('.item.navLogout').show();
-       console.log(sessionStorage.getItem("userEmail"));
-       console.log(sessionStorage.getItem("userActive"));
-       
-       if (sessionStorage.getItem("userActive") == 'false'){
-       $('.cookie.nag')
-       .nag('show')
-       ;
-       }
-       // Hide modal After successfull network request passe
-       $('.ui.tiny.modal.login')
-       .modal('hide')
-       ;
-       console.log('Form submited successfully');
-       
-       
-       })
-       }	
-       })
-       .catch((error)  => {
-       console.log('Request failure: ', error);
-       }
-       );	
-     * }
+       beforeSend: function(settings) {
+       // Create POST Data.
+       console.log("Log user email: " + settings.data.user.email);
+       // settings.data.user.email = settings.data.user.username;
+       // settings.data.user.password = settings.data.user.secret;
+       return settings;
+       },
+       // onResponse: function(response) {
+       //     console.log("OnResponse Callback: " + response.data);
+       //     return response;
+       // },
+       onSuccess: function(json) {
+       console.log("onSuccessCallback Data Available: " + json.data);
+       },
+       onFailure: function(json, element, xhr) {
+       console.log('onFailure Callback');
+       console.log(json, 'Failed! Should be an Object.');
+       console.log(json.data, 'Data Failed');
+       console.log(xhr);
+       },
+     * });
      */
+    
+    /* 
+     *     let loginForm =  $('.form.loginform');
+     *     let loginEmail = loginForm.form('get value', 'email');
+     *     let loginPassword = loginForm.form('get value', 'password');
+     *     */
 
+    
     
     let handleChekBox = () => {
 	$('.ui.checkbox')
@@ -349,8 +346,6 @@ document.addEventListener('turbolinks:load', () => {
      * 	 .sidebar('toggle')
      *      ;
      *  }*/
-
-
 
     $('.ui.search')
 	.search({
@@ -451,12 +446,8 @@ document.addEventListener('turbolinks:load', () => {
 		})
 	}).then((response) => {	     
 	    response.json().then(function(data) {
-		sessionStorage.userEmail = data.email;
-		sessionStorage.userAuth =  data.authentication_token;
-		sessionStorage.userID = data.id;
-		sessionStorage.userActive = data.active;
+		sessionStorage.setItem('user', data);
 		console.log(data);
-		console.log(sessionStorage.getItem("userEmail"));
 		$('#navLogin').hide();
 		$('#navSignup').hide();
 		$('#navLogout').show();
@@ -536,26 +527,26 @@ document.addEventListener('turbolinks:load', () => {
 
     
     // Validates and Sign-up New User 
-    $(".form.signupform .submit").form({
+    $(".form.signupform").form({
 	inline : true,
 	on: 'blur',
 	fields: {
             lastname: {
-		identifier: 'lastname',
+		identifier: 'user[lastname]',
 		rules: [{
                     type: 'empty',
                     prompt: 'Last name is required'
 		}]
             },
             firstname: {
-		identifier: 'firstname',
+		identifier: 'user[firstname]',
 		rules: [{
                     type: 'empty',
                     prompt: 'First name is required'
 		}]
             },
             email: {
-		identifier: 'email',
+		identifier: 'user[email]',
 		rules: [{
                     type: 'empty',
                     prompt: 'Email is required'
@@ -604,7 +595,7 @@ document.addEventListener('turbolinks:load', () => {
 		]
             },
 	    password: {
-		identifier: 'password',
+		identifier: 'user[password]',
 		rules: [
 		    {
 			type   : 'empty',
@@ -626,66 +617,89 @@ document.addEventListener('turbolinks:load', () => {
 		]
 	    }
 
-	}
-    }).api({
-	action: 'register user',
-	method: 'POST',
-	serializeForm: true,
-	dataType: 'json',
-	debug: true,
-	cache: false,
-	// ContentType: "application/json",
-	verbose: true,
-	data: {
 	},
-	beforeSend: function(settings) {
-
-	    let capFirstCharacter = (name) => {
-		name = name.split('');
-		firstCharacter = name.shift();
-		name.unshift(firstCharacter.toUpperCase());
-		name = name.join('');
-		return name; 
-	    }
-
-	    let birthday = () => {
-		let day = (settings.data.day).trim();
-		let month = (settings.data.month).trim();
-		let year = (settings.data.year).trim();
-		if ( day.length == 1 ){ 
-		    day = "0".concat(day);
-		    console.log("Not Default: " + year + '-' + month + '-' + day);
-		    return (year + '-' + month + '-' + day);
-		}
-		else{
-		    console.log("default: " + year + '-' + month + '-' + day);
-		    return (year + '-' + month + '-' + day);
-		}
-	    }	    
-	    settings.data.user.birthday = birthday();
-	    settings.data.user.firstname = capFirstCharacter(settings.data.user.firstname).trim();
-	    settings.data.user.lastname = capFirstCharacter(settings.data.user.lastname).trim();
-	    settings.data.user.email = settings.data.user.email.trim();
-	    settings.data.user.password = settings.data.user.password.trim();
+	onSuccess: (event) => {
 	    
-	    console.log(settings.data.user);
-	    console.log(settings.data.user.firstname);
-	    return settings;
-	},
-	onResponse: function(response) {
-	    console.log(response.data);
-	    return response;
-	},
-	onSuccess: function(json) {
-	    console.log('Data Available');
-	    console.log(json);
-	},
-	onFailure: function(json, element, xhr) {
-	    console.log('onFailure');
-	    console.log(json, 'Failed! Should be an Object.');
-	    console.log(json.data, 'Data Failed');
-	    console.log(xhr);
-	},
-    });
+	    //	    $('.form.signupform').form('validate form');
     
-});
+	$(".form.signupform .submit").api({
+	    action: 'register user',
+	    method: 'POST',
+	    loadingDuration: 3000,
+	    serializeForm: true,
+	    dataType: 'json',
+	    // debug: true,
+	    cache: false,
+	    // verbose: true,
+	    data: {
+	    },
+	    beforeSend: function(settings) {
+		    let capFirstCharacter = (name) => {
+			name = name.split('');
+			firstCharacter = name.shift();
+			name.unshift(firstCharacter.toUpperCase());
+			name = name.join('');
+			return name; 
+		    }
+		    
+		    let birthday = () => {
+			let day = (settings.data.day).trim();
+			let month = (settings.data.month).trim();
+			let year = (settings.data.year).trim();
+			if ( day.length == 1 ){ 
+			    day = "0".concat(day);
+			    console.log("Not Default: " + year + '-' + month + '-' + day);
+			    return (year + '-' + month + '-' + day);
+			}
+			else{
+			    console.log("default: " + year + '-' + month + '-' + day);
+			    return (year + '-' + month + '-' + day);
+			}
+		    }	    
+		    settings.data.user.birthday = birthday();
+		    settings.data.user.firstname = capFirstCharacter(settings.data.user.firstname).trim();
+		    settings.data.user.lastname = capFirstCharacter(settings.data.user.lastname).trim();
+		    settings.data.user.email = settings.data.user.email.trim();
+		    settings.data.user.password = settings.data.user.password.trim();
+		    
+		    console.log(settings.data.user);
+		    console.log(settings.data.user.firstname);
+		    return settings;
+		},
+		onResponse: function(response) {
+		    sessionStorage.setItem('user', JSON.stringify(response));
+		    let currentUser = JSON.parse(sessionStorage.user);
+		    $('.item.navLogin').hide();
+		    $('.item.navSignup').hide();
+		    $('.item.navLogout').show();
+		    
+		    if (sessionStorage.getItem("userActive") == 'false'){
+			$('.cookie.nag')
+			    .nag('show')
+			;
+		    }
+		    // Hide modal After successfull network request passe
+		    $('.ui.tiny.modal.signup')
+			.modal('hide')
+		    ;
+		    console.log('Sign-up:  Form submited successfully');
+		    // afterSignup.signupComplete();
+		    afterSignup.acceptTerms();
+		    // return response;
+		},
+		onSuccess: function(response) {
+		    console.log('OnSuccess: ' + response);
+		},
+		onFailure: function(json, element, xhr) {
+		    console.log('onFailure: ' + json);
+		    $(".form.signupform").form("add errors", [ 'This Email address is already taken by another user' ]);
+		}
+	    });
+
+	    event.preventDefault();
+	}
+	
+	});
+    
+})
+;

@@ -22,10 +22,10 @@
     <%= javascript_pack_tag 'nuka_carousel' %>
   </head>
 
-  <body>      
+  <body>
+      <%= render 'layouts/activate_account_flash' %>
       <div class="context example">
 	  <div class="ui top attached demo mobile tablet only grid menu">
-
 	      <a class="item" href="/">
 		  <i class="big yahoo icon" style="color: #fd5c63" data-turbolinks="false"> </i>
 	      </a>	
@@ -33,9 +33,9 @@
 		  <i class="sidebar icon"></i>
 	      </a>
 	  </div>
-	  <div class="ui bottom attached segment"> 
-	      <%= render 'layouts/mobile_topnav' %>
+	  <div class="ui bottom attached segment">
 	      <%= render 'layouts/flash_messages' %>
+	      <%= render 'layouts/mobile_topnav' %>
 	      <%= render 'layouts/topnav' %>
 	      
 

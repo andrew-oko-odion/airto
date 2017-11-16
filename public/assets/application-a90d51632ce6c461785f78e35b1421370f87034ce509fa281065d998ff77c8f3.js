@@ -1,3 +1,10 @@
+/*
+Turbolinks 5.0.3
+Copyright © 2017 Basecamp, LLC
+ */
+
+(function(){(function(){(function(){this.Turbolinks={supported:function(){return null!=window.history.pushState&&null!=window.requestAnimationFrame&&null!=window.addEventListener}(),visit:function(e,r){return t.controller.visit(e,r)},clearCache:function(){return t.controller.clearCache()}}}).call(this)}).call(this);var t=this.Turbolinks;(function(){(function(){var e,r,n=[].slice;t.copyObject=function(t){var e,r,n;r={};for(e in t)n=t[e],r[e]=n;return r},t.closest=function(t,r){return e.call(t,r)},e=function(){var t,e;return t=document.documentElement,null!=(e=t.closest)?e:function(t){var e;for(e=this;e;){if(e.nodeType===Node.ELEMENT_NODE&&r.call(e,t))return e;e=e.parentNode}}}(),t.defer=function(t){return setTimeout(t,1)},t.throttle=function(t){var e;return e=null,function(){var r;return r=1<=arguments.length?n.call(arguments,0):[],null!=e?e:e=requestAnimationFrame(function(n){return function(){return e=null,t.apply(n,r)}}(this))}},t.dispatch=function(t,e){var r,n,o,i,s;return i=null!=e?e:{},s=i.target,r=i.cancelable,n=i.data,o=document.createEvent("Events"),o.initEvent(t,!0,r===!0),o.data=null!=n?n:{},(null!=s?s:document).dispatchEvent(o),o},t.match=function(t,e){return r.call(t,e)},r=function(){var t,e,r,n;return t=document.documentElement,null!=(e=null!=(r=null!=(n=t.matchesSelector)?n:t.webkitMatchesSelector)?r:t.msMatchesSelector)?e:t.mozMatchesSelector}(),t.uuid=function(){var t,e,r;for(r="",t=e=1;36>=e;t=++e)r+=9===t||14===t||19===t||24===t?"-":15===t?"4":20===t?(Math.floor(4*Math.random())+8).toString(16):Math.floor(15*Math.random()).toString(16);return r}}).call(this),function(){t.Location=function(){function t(t){var e,r;null==t&&(t=""),r=document.createElement("a"),r.href=t.toString(),this.absoluteURL=r.href,e=r.hash.length,2>e?this.requestURL=this.absoluteURL:(this.requestURL=this.absoluteURL.slice(0,-e),this.anchor=r.hash.slice(1))}var e,r,n,o;return t.wrap=function(t){return t instanceof this?t:new this(t)},t.prototype.getOrigin=function(){return this.absoluteURL.split("/",3).join("/")},t.prototype.getPath=function(){var t,e;return null!=(t=null!=(e=this.absoluteURL.match(/\/\/[^\/]*(\/[^?;]*)/))?e[1]:void 0)?t:"/"},t.prototype.getPathComponents=function(){return this.getPath().split("/").slice(1)},t.prototype.getLastPathComponent=function(){return this.getPathComponents().slice(-1)[0]},t.prototype.getExtension=function(){var t,e;return null!=(t=null!=(e=this.getLastPathComponent().match(/\.[^.]*$/))?e[0]:void 0)?t:""},t.prototype.isHTML=function(){return this.getExtension().match(/^(?:|\.(?:htm|html|xhtml))$/)},t.prototype.isPrefixedBy=function(t){var e;return e=r(t),this.isEqualTo(t)||o(this.absoluteURL,e)},t.prototype.isEqualTo=function(t){return this.absoluteURL===(null!=t?t.absoluteURL:void 0)},t.prototype.toCacheKey=function(){return this.requestURL},t.prototype.toJSON=function(){return this.absoluteURL},t.prototype.toString=function(){return this.absoluteURL},t.prototype.valueOf=function(){return this.absoluteURL},r=function(t){return e(t.getOrigin()+t.getPath())},e=function(t){return n(t,"/")?t:t+"/"},o=function(t,e){return t.slice(0,e.length)===e},n=function(t,e){return t.slice(-e.length)===e},t}()}.call(this),function(){var e=function(t,e){return function(){return t.apply(e,arguments)}};t.HttpRequest=function(){function r(r,n,o){this.delegate=r,this.requestCanceled=e(this.requestCanceled,this),this.requestTimedOut=e(this.requestTimedOut,this),this.requestFailed=e(this.requestFailed,this),this.requestLoaded=e(this.requestLoaded,this),this.requestProgressed=e(this.requestProgressed,this),this.url=t.Location.wrap(n).requestURL,this.referrer=t.Location.wrap(o).absoluteURL,this.createXHR()}return r.NETWORK_FAILURE=0,r.TIMEOUT_FAILURE=-1,r.timeout=60,r.prototype.send=function(){var t;return this.xhr&&!this.sent?(this.notifyApplicationBeforeRequestStart(),this.setProgress(0),this.xhr.send(),this.sent=!0,"function"==typeof(t=this.delegate).requestStarted?t.requestStarted():void 0):void 0},r.prototype.cancel=function(){return this.xhr&&this.sent?this.xhr.abort():void 0},r.prototype.requestProgressed=function(t){return t.lengthComputable?this.setProgress(t.loaded/t.total):void 0},r.prototype.requestLoaded=function(){return this.endRequest(function(t){return function(){var e;return 200<=(e=t.xhr.status)&&300>e?t.delegate.requestCompletedWithResponse(t.xhr.responseText,t.xhr.getResponseHeader("Turbolinks-Location")):(t.failed=!0,t.delegate.requestFailedWithStatusCode(t.xhr.status,t.xhr.responseText))}}(this))},r.prototype.requestFailed=function(){return this.endRequest(function(t){return function(){return t.failed=!0,t.delegate.requestFailedWithStatusCode(t.constructor.NETWORK_FAILURE)}}(this))},r.prototype.requestTimedOut=function(){return this.endRequest(function(t){return function(){return t.failed=!0,t.delegate.requestFailedWithStatusCode(t.constructor.TIMEOUT_FAILURE)}}(this))},r.prototype.requestCanceled=function(){return this.endRequest()},r.prototype.notifyApplicationBeforeRequestStart=function(){return t.dispatch("turbolinks:request-start",{data:{url:this.url,xhr:this.xhr}})},r.prototype.notifyApplicationAfterRequestEnd=function(){return t.dispatch("turbolinks:request-end",{data:{url:this.url,xhr:this.xhr}})},r.prototype.createXHR=function(){return this.xhr=new XMLHttpRequest,this.xhr.open("GET",this.url,!0),this.xhr.timeout=1e3*this.constructor.timeout,this.xhr.setRequestHeader("Accept","text/html, application/xhtml+xml"),this.xhr.setRequestHeader("Turbolinks-Referrer",this.referrer),this.xhr.onprogress=this.requestProgressed,this.xhr.onload=this.requestLoaded,this.xhr.onerror=this.requestFailed,this.xhr.ontimeout=this.requestTimedOut,this.xhr.onabort=this.requestCanceled},r.prototype.endRequest=function(t){return this.xhr?(this.notifyApplicationAfterRequestEnd(),null!=t&&t.call(this),this.destroy()):void 0},r.prototype.setProgress=function(t){var e;return this.progress=t,"function"==typeof(e=this.delegate).requestProgressed?e.requestProgressed(this.progress):void 0},r.prototype.destroy=function(){var t;return this.setProgress(1),"function"==typeof(t=this.delegate).requestFinished&&t.requestFinished(),this.delegate=null,this.xhr=null},r}()}.call(this),function(){var e=function(t,e){return function(){return t.apply(e,arguments)}};t.ProgressBar=function(){function t(){this.trickle=e(this.trickle,this),this.stylesheetElement=this.createStylesheetElement(),this.progressElement=this.createProgressElement()}var r;return r=300,t.defaultCSS=".turbolinks-progress-bar {\n  position: fixed;\n  display: block;\n  top: 0;\n  left: 0;\n  height: 3px;\n  background: #0076ff;\n  z-index: 9999;\n  transition: width "+r+"ms ease-out, opacity "+r/2+"ms "+r/2+"ms ease-in;\n  transform: translate3d(0, 0, 0);\n}",t.prototype.show=function(){return this.visible?void 0:(this.visible=!0,this.installStylesheetElement(),this.installProgressElement(),this.startTrickling())},t.prototype.hide=function(){return this.visible&&!this.hiding?(this.hiding=!0,this.fadeProgressElement(function(t){return function(){return t.uninstallProgressElement(),t.stopTrickling(),t.visible=!1,t.hiding=!1}}(this))):void 0},t.prototype.setValue=function(t){return this.value=t,this.refresh()},t.prototype.installStylesheetElement=function(){return document.head.insertBefore(this.stylesheetElement,document.head.firstChild)},t.prototype.installProgressElement=function(){return this.progressElement.style.width=0,this.progressElement.style.opacity=1,document.documentElement.insertBefore(this.progressElement,document.body),this.refresh()},t.prototype.fadeProgressElement=function(t){return this.progressElement.style.opacity=0,setTimeout(t,1.5*r)},t.prototype.uninstallProgressElement=function(){return this.progressElement.parentNode?document.documentElement.removeChild(this.progressElement):void 0},t.prototype.startTrickling=function(){return null!=this.trickleInterval?this.trickleInterval:this.trickleInterval=setInterval(this.trickle,r)},t.prototype.stopTrickling=function(){return clearInterval(this.trickleInterval),this.trickleInterval=null},t.prototype.trickle=function(){return this.setValue(this.value+Math.random()/100)},t.prototype.refresh=function(){return requestAnimationFrame(function(t){return function(){return t.progressElement.style.width=10+90*t.value+"%"}}(this))},t.prototype.createStylesheetElement=function(){var t;return t=document.createElement("style"),t.type="text/css",t.textContent=this.constructor.defaultCSS,t},t.prototype.createProgressElement=function(){var t;return t=document.createElement("div"),t.className="turbolinks-progress-bar",t},t}()}.call(this),function(){var e=function(t,e){return function(){return t.apply(e,arguments)}};t.BrowserAdapter=function(){function r(r){this.controller=r,this.showProgressBar=e(this.showProgressBar,this),this.progressBar=new t.ProgressBar}var n,o,i,s;return s=t.HttpRequest,n=s.NETWORK_FAILURE,i=s.TIMEOUT_FAILURE,o=500,r.prototype.visitProposedToLocationWithAction=function(t,e){return this.controller.startVisitToLocationWithAction(t,e)},r.prototype.visitStarted=function(t){return t.issueRequest(),t.changeHistory(),t.loadCachedSnapshot()},r.prototype.visitRequestStarted=function(t){return this.progressBar.setValue(0),t.hasCachedSnapshot()||"restore"!==t.action?this.showProgressBarAfterDelay():this.showProgressBar()},r.prototype.visitRequestProgressed=function(t){return this.progressBar.setValue(t.progress)},r.prototype.visitRequestCompleted=function(t){return t.loadResponse()},r.prototype.visitRequestFailedWithStatusCode=function(t,e){switch(e){case n:case i:return this.reload();default:return t.loadResponse()}},r.prototype.visitRequestFinished=function(t){return this.hideProgressBar()},r.prototype.visitCompleted=function(t){return t.followRedirect()},r.prototype.pageInvalidated=function(){return this.reload()},r.prototype.showProgressBarAfterDelay=function(){return this.progressBarTimeout=setTimeout(this.showProgressBar,o)},r.prototype.showProgressBar=function(){return this.progressBar.show()},r.prototype.hideProgressBar=function(){return this.progressBar.hide(),clearTimeout(this.progressBarTimeout)},r.prototype.reload=function(){return window.location.reload()},r}()}.call(this),function(){var e=function(t,e){return function(){return t.apply(e,arguments)}};t.History=function(){function r(t){this.delegate=t,this.onPageLoad=e(this.onPageLoad,this),this.onPopState=e(this.onPopState,this)}return r.prototype.start=function(){return this.started?void 0:(addEventListener("popstate",this.onPopState,!1),addEventListener("load",this.onPageLoad,!1),this.started=!0)},r.prototype.stop=function(){return this.started?(removeEventListener("popstate",this.onPopState,!1),removeEventListener("load",this.onPageLoad,!1),this.started=!1):void 0},r.prototype.push=function(e,r){return e=t.Location.wrap(e),this.update("push",e,r)},r.prototype.replace=function(e,r){return e=t.Location.wrap(e),this.update("replace",e,r)},r.prototype.onPopState=function(e){var r,n,o,i;return this.shouldHandlePopState()&&(i=null!=(n=e.state)?n.turbolinks:void 0)?(r=t.Location.wrap(window.location),o=i.restorationIdentifier,this.delegate.historyPoppedToLocationWithRestorationIdentifier(r,o)):void 0},r.prototype.onPageLoad=function(e){return t.defer(function(t){return function(){return t.pageLoaded=!0}}(this))},r.prototype.shouldHandlePopState=function(){return this.pageIsLoaded()},r.prototype.pageIsLoaded=function(){return this.pageLoaded||"complete"===document.readyState},r.prototype.update=function(t,e,r){var n;return n={turbolinks:{restorationIdentifier:r}},history[t+"State"](n,null,e)},r}()}.call(this),function(){t.Snapshot=function(){function e(t){var e,r;r=t.head,e=t.body,this.head=null!=r?r:document.createElement("head"),this.body=null!=e?e:document.createElement("body")}return e.wrap=function(t){return t instanceof this?t:this.fromHTML(t)},e.fromHTML=function(t){var e;return e=document.createElement("html"),e.innerHTML=t,this.fromElement(e)},e.fromElement=function(t){return new this({head:t.querySelector("head"),body:t.querySelector("body")})},e.prototype.clone=function(){return new e({head:this.head.cloneNode(!0),body:this.body.cloneNode(!0)})},e.prototype.getRootLocation=function(){var e,r;return r=null!=(e=this.getSetting("root"))?e:"/",new t.Location(r)},e.prototype.getCacheControlValue=function(){return this.getSetting("cache-control")},e.prototype.hasAnchor=function(t){try{return null!=this.body.querySelector("[id='"+t+"']")}catch(e){}},e.prototype.isPreviewable=function(){return"no-preview"!==this.getCacheControlValue()},e.prototype.isCacheable=function(){return"no-cache"!==this.getCacheControlValue()},e.prototype.getSetting=function(t){var e,r;return r=this.head.querySelectorAll("meta[name='turbolinks-"+t+"']"),e=r[r.length-1],null!=e?e.getAttribute("content"):void 0},e}()}.call(this),function(){var e=[].slice;t.Renderer=function(){function t(){}var r;return t.render=function(){var t,r,n,o;return n=arguments[0],r=arguments[1],t=3<=arguments.length?e.call(arguments,2):[],o=function(t,e,r){r.prototype=t.prototype;var n=new r,o=t.apply(n,e);return Object(o)===o?o:n}(this,t,function(){}),o.delegate=n,o.render(r),o},t.prototype.renderView=function(t){return this.delegate.viewWillRender(this.newBody),t(),this.delegate.viewRendered(this.newBody)},t.prototype.invalidateView=function(){return this.delegate.viewInvalidated()},t.prototype.createScriptElement=function(t){var e;return"false"===t.getAttribute("data-turbolinks-eval")?t:(e=document.createElement("script"),e.textContent=t.textContent,r(e,t),e)},r=function(t,e){var r,n,o,i,s,a,u;for(i=e.attributes,a=[],r=0,n=i.length;n>r;r++)s=i[r],o=s.name,u=s.value,a.push(t.setAttribute(o,u));return a},t}()}.call(this),function(){t.HeadDetails=function(){function t(t){var e,r,i,s,a,u,l;for(this.element=t,this.elements={},l=this.element.childNodes,s=0,u=l.length;u>s;s++)i=l[s],i.nodeType===Node.ELEMENT_NODE&&(a=i.outerHTML,r=null!=(e=this.elements)[a]?e[a]:e[a]={type:o(i),tracked:n(i),elements:[]},r.elements.push(i))}var e,r,n,o;return t.prototype.hasElementWithKey=function(t){return t in this.elements},t.prototype.getTrackedElementSignature=function(){var t,e;return function(){var r,n;r=this.elements,n=[];for(t in r)e=r[t].tracked,e&&n.push(t);return n}.call(this).join("")},t.prototype.getScriptElementsNotInDetails=function(t){return this.getElementsMatchingTypeNotInDetails("script",t)},t.prototype.getStylesheetElementsNotInDetails=function(t){return this.getElementsMatchingTypeNotInDetails("stylesheet",t)},t.prototype.getElementsMatchingTypeNotInDetails=function(t,e){var r,n,o,i,s,a;o=this.elements,s=[];for(n in o)i=o[n],a=i.type,r=i.elements,a!==t||e.hasElementWithKey(n)||s.push(r[0]);return s},t.prototype.getProvisionalElements=function(){var t,e,r,n,o,i,s;r=[],n=this.elements;for(e in n)o=n[e],s=o.type,i=o.tracked,t=o.elements,null!=s||i?t.length>1&&r.push.apply(r,t.slice(1)):r.push.apply(r,t);return r},o=function(t){return e(t)?"script":r(t)?"stylesheet":void 0},n=function(t){return"reload"===t.getAttribute("data-turbolinks-track")},e=function(t){var e;return e=t.tagName.toLowerCase(),"script"===e},r=function(t){var e;return e=t.tagName.toLowerCase(),"style"===e||"link"===e&&"stylesheet"===t.getAttribute("rel")},t}()}.call(this),function(){var e=function(t,e){function n(){this.constructor=t}for(var o in e)r.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty;t.SnapshotRenderer=function(r){function n(e,r){this.currentSnapshot=e,this.newSnapshot=r,this.currentHeadDetails=new t.HeadDetails(this.currentSnapshot.head),this.newHeadDetails=new t.HeadDetails(this.newSnapshot.head),this.newBody=this.newSnapshot.body}return e(n,r),n.prototype.render=function(t){return this.trackedElementsAreIdentical()?(this.mergeHead(),this.renderView(function(e){return function(){return e.replaceBody(),e.focusFirstAutofocusableElement(),t()}}(this))):this.invalidateView()},n.prototype.mergeHead=function(){return this.copyNewHeadStylesheetElements(),this.copyNewHeadScriptElements(),this.removeCurrentHeadProvisionalElements(),this.copyNewHeadProvisionalElements()},n.prototype.replaceBody=function(){return this.activateBodyScriptElements(),this.importBodyPermanentElements(),this.assignNewBody()},n.prototype.trackedElementsAreIdentical=function(){return this.currentHeadDetails.getTrackedElementSignature()===this.newHeadDetails.getTrackedElementSignature()},n.prototype.copyNewHeadStylesheetElements=function(){var t,e,r,n,o;for(n=this.getNewHeadStylesheetElements(),o=[],e=0,r=n.length;r>e;e++)t=n[e],o.push(document.head.appendChild(t));return o},n.prototype.copyNewHeadScriptElements=function(){var t,e,r,n,o;for(n=this.getNewHeadScriptElements(),o=[],e=0,r=n.length;r>e;e++)t=n[e],o.push(document.head.appendChild(this.createScriptElement(t)));return o},n.prototype.removeCurrentHeadProvisionalElements=function(){var t,e,r,n,o;for(n=this.getCurrentHeadProvisionalElements(),o=[],e=0,r=n.length;r>e;e++)t=n[e],o.push(document.head.removeChild(t));return o},n.prototype.copyNewHeadProvisionalElements=function(){var t,e,r,n,o;for(n=this.getNewHeadProvisionalElements(),o=[],e=0,r=n.length;r>e;e++)t=n[e],o.push(document.head.appendChild(t));return o},n.prototype.importBodyPermanentElements=function(){var t,e,r,n,o,i;for(n=this.getNewBodyPermanentElements(),i=[],e=0,r=n.length;r>e;e++)o=n[e],(t=this.findCurrentBodyPermanentElement(o))?i.push(o.parentNode.replaceChild(t,o)):i.push(void 0);return i},n.prototype.activateBodyScriptElements=function(){var t,e,r,n,o,i;for(n=this.getNewBodyScriptElements(),i=[],e=0,r=n.length;r>e;e++)o=n[e],t=this.createScriptElement(o),i.push(o.parentNode.replaceChild(t,o));return i},n.prototype.assignNewBody=function(){return document.body=this.newBody},n.prototype.focusFirstAutofocusableElement=function(){var t;return null!=(t=this.findFirstAutofocusableElement())?t.focus():void 0},n.prototype.getNewHeadStylesheetElements=function(){return this.newHeadDetails.getStylesheetElementsNotInDetails(this.currentHeadDetails)},n.prototype.getNewHeadScriptElements=function(){return this.newHeadDetails.getScriptElementsNotInDetails(this.currentHeadDetails)},n.prototype.getCurrentHeadProvisionalElements=function(){return this.currentHeadDetails.getProvisionalElements()},n.prototype.getNewHeadProvisionalElements=function(){return this.newHeadDetails.getProvisionalElements()},n.prototype.getNewBodyPermanentElements=function(){return this.newBody.querySelectorAll("[id][data-turbolinks-permanent]")},n.prototype.findCurrentBodyPermanentElement=function(t){return document.body.querySelector("#"+t.id+"[data-turbolinks-permanent]")},n.prototype.getNewBodyScriptElements=function(){return this.newBody.querySelectorAll("script")},n.prototype.findFirstAutofocusableElement=function(){return document.body.querySelector("[autofocus]")},n}(t.Renderer)}.call(this),function(){var e=function(t,e){function n(){this.constructor=t}for(var o in e)r.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty;t.ErrorRenderer=function(t){function r(t){this.html=t}return e(r,t),r.prototype.render=function(t){return this.renderView(function(e){return function(){return e.replaceDocumentHTML(),e.activateBodyScriptElements(),t()}}(this))},r.prototype.replaceDocumentHTML=function(){return document.documentElement.innerHTML=this.html},r.prototype.activateBodyScriptElements=function(){var t,e,r,n,o,i;for(n=this.getScriptElements(),i=[],e=0,r=n.length;r>e;e++)o=n[e],t=this.createScriptElement(o),i.push(o.parentNode.replaceChild(t,o));return i},r.prototype.getScriptElements=function(){return document.documentElement.querySelectorAll("script")},r}(t.Renderer)}.call(this),function(){t.View=function(){function e(t){this.delegate=t,this.element=document.documentElement}return e.prototype.getRootLocation=function(){return this.getSnapshot().getRootLocation()},e.prototype.getSnapshot=function(){return t.Snapshot.fromElement(this.element)},e.prototype.render=function(t,e){var r,n,o;return o=t.snapshot,r=t.error,n=t.isPreview,this.markAsPreview(n),null!=o?this.renderSnapshot(o,e):this.renderError(r,e)},e.prototype.markAsPreview=function(t){return t?this.element.setAttribute("data-turbolinks-preview",""):this.element.removeAttribute("data-turbolinks-preview")},e.prototype.renderSnapshot=function(e,r){return t.SnapshotRenderer.render(this.delegate,r,this.getSnapshot(),t.Snapshot.wrap(e))},e.prototype.renderError=function(e,r){return t.ErrorRenderer.render(this.delegate,r,e)},e}()}.call(this),function(){var e=function(t,e){return function(){return t.apply(e,arguments)}};t.ScrollManager=function(){function r(r){this.delegate=r,this.onScroll=e(this.onScroll,this),this.onScroll=t.throttle(this.onScroll)}return r.prototype.start=function(){return this.started?void 0:(addEventListener("scroll",this.onScroll,!1),this.onScroll(),this.started=!0)},r.prototype.stop=function(){return this.started?(removeEventListener("scroll",this.onScroll,!1),this.started=!1):void 0},r.prototype.scrollToElement=function(t){return t.scrollIntoView()},r.prototype.scrollToPosition=function(t){var e,r;return e=t.x,r=t.y,window.scrollTo(e,r)},r.prototype.onScroll=function(t){return this.updatePosition({x:window.pageXOffset,y:window.pageYOffset})},r.prototype.updatePosition=function(t){var e;return this.position=t,null!=(e=this.delegate)?e.scrollPositionChanged(this.position):void 0},r}()}.call(this),function(){t.SnapshotCache=function(){function e(t){this.size=t,this.keys=[],this.snapshots={}}var r;return e.prototype.has=function(t){var e;return e=r(t),e in this.snapshots},e.prototype.get=function(t){var e;if(this.has(t))return e=this.read(t),this.touch(t),e},e.prototype.put=function(t,e){return this.write(t,e),this.touch(t),e},e.prototype.read=function(t){var e;return e=r(t),this.snapshots[e]},e.prototype.write=function(t,e){var n;return n=r(t),this.snapshots[n]=e},e.prototype.touch=function(t){var e,n;return n=r(t),e=this.keys.indexOf(n),e>-1&&this.keys.splice(e,1),this.keys.unshift(n),this.trim()},e.prototype.trim=function(){var t,e,r,n,o;for(n=this.keys.splice(this.size),o=[],t=0,r=n.length;r>t;t++)e=n[t],o.push(delete this.snapshots[e]);return o},r=function(e){return t.Location.wrap(e).toCacheKey()},e}()}.call(this),function(){var e=function(t,e){return function(){return t.apply(e,arguments)}};t.Visit=function(){function r(r,n,o){this.controller=r,this.action=o,this.performScroll=e(this.performScroll,this),this.identifier=t.uuid(),this.location=t.Location.wrap(n),this.adapter=this.controller.adapter,this.state="initialized",this.timingMetrics={}}var n;return r.prototype.start=function(){return"initialized"===this.state?(this.recordTimingMetric("visitStart"),this.state="started",this.adapter.visitStarted(this)):void 0},r.prototype.cancel=function(){var t;return"started"===this.state?(null!=(t=this.request)&&t.cancel(),this.cancelRender(),this.state="canceled"):void 0},r.prototype.complete=function(){var t;return"started"===this.state?(this.recordTimingMetric("visitEnd"),this.state="completed","function"==typeof(t=this.adapter).visitCompleted&&t.visitCompleted(this),this.controller.visitCompleted(this)):void 0},r.prototype.fail=function(){var t;return"started"===this.state?(this.state="failed","function"==typeof(t=this.adapter).visitFailed?t.visitFailed(this):void 0):void 0},r.prototype.changeHistory=function(){var t,e;return this.historyChanged?void 0:(t=this.location.isEqualTo(this.referrer)?"replace":this.action,e=n(t),this.controller[e](this.location,this.restorationIdentifier),this.historyChanged=!0)},r.prototype.issueRequest=function(){return this.shouldIssueRequest()&&null==this.request?(this.progress=0,this.request=new t.HttpRequest(this,this.location,this.referrer),this.request.send()):void 0},r.prototype.getCachedSnapshot=function(){var t;return!(t=this.controller.getCachedSnapshotForLocation(this.location))||null!=this.location.anchor&&!t.hasAnchor(this.location.anchor)||"restore"!==this.action&&!t.isPreviewable()?void 0:t},r.prototype.hasCachedSnapshot=function(){return null!=this.getCachedSnapshot()},r.prototype.loadCachedSnapshot=function(){var t,e;return(e=this.getCachedSnapshot())?(t=this.shouldIssueRequest(),this.render(function(){var r;return this.cacheSnapshot(),this.controller.render({snapshot:e,isPreview:t},this.performScroll),"function"==typeof(r=this.adapter).visitRendered&&r.visitRendered(this),t?void 0:this.complete()})):void 0},r.prototype.loadResponse=function(){return null!=this.response?this.render(function(){var t,e;return this.cacheSnapshot(),this.request.failed?(this.controller.render({error:this.response},this.performScroll),"function"==typeof(t=this.adapter).visitRendered&&t.visitRendered(this),this.fail()):(this.controller.render({snapshot:this.response},this.performScroll),"function"==typeof(e=this.adapter).visitRendered&&e.visitRendered(this),this.complete())}):void 0},r.prototype.followRedirect=function(){return this.redirectedToLocation&&!this.followedRedirect?(this.location=this.redirectedToLocation,this.controller.replaceHistoryWithLocationAndRestorationIdentifier(this.redirectedToLocation,this.restorationIdentifier),this.followedRedirect=!0):void 0},r.prototype.requestStarted=function(){var t;return this.recordTimingMetric("requestStart"),"function"==typeof(t=this.adapter).visitRequestStarted?t.visitRequestStarted(this):void 0},r.prototype.requestProgressed=function(t){var e;return this.progress=t,"function"==typeof(e=this.adapter).visitRequestProgressed?e.visitRequestProgressed(this):void 0},r.prototype.requestCompletedWithResponse=function(e,r){return this.response=e,null!=r&&(this.redirectedToLocation=t.Location.wrap(r)),this.adapter.visitRequestCompleted(this)},r.prototype.requestFailedWithStatusCode=function(t,e){return this.response=e,this.adapter.visitRequestFailedWithStatusCode(this,t)},r.prototype.requestFinished=function(){var t;return this.recordTimingMetric("requestEnd"),"function"==typeof(t=this.adapter).visitRequestFinished?t.visitRequestFinished(this):void 0},r.prototype.performScroll=function(){return this.scrolled?void 0:("restore"===this.action?this.scrollToRestoredPosition()||this.scrollToTop():this.scrollToAnchor()||this.scrollToTop(),this.scrolled=!0)},r.prototype.scrollToRestoredPosition=function(){var t,e;return t=null!=(e=this.restorationData)?e.scrollPosition:void 0,null!=t?(this.controller.scrollToPosition(t),!0):void 0},r.prototype.scrollToAnchor=function(){return null!=this.location.anchor?(this.controller.scrollToAnchor(this.location.anchor),!0):void 0},r.prototype.scrollToTop=function(){return this.controller.scrollToPosition({x:0,y:0})},r.prototype.recordTimingMetric=function(t){var e;return null!=(e=this.timingMetrics)[t]?e[t]:e[t]=(new Date).getTime()},r.prototype.getTimingMetrics=function(){return t.copyObject(this.timingMetrics)},n=function(t){switch(t){case"replace":return"replaceHistoryWithLocationAndRestorationIdentifier";case"advance":case"restore":return"pushHistoryWithLocationAndRestorationIdentifier"}},r.prototype.shouldIssueRequest=function(){return"restore"===this.action?!this.hasCachedSnapshot():!0},r.prototype.cacheSnapshot=function(){return this.snapshotCached?void 0:(this.controller.cacheSnapshot(),this.snapshotCached=!0)},r.prototype.render=function(t){return this.cancelRender(),this.frame=requestAnimationFrame(function(e){return function(){return e.frame=null,t.call(e)}}(this))},r.prototype.cancelRender=function(){return this.frame?cancelAnimationFrame(this.frame):void 0},r}()}.call(this),function(){var e=function(t,e){return function(){return t.apply(e,arguments)}};t.Controller=function(){function r(){this.clickBubbled=e(this.clickBubbled,this),this.clickCaptured=e(this.clickCaptured,this),this.pageLoaded=e(this.pageLoaded,this),this.history=new t.History(this),this.view=new t.View(this),this.scrollManager=new t.ScrollManager(this),this.restorationData={},this.clearCache()}return r.prototype.start=function(){return t.supported&&!this.started?(addEventListener("click",this.clickCaptured,!0),addEventListener("DOMContentLoaded",this.pageLoaded,!1),this.scrollManager.start(),this.startHistory(),this.started=!0,this.enabled=!0):void 0},r.prototype.disable=function(){return this.enabled=!1},r.prototype.stop=function(){return this.started?(removeEventListener("click",this.clickCaptured,!0),removeEventListener("DOMContentLoaded",this.pageLoaded,!1),this.scrollManager.stop(),this.stopHistory(),this.started=!1):void 0},r.prototype.clearCache=function(){return this.cache=new t.SnapshotCache(10)},r.prototype.visit=function(e,r){var n,o;return null==r&&(r={}),e=t.Location.wrap(e),this.applicationAllowsVisitingLocation(e)?this.locationIsVisitable(e)?(n=null!=(o=r.action)?o:"advance",this.adapter.visitProposedToLocationWithAction(e,n)):window.location=e:void 0},r.prototype.startVisitToLocationWithAction=function(e,r,n){var o;return t.supported?(o=this.getRestorationDataForIdentifier(n),this.startVisit(e,r,{restorationData:o})):window.location=e},r.prototype.startHistory=function(){return this.location=t.Location.wrap(window.location),this.restorationIdentifier=t.uuid(),this.history.start(),this.history.replace(this.location,this.restorationIdentifier)},r.prototype.stopHistory=function(){return this.history.stop()},r.prototype.pushHistoryWithLocationAndRestorationIdentifier=function(e,r){return this.restorationIdentifier=r,this.location=t.Location.wrap(e),this.history.push(this.location,this.restorationIdentifier)},r.prototype.replaceHistoryWithLocationAndRestorationIdentifier=function(e,r){return this.restorationIdentifier=r,this.location=t.Location.wrap(e),this.history.replace(this.location,this.restorationIdentifier)},r.prototype.historyPoppedToLocationWithRestorationIdentifier=function(e,r){var n;return this.restorationIdentifier=r,this.enabled?(n=this.getRestorationDataForIdentifier(this.restorationIdentifier),this.startVisit(e,"restore",{restorationIdentifier:this.restorationIdentifier,restorationData:n,historyChanged:!0}),this.location=t.Location.wrap(e)):this.adapter.pageInvalidated()},r.prototype.getCachedSnapshotForLocation=function(t){var e;return e=this.cache.get(t),e?e.clone():void 0},r.prototype.shouldCacheSnapshot=function(){return this.view.getSnapshot().isCacheable()},r.prototype.cacheSnapshot=function(){var t;return this.shouldCacheSnapshot()?(this.notifyApplicationBeforeCachingSnapshot(),t=this.view.getSnapshot(),this.cache.put(this.lastRenderedLocation,t.clone())):void 0},r.prototype.scrollToAnchor=function(t){var e;return(e=document.getElementById(t))?this.scrollToElement(e):this.scrollToPosition({x:0,y:0})},r.prototype.scrollToElement=function(t){return this.scrollManager.scrollToElement(t)},r.prototype.scrollToPosition=function(t){return this.scrollManager.scrollToPosition(t)},r.prototype.scrollPositionChanged=function(t){var e;return e=this.getCurrentRestorationData(),e.scrollPosition=t},r.prototype.render=function(t,e){return this.view.render(t,e)},r.prototype.viewInvalidated=function(){return this.adapter.pageInvalidated()},r.prototype.viewWillRender=function(t){return this.notifyApplicationBeforeRender(t)},r.prototype.viewRendered=function(){return this.lastRenderedLocation=this.currentVisit.location,this.notifyApplicationAfterRender()},r.prototype.pageLoaded=function(){return this.lastRenderedLocation=this.location,this.notifyApplicationAfterPageLoad()},r.prototype.clickCaptured=function(){return removeEventListener("click",this.clickBubbled,!1),addEventListener("click",this.clickBubbled,!1)},r.prototype.clickBubbled=function(t){var e,r,n;return this.enabled&&this.clickEventIsSignificant(t)&&(r=this.getVisitableLinkForNode(t.target))&&(n=this.getVisitableLocationForLink(r))&&this.applicationAllowsFollowingLinkToLocation(r,n)?(t.preventDefault(),e=this.getActionForLink(r),this.visit(n,{action:e})):void 0},r.prototype.applicationAllowsFollowingLinkToLocation=function(t,e){var r;return r=this.notifyApplicationAfterClickingLinkToLocation(t,e),!r.defaultPrevented},r.prototype.applicationAllowsVisitingLocation=function(t){var e;return e=this.notifyApplicationBeforeVisitingLocation(t),!e.defaultPrevented},r.prototype.notifyApplicationAfterClickingLinkToLocation=function(e,r){return t.dispatch("turbolinks:click",{target:e,data:{url:r.absoluteURL},cancelable:!0})},r.prototype.notifyApplicationBeforeVisitingLocation=function(e){return t.dispatch("turbolinks:before-visit",{data:{url:e.absoluteURL},cancelable:!0})},r.prototype.notifyApplicationAfterVisitingLocation=function(e){return t.dispatch("turbolinks:visit",{data:{url:e.absoluteURL}})},r.prototype.notifyApplicationBeforeCachingSnapshot=function(){return t.dispatch("turbolinks:before-cache")},r.prototype.notifyApplicationBeforeRender=function(e){
+return t.dispatch("turbolinks:before-render",{data:{newBody:e}})},r.prototype.notifyApplicationAfterRender=function(){return t.dispatch("turbolinks:render")},r.prototype.notifyApplicationAfterPageLoad=function(e){return null==e&&(e={}),t.dispatch("turbolinks:load",{data:{url:this.location.absoluteURL,timing:e}})},r.prototype.startVisit=function(t,e,r){var n;return null!=(n=this.currentVisit)&&n.cancel(),this.currentVisit=this.createVisit(t,e,r),this.currentVisit.start(),this.notifyApplicationAfterVisitingLocation(t)},r.prototype.createVisit=function(e,r,n){var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationData,o=i.historyChanged,u=new t.Visit(this,e,r),u.restorationIdentifier=null!=a?a:t.uuid(),u.restorationData=t.copyObject(s),u.historyChanged=o,u.referrer=this.location,u},r.prototype.visitCompleted=function(t){return this.notifyApplicationAfterPageLoad(t.getTimingMetrics())},r.prototype.clickEventIsSignificant=function(t){return!(t.defaultPrevented||t.target.isContentEditable||t.which>1||t.altKey||t.ctrlKey||t.metaKey||t.shiftKey)},r.prototype.getVisitableLinkForNode=function(e){return this.nodeIsVisitable(e)?t.closest(e,"a[href]:not([target]):not([download])"):void 0},r.prototype.getVisitableLocationForLink=function(e){var r;return r=new t.Location(e.getAttribute("href")),this.locationIsVisitable(r)?r:void 0},r.prototype.getActionForLink=function(t){var e;return null!=(e=t.getAttribute("data-turbolinks-action"))?e:"advance"},r.prototype.nodeIsVisitable=function(e){var r;return(r=t.closest(e,"[data-turbolinks]"))?"false"!==r.getAttribute("data-turbolinks"):!0},r.prototype.locationIsVisitable=function(t){return t.isPrefixedBy(this.view.getRootLocation())&&t.isHTML()},r.prototype.getCurrentRestorationData=function(){return this.getRestorationDataForIdentifier(this.restorationIdentifier)},r.prototype.getRestorationDataForIdentifier=function(t){var e;return null!=(e=this.restorationData)[t]?e[t]:e[t]={}},r}()}.call(this),function(){var e,r,n;t.start=function(){return r()?(null==t.controller&&(t.controller=e()),t.controller.start()):void 0},r=function(){return null==window.Turbolinks&&(window.Turbolinks=t),n()},e=function(){var e;return e=new t.Controller,e.adapter=new t.BrowserAdapter(e),e},n=function(){return window.Turbolinks===t},n()&&t.start()}.call(this)}).call(this),"object"==typeof module&&module.exports?module.exports=t:"function"==typeof define&&define.amd&&define(t)}).call(this);
 /*!
  * jQuery JavaScript Library v1.12.4
  * http://jquery.com/
@@ -11007,6 +11014,121 @@ if ( !noGlobal ) {
 
 return jQuery;
 }));
+/*!
+ * jQuery Cookie Plugin v1.4.1
+ * https://github.com/carhartl/jquery-cookie
+ *
+ * Copyright 2006, 2014 Klaus Hartl
+ * Released under the MIT license
+ */
+
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD (Register as an anonymous module)
+		define(['jquery'], factory);
+	} else if (typeof exports === 'object') {
+		// Node/CommonJS
+		module.exports = factory(require('jquery'));
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function ($) {
+
+	var pluses = /\+/g;
+
+	function encode(s) {
+		return config.raw ? s : encodeURIComponent(s);
+	}
+
+	function decode(s) {
+		return config.raw ? s : decodeURIComponent(s);
+	}
+
+	function stringifyCookieValue(value) {
+		return encode(config.json ? JSON.stringify(value) : String(value));
+	}
+
+	function parseCookieValue(s) {
+		if (s.indexOf('"') === 0) {
+			// This is a quoted cookie as according to RFC2068, unescape...
+			s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+		}
+
+		try {
+			// Replace server-side written pluses with spaces.
+			// If we can't decode the cookie, ignore it, it's unusable.
+			// If we can't parse the cookie, ignore it, it's unusable.
+			s = decodeURIComponent(s.replace(pluses, ' '));
+			return config.json ? JSON.parse(s) : s;
+		} catch(e) {}
+	}
+
+	function read(s, converter) {
+		var value = config.raw ? s : parseCookieValue(s);
+		return $.isFunction(converter) ? converter(value) : value;
+	}
+
+	var config = $.cookie = function (key, value, options) {
+
+		// Write
+
+		if (arguments.length > 1 && !$.isFunction(value)) {
+			options = $.extend({}, config.defaults, options);
+
+			if (typeof options.expires === 'number') {
+				var days = options.expires, t = options.expires = new Date();
+				t.setMilliseconds(t.getMilliseconds() + days * 864e+5);
+			}
+
+			return (document.cookie = [
+				encode(key), '=', stringifyCookieValue(value),
+				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+				options.path    ? '; path=' + options.path : '',
+				options.domain  ? '; domain=' + options.domain : '',
+				options.secure  ? '; secure' : ''
+			].join(''));
+		}
+
+		// Read
+
+		var result = key ? undefined : {},
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling $.cookie().
+			cookies = document.cookie ? document.cookie.split('; ') : [],
+			i = 0,
+			l = cookies.length;
+
+		for (; i < l; i++) {
+			var parts = cookies[i].split('='),
+				name = decode(parts.shift()),
+				cookie = parts.join('=');
+
+			if (key === name) {
+				// If second argument (value) is a function it's a converter...
+				result = read(cookie, value);
+				break;
+			}
+
+			// Prevent storing a cookie that we couldn't decode.
+			if (!key && (cookie = read(cookie)) !== undefined) {
+				result[name] = cookie;
+			}
+		}
+
+		return result;
+	};
+
+	config.defaults = {};
+
+	$.removeCookie = function (key, options) {
+		// Must not alter options, thus extending a fresh object...
+		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
+		return !$.cookie(key);
+	};
+
+}));
 (function($, undefined) {
 
 /**
@@ -11710,64 +11832,361 @@ return jQuery;
   return FormSerializer;
 }));
 
+/* 
+   Remember DOM manipulation is not to be done here. For a clean and decoupled Design, DOM manipulations like
+   DOM node show or hide that accompany Auth, should be done where the instance of this class  is called 
+*/
 
+
+class Auth {
+    /* checks if user is signed in */
+    /* returns true if user is signed in or false if otherwise */
+    isSignedIn(){	
+	if ( sessionStorage.getItem('userEmail')) {
+	    return true;
+	}
+	return false;
+    }
+    
+    /* Predicate function */
+    /* returns users SESSION data if user is login */
+    currentUser(){
+	if (isSignedIn()) {
+	    let user = { 
+		userFirstname: '',
+		userLastname: '',
+		userEmail: '',
+		userBirthday: '',
+		userAuth: '',
+		userID: ''
+	    };
+	    return user;
+	}
+	return false;
+    }
+
+    capFirstCharacter(name){
+	name = name.split('');
+	firstCharacter = name.shift();
+	name.unshift(firstCharacter.toUpperCase());
+	name = name.join('');
+	return name; 
+    }
+    
+    /* returns false, else destroy user SESSION */
+    signOut(){
+	console.log('Logout button Clicked');
+	if ( isSignedIn()) {
+	    const logoutUrl = '/users/sign_out.json'
+	    fetch(logoutUrl, {
+		method: 'DELETE',
+		cache: false,
+		headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json',
+		    'X-User-Token': sessionStorage.getItem("userAuth"),
+		    'X-User-Email': sessionStorage.getItem("userEmail")
+		}
+	    });
+
+	    sessionStorage.setItem("userEmail","");
+	    sessionStorage.setItem("userAuth","");
+	    sessionStorage.setItem("userID","");
+	    $('.item.navLogin').show();
+	    $('.item.navSignup').show();
+	    $('.item.navLogout').hide();
+
+	    /* Clear Email nag after logout*/
+	    if ( sessionStorage.getItem("userActive") == 'false') {
+		$('.cookie.nag')
+		    .hide()
+		;
+	    }
+	    
+	    window.setTimeout( () => window.location.replace = "/", 3000);
+	    console.log('redirected to home completed');
+	}
+    }
+
+    
+    loginUserByEmail(){
+	/* Validate Login supplied Data */
+	$('.form.loginform .submit').form({
+	    inline : true,
+	    on: 'blur',
+	    fields: {
+		email: {
+		    identifier: "user[email]",
+		    rules: [{
+			type: 'empty',
+			prompt: 'Please enter your email address'
+		    },              {
+			type: 'email',
+			prompt: 'Please enter a valid email'
+		    }]
+		},
+		password: {
+		    identifier: "user[password]",
+		    rules: [
+			{
+			    type   : 'empty',
+			    prompt : 'Please enter your password'
+			}
+		    ]
+		}
+	    }
+	}).api({
+	    action: 'signin user',
+	    method: 'POST',
+	    serializeForm: true,
+	    dataType: 'json',
+	    debug: true,
+	    cache: false,
+	    verbose: true,
+	    data: {
+	    },
+	    beforeSend: function(settings) {
+		console.log(settings.data.user);
+		return settings;
+	    },
+	    onResponse: function(response) {
+		console.log(response.data);
+		return response;
+	    },
+	    onSuccess: function(json) {
+		console.log('Data Available');
+		console.log(json);
+	    },
+	    onFailure: function(json, element, xhr) {
+		console.log('onFailure');
+		console.log(json, 'Failed! Should be an Object.');
+		console.log(json.data, 'Data Failed');
+		console.log(xhr);
+	    },
+	});	
+    }
+
+    /* Handle user Signup */
+    /* call loginUserByEmail() after successful signup */
+    signupUserByEmail(){
+	// Validates and Sign-up New User 
+	$(".form.signupform .submit").form({
+	    inline : true,
+	    on: 'blur',
+	    fields: {
+		lastname: {
+		    identifier: 'lastname',
+		    rules: [{
+			type: 'empty',
+			prompt: 'Last name is required'
+		    }]
+		},
+		firstname: {
+		    identifier: 'firstname',
+		    rules: [{
+			type: 'empty',
+			prompt: 'First name is required'
+		    }]
+		},
+		email: {
+		    identifier: 'email',
+		    rules: [{
+			type: 'empty',
+			prompt: 'Email is required'
+		    },
+			    {
+				type: 'email',
+				prompt: 'Please enter a valid email'
+			    }]
+		},
+		day: {
+		    identifier: 'day',
+		    rules: [{
+			type: 'empty',
+			prompt: 'Please enter day'
+		    },
+			    { 
+				type: 'integer',
+				prompt: 'number digit only'
+			    },
+			    { 
+				type: 'integer[1..31]',
+				prompt: 'invalid day'
+			    }]
+		},
+		month: {
+		    identifier: 'month',
+		    rules: [{
+			type: 'empty',
+			prompt: 'Please enter month'
+		    }]
+		},
+		year: {
+		    identifier: 'year',
+		    rules: [{
+			type: 'empty',
+			prompt: 'Please enter year'
+		    },
+			    {
+				type: 'exactLength[4]',
+				prompt: 'should be {ruleValue} characters long'
+			    },
+			    { 
+				type: 'integer',
+				prompt: 'Number digits only'
+			    }
+		    ]
+		},
+		password: {
+		    identifier: 'password',
+		    rules: [
+			{
+			    type   : 'empty',
+			    prompt : 'Please enter a password'
+			},		 
+			{
+			    type   : 'minLength[6]',
+			    prompt : 'Your password must be at least {ruleValue} characters'
+			}
+		    ]
+		},	 
+		terms: {
+		    identifier: 'terms',
+		    rules: [
+			{
+			    type   : 'checked',
+			    prompt : 'Please Check this box'
+			}
+		    ]
+		}
+
+	    }
+	}).api({
+	    action: 'register user',
+	    method: 'POST',
+	    serializeForm: true,
+	    dataType: 'json',
+	    debug: true,
+	    cache: false,
+	    verbose: true,
+	    data: {
+	    },
+	    beforeSend: function(settings) {
+
+		let capFirstCharacter = (name) => {
+		    name = name.split('');
+		    firstCharacter = name.shift();
+		    name.unshift(firstCharacter.toUpperCase());
+		    name = name.join('');
+		    return name; 
+		}
+
+		let birthday = () => {
+		    let day = (settings.data.day).trim();
+		    let month = (settings.data.month).trim();
+		    let year = (settings.data.year).trim();
+		    if ( day.length == 1 ){ 
+			day = "0".concat(day);
+			console.log("Not Default: " + year + '-' + month + '-' + day);
+			return (year + '-' + month + '-' + day);
+		    }
+		    else{
+			console.log("default: " + year + '-' + month + '-' + day);
+			return (year + '-' + month + '-' + day);
+		    }
+		}	    
+		settings.data.user.birthday = birthday();
+		settings.data.user.firstname = capFirstCharacter(settings.data.user.firstname).trim();
+		settings.data.user.lastname = capFirstCharacter(settings.data.user.lastname).trim();
+		settings.data.user.email = settings.data.user.email.trim();
+		settings.data.user.password = settings.data.user.password.trim();
+		
+		console.log(settings.data.user);
+		console.log(settings.data.user.firstname);
+		return settings;
+	    },
+	    onResponse: function(response) {
+		console.log(response.data);
+		return response;
+	    },
+	    onSuccess: function(json) {
+		console.log('Data Available');
+		console.log(json);
+	    },
+	    onFailure: function(json, element, xhr) {
+		console.log('onFailure');
+		console.log(json, 'Failed! Should be an Object.');
+		console.log(json.data, 'Data Failed');
+		console.log(xhr);
+	    },
+	});
+
+    }
+
+}
+;
+let closeModal =  () => {
+    $('.modal')
+	.modal('hide')
+    ;
+}
 let service = () => {
-     $('.ui.tiny.modal.service')
-	 .modal('show')
-     ;
- }
- let rental = () => {
-     $('.ui.tiny.modal.rental')
-	 .modal('show')
-     ;
- }
- let login = () => {
-     $('.ui.tiny.modal.login')
-	 .modal('show')
-     ;
-     $('form').form('clear')
- }
+    $('.ui.tiny.modal.service')
+	.modal('show')
+    ;
+}
+let rental = () => {
+    $('.ui.tiny.modal.rental')
+	.modal('show')
+    ;
+}
+let login = () => {
+    $('.ui.tiny.modal.login')
+	.modal('show')
+    ;
+    $('form').form('clear')
+}
 
- let resetPassword = () => {
-     $('.ui.tiny.modal.password')
-	 .modal('show')
-     ;
- }
+let resetPassword = () => {
+    $('.ui.tiny.modal.password')
+	.modal('show')
+    ;
+}
 
- let signup = () => {
-     $('.ui.tiny.modal.signup')
-	 .modal('show')
-     ;
-     /* clear form data */
-     $('form').form('clear')
+let signup = () => {
+    $('.ui.tiny.modal.signup')
+	.modal('show')
+    ;
+    /* clear form data */
+    $('form').form('clear')
 
- }
+}
 
- let startProfile = () => {
-     $('.ui.mini.modal.startprofile')
-	 .modal('show')
-     ;
- }
+let startProfile = () => {
+    $('.ui.mini.modal.startprofile')
+	.modal('show')
+    ;
+}
 
- let showPhoneStep = () => {
-     $('.ui.mini.modal.profile.pic')
-	 .modal('show')
-     ;
- }
+let showPhoneStep = () => {
+    $('.ui.mini.modal.profile.pic')
+	.modal('show')
+    ;
+}
 
- let pictureProfile = () => {
-     $('.ui.mini.modal.pictureprofile')
-	 .modal('show')
-     ;
- }
+let pictureProfile = () => {
+    $('.ui.mini.modal.pictureprofile')
+	.modal('show')
+    ;
+}
 
- let handlePictureProfileChange = (e) => {
-     /* let pic = $('#profile-pic["value"]');*/
-     console.log('Item selected');
-     console.log(e.value);
-     /* let pix = $("#pix src").val();
-      * console.log(pix);*/
- }
+let handlePictureProfileChange = (e) => {
+    /* let pic = $('#profile-pic["value"]');*/
+    console.log('Item selected');
+    console.log(e.value);
+    /* let pix = $("#pix src").val();
+     * console.log(pix);*/
+}
 
 let handleSignupSubmitClick = () => console.log('Sign up button click');
 let handleLoginSubmitClick = () => console.log("Login form button clicked ")
@@ -11775,13 +12194,35 @@ let handlePasswordRecoveryClick = () => console.log("Password reset button click
 let handlePictureProfileSubmit = () => console.log('Picture Profile submit button Clicked');
 
 
+
+/* checks if user is signed in */
+/* returns true if user is signed in or false if otherwise */
+let isSignedIn = () => {	
+    if ( sessionStorage.getItem('user')) {
+	return true;
+    }
+    return false;
+}
+
+/* returns users SESSION data if user is login */
+let ActiveUser = () => {
+    if ( sessionStorage.getItem('user')) {
+	let currentUser = JSON.parse(sessionStorage.user);
+	console.log("CurrentUser: " + currentUser.email);
+	return currentUser;
+    }
+    return false;
+}
+
+let currentUser = ActiveUser();
+
 let  isLogin = () => {
-    if ( sessionStorage.getItem("userID")) {
-	console.log(sessionStorage.getItem("userEmail"));
-	console.log(sessionStorage.getItem("userID"));
-	console.log(sessionStorage.getItem("userAuth"));
-	console.log('User is login');
-	console.log(sessionStorage.getItem("userActive"));
+    if (sessionStorage.getItem('user')) {
+	/* console.log(sessionStorage.getItem("userEmail"));
+	   console.log(sessionStorage.getItem("userID"));
+	   console.log(sessionStorage.getItem("userAuth"));
+	   console.log('User is login');
+	   console.log(sessionStorage.getItem("userActive"));*/
 	/* if( sessionStorage.getItem("userActive") == 'false') {
 	   $('.cookie.nag')
 	   .nag('show')
@@ -11809,43 +12250,108 @@ let signOut = () => {
 	    headers: {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json',
-		'X-User-Token': sessionStorage.getItem("userAuth"),
-		'X-User-Email': sessionStorage.getItem("userEmail")
+		'X-User-Token': currentUser.authentication_token,
+		'X-User-Email': currentUser.email
 	    }
 	});
-
-	sessionStorage.setItem("userEmail","");
-	sessionStorage.setItem("userAuth","");
-	sessionStorage.setItem("userID","");
+	
+	/* Clear Email nag after logout*/
+	/* if ( currentUser.userActive == false) {
+	   $('.cookie.nag')
+	   .hide()
+	   ;
+	   }*/
+	
+	sessionStorage.setItem('user', '');
+	$('.cookie.nag').hide();
 	$('.item.navLogin').show();
 	$('.item.navSignup').show();
 	$('.item.navLogout').hide();
 
-	/* Clear Email nag after logout*/
-	if ( sessionStorage.getItem("userActive") == 'false') {
-	    $('.cookie.nag')
-		.hide()
-	    ;
-	}
-	
-	window.setTimeout( () => window.location.replace = "/", 3000);
+	window.setTimeout( () => window.location = "/", 10);
 	console.log('redirected to home completed');
     }
 }
 
 
+let login_user = () => {
+    let data = $('.form.loginform').serializeJSON();
+    console.log(data);
+    const loginUrl = '/users/sign_in.json'
+    fetch(loginUrl, {
+	method: 'POST',
+	cache: false,
+	headers: {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json',
+	},
+	body: data
+    }).then((response) => {
+	if (response.status == 401){
+	    $("#loginError").html('<p> Invalid username or password </p>');
+	    console.log('Invalid username or password');
+	    console.log('Fighting error messages');
+	}
+	else {
+	  //  sessionStorage.setItem('user', JSON.stringify(user));
+	    response.json().then( function(data) {
+		console.log(data);
+		sessionStorage.setItem('user', JSON.stringify(data));
+		let currentUser = JSON.parse(sessionStorage.user);
+		console.log(currentUser.email);
+		$('.item.navLogin').hide();
+		$('.item.navSignup').hide();
+		$('.item.navLogout').show();
+		
+		if (sessionStorage.getItem("userActive") == 'false'){
+		    $('.cookie.nag')
+			.nag('show')
+		    ;
+		}
+		// Hide modal After successfull network request passe
+		$('.ui.tiny.modal.login')
+		    .modal('hide')
+		;
+		console.log('Form submited successfully');
+		
+		
+	    })
+	}	
+    })
+      .catch((error)  => {
+	 $('.form.loginform .message.error').show();
+	  console.log('Request failure: ', error);
+      }
+      );	
+}
 
-
-$(document).ready( () =>  {
-
-    $('.dropdown')
-	.dropdown()
-    ;
-
+document.addEventListener('turbolinks:load', () => {    
+    $.fn.api.settings.api = {
+	'signin user'   : "/users/sign_in",
+	'signout user'  : '/users/delete',
+	'register user' : '/users.json',
+	'add space'     : '/spaces.json'
+    };
+    // Define API success test globally
+    $.fn.api.settings.successTest = function(response) {
+	if(response && response.success){
+	    return response.success;
+	}
+	return false;
+    };
+    
     $('.checkbox')
 	.checkbox()
     ;
-
+    $('.dropdown')
+	.dropdown({
+            direction: 'downward'
+	})
+    ;
+    $('.rating')
+	.rating()
+    ;
+    
     if (isLogin()) {
 	$('.item.navLogin').hide();
 	$('.item.navSignup').hide();
@@ -11865,46 +12371,29 @@ $(document).ready( () =>  {
 	}
     }
 
-    
     /* initialize classes */
-    afterSignup = new AfterSignUp;
-    item = new Items;
+
+    // Handle Login of user
+    console.log("Hello User");
+    auth = new Auth;
+    if (!auth.isSignedIn() ){
+	console.log("User is not Signed In Yet");
+	// auth.loginUserByEmail();
+    }
+
     
-    /* $.fn.api.settings.successTest = function(response) {
-       if (response && response.active) {
-     *         return response.active;
-       }
-       return false;
-     * };*/
+    afterSignup = new AfterSignUp; // After Signup Initialization
+    item = new Items;  // Listing creation Initalization 
+    item.checkAccepted(); // Check if user has accepted Listing terms
+    
+    /* handle menu changing */
+    $('.ui .item').on('click', function() {
+        $('.ui .item').removeClass('active');
+        $(this).addClass('active');
+    });
 
-     $.fn.api.settings.api = {
-	 'signin user'   : '/users/sign_in.json',
-	 'signout user'  : '/users/delete',
-	 'register user' : '/users.json'
-     };
-
-     $('.ui .item').on('click', function() {
-         $('.ui .item').removeClass('active');
-         $(this).addClass('active');
-     });
-
-     /* 
-	Returns the current_user data from session
-	eg current_user.firstname; 
-      */
-     /* let current_user = {   
-      *     userEmail  :  sessionStorage.getItem("userEmail"),
-      *     userID     :  sessionStorage.getItem("userID"),
-      *     userAuth   :  sessionStorage.getItem("userAuth"),
-      *     active     :  sessionStorage.getItem("userActive")
-      * }*/
-
-     /* 
-	Returns false  if user is not login
-      */
-
-
-    $('.form.loginform .submit').form({
+    
+    $('.form.loginform').form({
 	inline : true,
 	on: 'blur',
 	// onSuccess: login_user,
@@ -11929,339 +12418,262 @@ $(document).ready( () =>  {
 		]
 	    }
 	}
-    })
-				.api({
-				    action: 'signin user',
-				    method: 'POST',
-				    serializeForm: true,
-				    dataType: 'json',
-				    debug: true,
-				    cache: false,
-				    ContentType: "application/json",
-				    verbose: true,
-				    data: {
-				    },
-				    beforeSend: function(settings) {
-					// Create POST Data.
-					    // settings.data = {
-						/* user: JSON.stringify({
-						   // success: true,    // Change this to true|false
-						   // message: 'message',
-						   }),*/
-						// delay: 1
-					// };
-					console.log(settings.data);
-					return settings;
-				    },
-				    onResponse: function(response) {
-					// make some adjustments to response
-					console.log(response.data);
-					return response;
-				    },
-				    onSuccess: function(json) {
-					console.log('Data Available');
-					console.log(json);
-				    },
-				    onFailure: function(json, element, xhr) {
-					console.log('onFailure');
-					console.log(json, 'Failed! Should be an Object.');
-					console.log(json.data, 'Data Failed');
-					console.log(xhr);
-				    },
-				});
+    });
     
-    
-
-     
-     
-
-
-    // let loginForm =  $('.form.loginform');
-    // let loginEmail = loginForm.form('get value', 'email');
-    // let loginPassword = loginForm.form('get value', 'password');
-    
-
-    /* let login_user = () => {
-       let email = $('.loginform #email').val();
-       let password = $('.loginform #password').val();
-       
-       const loginUrl = '/users/sign_in.json'
-       fetch(loginUrl, {
+    /* $('.form.loginform .submit').api({
+       action: 'signin user',
        method: 'POST',
+       serializeForm: true,
+       dataType: 'json',
+       debug: true,
        cache: false,
-       headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json',
+       // verbose: true,
+       defaultData: false,
+       data: {
        },
-       body: JSON.stringify(
-       { "user": {
-       email: email,
-       password: password
-       }
-       })
-       })
-       .then((response) => {
-       if (response.status == 401){
-       // $('.loginform .error.message')	
-       $("#loginError").html('<p> Invalid username or password </p>');
-       console.log('Invalid username or password');
-       console.log('Fighting error messages');
-       }
-       else {	    
-       response.json().then( function(data) {
-       sessionStorage.userEmail = data.email;
-       sessionStorage.userAuth =  data.authentication_token;
-       sessionStorage.userID = data.id;
-       sessionStorage.userActive = data.active;
-       console.log(data);
-       
-       $('.item.navLogin').hide();
-       $('.item.navSignup').hide();
-       $('.item.navLogout').show();
-       console.log(sessionStorage.getItem("userEmail"));
-       console.log(sessionStorage.getItem("userActive"));
-       
-       if (sessionStorage.getItem("userActive") == 'false'){
-       $('.cookie.nag')
-       .nag('show')
-       ;
-       }
-       // Hide modal After successfull network request passe
-       $('.ui.tiny.modal.login')
-       .modal('hide')
-       ;
-       console.log('Form submited successfully');
-       
-       
-       })
-       }	
-       })
-       .catch((error)  => {
-       console.log('Request failure: ', error);
-       }
-       );	
-     * }
+       beforeSend: function(settings) {
+       // Create POST Data.
+       console.log("Log user email: " + settings.data.user.email);
+       // settings.data.user.email = settings.data.user.username;
+       // settings.data.user.password = settings.data.user.secret;
+       return settings;
+       },
+       // onResponse: function(response) {
+       //     console.log("OnResponse Callback: " + response.data);
+       //     return response;
+       // },
+       onSuccess: function(json) {
+       console.log("onSuccessCallback Data Available: " + json.data);
+       },
+       onFailure: function(json, element, xhr) {
+       console.log('onFailure Callback');
+       console.log(json, 'Failed! Should be an Object.');
+       console.log(json.data, 'Data Failed');
+       console.log(xhr);
+       },
+     * });
      */
+    
+    /* 
+     *     let loginForm =  $('.form.loginform');
+     *     let loginEmail = loginForm.form('get value', 'email');
+     *     let loginPassword = loginForm.form('get value', 'password');
+     *     */
 
+    
     
     let handleChekBox = () => {
 	$('.ui.checkbox')
 	    .checkbox();
     }
 
-     /* let sidenav =  () => {
-      *      $('.ui.top.sidebar')
-      * 	 .sidebar('setting', 'transition', 'overlay')
-      * 	 .sidebar('toggle')
-      *      ;
-      *  }*/
+    /* let sidenav =  () => {
+     *      $('.ui.top.sidebar')
+     * 	 .sidebar('setting', 'transition', 'overlay')
+     * 	 .sidebar('toggle')
+     *      ;
+     *  }*/
 
+    $('.ui.search')
+	.search({
+	    apiSettings: {
+		url: '//localhost:3000/jobs/autocomplete.json?query={query}'
+	    },
+	    fields: {
+		results : 'items',
+		title   : 'title',
+		url     : 'url'
+	    },
+	    minCharacters : 1,
+	    debug: true
+	})
+    ;
 
-
-     $('.ui.search')
-	 .search({
-	     apiSettings: {
-		 url: '//localhost:3000/jobs/autocomplete.json?query={query}'
-	     },
-	     fields: {
-		 results : 'items',
-		 title   : 'title',
-		 url     : 'url'
-	     },
-	     minCharacters : 1,
-	     debug: true
-	 })
-     ;
-
-     $('.ui.checkbox')
-	 .checkbox()
-     ;
+    $('.ui.checkbox')
+	.checkbox()
+    ;
 
 
 
 
-     /* Validate Login form */
-     // $('.ui.form.loginform').form({
-     // 	 inline : true,
-     // 	 on: 'blur',
-     // 	 onSuccess: login_user,
-     // 	 fields: {
-     //         email: {
-     // 		 identifier: 'email',
-     // 		 rules: [{
-     //                 type: 'empty',
-     //                 prompt: 'Please enter your email address'
-     // 		 },              {
-     // 		     type: 'email',
-     // 		     prompt: 'Please enter a valid email'
-     // 		 }]
-     //         },
-     // 	     password: {
-     // 		 identifier: 'password',
-     // 		 rules: [
-     // 		     {
-     // 			 type   : 'empty',
-     // 			 prompt : 'Please enter your password'
-     // 		     }
-     // 		 ]
-     // 	     }
-     // 	 }
-     // });
+    /* Validate Login form */
+    // $('.ui.form.loginform').form({
+    // 	 inline : true,
+    // 	 on: 'blur',
+    // 	 onSuccess: login_user,
+    // 	 fields: {
+    //         email: {
+    // 		 identifier: 'email',
+    // 		 rules: [{
+    //                 type: 'empty',
+    //                 prompt: 'Please enter your email address'
+    // 		 },              {
+    // 		     type: 'email',
+    // 		     prompt: 'Please enter a valid email'
+    // 		 }]
+    //         },
+    // 	     password: {
+    // 		 identifier: 'password',
+    // 		 rules: [
+    // 		     {
+    // 			 type   : 'empty',
+    // 			 prompt : 'Please enter your password'
+    // 		     }
+    // 		 ]
+    // 	     }
+    // 	 }
+    // });
 
 
-     /* format Birthday */
-     let formatBirthday = () => {
-	 let day = $(".signupform #day").val();
-	 if ( day.trim().length == 1 ){ 
-	     day = "0".concat(day);	 
-	 }
-	 let month = $(".signupform #month").val(); 
-	 let year = $(".signupform #year").val(); 
-	 return year + '-' + month + '-' + day;
-     }
+    /* format Birthday */
+    let formatBirthday = () => {
+	let day = $(".signupform #day").val();
+	if ( day.trim().length == 1 ){ 
+	    day = "0".concat(day);	 
+	}
+	let month = $(".signupform #month").val(); 
+	let year = $(".signupform #year").val(); 
+	return year + '-' + month + '-' + day;
+    }
 
-     let capFirstCharacter = (name) => {
-	 name = name.split('');
-	 firstCharacter = name.shift();
-	 name.unshift(firstCharacter.toUpperCase());
-	 name = name.join('');
-	 return name; 
-     }
+    let capFirstCharacter = (name) => {
+	name = name.split('');
+	firstCharacter = name.shift();
+	name.unshift(firstCharacter.toUpperCase());
+	name = name.join('');
+	return name; 
+    }
 
-     /* After user frontend validation Signup user */
-     let signup_user  = () => {
-	 /* formating values */
-	 let firstname = capFirstCharacter(($(".signupform #firstname").val()).trim());
-	 let lastname = capFirstCharacter(($(".signupform #lastname").val()).trim());
-	 let email = (($(".signupform #email").val()).trim()).toLowerCase();
-	 let password = ($(".signupform #password").val()).trim();
-	 let birthday = formatBirthday(); 
+    /* After user frontend validation Signup user */
+    let signup_user  = () => {
+	/* formating values */
+	let firstname = capFirstCharacter(($(".signupform #firstname").val()).trim());
+	let lastname = capFirstCharacter(($(".signupform #lastname").val()).trim());
+	let email = (($(".signupform #email").val()).trim()).toLowerCase();
+	let password = ($(".signupform #password").val()).trim();
+	let birthday = formatBirthday(); 
 
-	 console.log('Sign up Form submited');
-	 const signupUrl = "/users.json";
-	 fetch(signupUrl, {
-	     method: 'POST',
-	     cache: false,
-	     headers: {
-		 'Accept': 'application/json',
-		 'Content-Type': 'application/json',
-	     },
-	     body: JSON.stringify(
-		 { "user": {
-		     email: email,
-		     password: password,
-		     firstname: firstname,
-		     lastname: lastname,
-		     birthday: birthday
-		 }
-		 })
-	 }).then((response) => {	     
-	     response.json().then(function(data) {
-		 sessionStorage.userEmail = data.email;
-		 sessionStorage.userAuth =  data.authentication_token;
-		 sessionStorage.userID = data.id;
-		 sessionStorage.userActive = data.active;
-		 console.log(data);
-		 console.log(sessionStorage.getItem("userEmail"));
-		 $('#navLogin').hide();
-		 $('#navSignup').hide();
-		 $('#navLogout').show();
+	console.log('Sign up Form submited');
+	const signupUrl = "/users.json";
+	fetch(signupUrl, {
+	    method: 'POST',
+	    cache: false,
+	    headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify(
+		{ "user": {
+		    email: email,
+		    password: password,
+		    firstname: firstname,
+		    lastname: lastname,
+		    birthday: birthday
+		}
+		})
+	}).then((response) => {	     
+	    response.json().then(function(data) {
+		sessionStorage.setItem('user', data);
+		console.log(data);
+		$('#navLogin').hide();
+		$('#navSignup').hide();
+		$('#navLogout').show();
 
-		 afterSignup.acceptTerms();
-		 console.log('You account created successfully');
-		 $('.ui.tiny.modal.signup')
-		     .modal('hide')
-		 ;
-		 /* Show Email accout activation reminder */	     
-		 $('.cookie.nag')
-		     .nag('show')
-		 ;
-		 /* Call Accept terms modal */
-
-	     }); 
-	 })
-	   .catch((error)  => {
-	       console.log('Request failure: ', error);
-	   }
-	   );
-     }
-
-
-     let passwordResetUser  = () => {
-	 let email = (($(".signupform #email").val()).trim()).toLowerCase();
-	 console.log('Password Reset form sent');
-	 const passwordResetUrl = "/users/password.json";
-	 fetch(passwordResetUrl, {
-	     method: 'POST', 
-	     cache: false,
-	     headers: {
-		 'Accept': 'application/json',
-		 'Content-Type': 'application/json',
-	     },
-	     body: JSON.stringify(
-		 { "user": {
-		     email: email
-		 }
-		 })
-	 }).then((response) => {	     
-	     response.json().then(function(data) {
-		 console.log('An Email with Reset instruction sent successfully');
-		 $('.ui.tiny.modal.passwordReset')
-		     .modal('hide')
-		 ;	    
-		 picture_profile();
-
-		 /* Show Email accout activation reminder */	     
-		 /* $('.cookie.nag')
+		afterSignup.acceptTerms();
+		console.log('You account created successfully');
+		$('.ui.tiny.modal.signup')
+		    .modal('hide')
+		;
+		/* Show Email accout activation reminder */	     
+		$('.cookie.nag')
 		    .nag('show')
-		    ;*/
-	     }); 
-	 })
-	   .catch((error)  => {
-	       console.log('Request failure: ', error);
-	   }
-	   );
-     }
+		;
+		/* Call Accept terms modal */
 
-     $('.ui.form.passwordresetform').form({
-	 inline : true,
-	 onSuccess: passwordResetUser,
-	 fields: {
-             email: {
-		 identifier: 'email',
-		 rules: [{
-                     type: 'empty',
-                     prompt: 'Please enter your email address'
-		 },              {
-		     type: 'email',
-		     prompt: 'Please enter a valid email'
-		 }]
-             }
-	 }
-     });
+	    }); 
+	})
+	  .catch((error)  => {
+	      console.log('Request failure: ', error);
+	  }
+	  );
+    }
+
+
+    let passwordResetUser  = () => {
+	let email = (($(".signupform #email").val()).trim()).toLowerCase();
+	console.log('Password Reset form sent');
+	const passwordResetUrl = "/users/password.json";
+	fetch(passwordResetUrl, {
+	    method: 'POST', 
+	    cache: false,
+	    headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify(
+		{ "user": {
+		    email: email
+		}
+		})
+	}).then((response) => {	     
+	    response.json().then(function(data) {
+		console.log('An Email with Reset instruction sent successfully');
+		$('.ui.tiny.modal.passwordReset')
+		    .modal('hide')
+		;	    
+		picture_profile();
+
+		/* Show Email accout activation reminder */	     
+		/* $('.cookie.nag')
+		   .nag('show')
+		   ;*/
+	    }); 
+	})
+	  .catch((error)  => {
+	      console.log('Request failure: ', error);
+	  }
+	  );
+    }
+
+    $('.ui.form.passwordresetform').form({
+	inline : true,
+	onSuccess: passwordResetUser,
+	fields: {
+            email: {
+		identifier: 'email',
+		rules: [{
+                    type: 'empty',
+                    prompt: 'Please enter your email address'
+		},              {
+		    type: 'email',
+		    prompt: 'Please enter a valid email'
+		}]
+            }
+	}
+    });
 
     
-// Validates and Sign-up New User 
-    $(".form.signupform .submit").form({
+    // Validates and Sign-up New User 
+    $(".form.signupform").form({
 	inline : true,
 	on: 'blur',
 	fields: {
             lastname: {
-		identifier: 'lastname',
+		identifier: 'user[lastname]',
 		rules: [{
                     type: 'empty',
                     prompt: 'Last name is required'
 		}]
             },
             firstname: {
-		identifier: 'firstname',
+		identifier: 'user[firstname]',
 		rules: [{
                     type: 'empty',
                     prompt: 'First name is required'
 		}]
             },
             email: {
-		identifier: 'email',
+		identifier: 'user[email]',
 		rules: [{
                     type: 'empty',
                     prompt: 'Email is required'
@@ -12307,10 +12719,10 @@ $(document).ready( () =>  {
 			    type: 'integer',
 			    prompt: 'Number digits only'
 			}
-		       ]
+		]
             },
 	    password: {
-		identifier: 'password',
+		identifier: 'user[password]',
 		rules: [
 		    {
 			type   : 'empty',
@@ -12332,72 +12744,92 @@ $(document).ready( () =>  {
 		]
 	    }
 
-	}
-    }).api({
-	action: 'register user',
-	method: 'POST',
-	serializeForm: true,
-	dataType: 'json',
-	debug: true,
-	cache: false,
-	// ContentType: "application/json",
-	verbose: true,
-	data: {
 	},
-	beforeSend: function(settings) {
-
-	    let capFirstCharacter = (name) => {
-		name = name.split('');
-		firstCharacter = name.shift();
-		name.unshift(firstCharacter.toUpperCase());
-		name = name.join('');
-		return name; 
-	    }
-
-	    let birthday = () => {
-		let day = (settings.data.day).trim();
-		let month = (settings.data.month).trim();
-		let year = (settings.data.year).trim();
-		if ( day.length == 1 ){ 
-		    day = "0".concat(day);
-		    console.log("Not Default: " + year + '-' + month + '-' + day);
-		    return (year + '-' + month + '-' + day);
-		}
-		else{
-		    console.log("default: " + year + '-' + month + '-' + day);
-		    return (year + '-' + month + '-' + day);
-		}
-	    }	    
-	    settings.data.user.birthday = birthday();
-	    settings.data.user.firstname = capFirstCharacter(settings.data.user.firstname).trim();
-	    settings.data.user.lastname = capFirstCharacter(settings.data.user.lastname).trim();
-	    settings.data.user.email = settings.data.user.email.trim();
-	    settings.data.user.password = settings.data.user.password.trim();
+	onSuccess: (event) => {
 	    
-	    console.log(settings.data.user);
-	    console.log(settings.data.user.firstname);
-	    return settings;
-	},
-	onResponse: function(response) {
-	    console.log(response.data);
-	    return response;
-	},
-	onSuccess: function(json) {
-	    console.log('Data Available');
-	    console.log(json);
-	},
-	onFailure: function(json, element, xhr) {
-	    console.log('onFailure');
-	    console.log(json, 'Failed! Should be an Object.');
-	    console.log(json.data, 'Data Failed');
-	    console.log(xhr);
-	},
-    });
+	    //	    $('.form.signupform').form('validate form');
     
-});
+	$(".form.signupform .submit").api({
+	    action: 'register user',
+	    method: 'POST',
+	    loadingDuration: 3000,
+	    serializeForm: true,
+	    dataType: 'json',
+	    // debug: true,
+	    cache: false,
+	    // verbose: true,
+	    data: {
+	    },
+	    beforeSend: function(settings) {
+		    let capFirstCharacter = (name) => {
+			name = name.split('');
+			firstCharacter = name.shift();
+			name.unshift(firstCharacter.toUpperCase());
+			name = name.join('');
+			return name; 
+		    }
+		    
+		    let birthday = () => {
+			let day = (settings.data.day).trim();
+			let month = (settings.data.month).trim();
+			let year = (settings.data.year).trim();
+			if ( day.length == 1 ){ 
+			    day = "0".concat(day);
+			    console.log("Not Default: " + year + '-' + month + '-' + day);
+			    return (year + '-' + month + '-' + day);
+			}
+			else{
+			    console.log("default: " + year + '-' + month + '-' + day);
+			    return (year + '-' + month + '-' + day);
+			}
+		    }	    
+		    settings.data.user.birthday = birthday();
+		    settings.data.user.firstname = capFirstCharacter(settings.data.user.firstname).trim();
+		    settings.data.user.lastname = capFirstCharacter(settings.data.user.lastname).trim();
+		    settings.data.user.email = settings.data.user.email.trim();
+		    settings.data.user.password = settings.data.user.password.trim();
+		    
+		    console.log(settings.data.user);
+		    console.log(settings.data.user.firstname);
+		    return settings;
+		},
+		onResponse: function(response) {
+		    sessionStorage.setItem('user', JSON.stringify(response));
+		    let currentUser = JSON.parse(sessionStorage.user);
+		    $('.item.navLogin').hide();
+		    $('.item.navSignup').hide();
+		    $('.item.navLogout').show();
+		    
+		    if (sessionStorage.getItem("userActive") == 'false'){
+			$('.cookie.nag')
+			    .nag('show')
+			;
+		    }
+		    // Hide modal After successfull network request passe
+		    $('.ui.tiny.modal.signup')
+			.modal('hide')
+		    ;
+		    console.log('Sign-up:  Form submited successfully');
+		    // afterSignup.signupComplete();
+		    afterSignup.acceptTerms();
+		    // return response;
+		},
+		onSuccess: function(response) {
+		    console.log('OnSuccess: ' + response);
+		},
+		onFailure: function(json, element, xhr) {
+		    console.log('onFailure: ' + json);
+		    $(".form.signupform").form("add errors", [ 'This Email address is already taken by another user' ]);
+		}
+	    });
 
-
-
+	    event.preventDefault();
+	}
+	
+	});
+    
+})
+;
 /*
   Remember to use Rails to generate authenticity meta token for every form submit 
 */
@@ -13102,6 +13534,9 @@ class AfterSignUp {
 }).call(this);
 
 
+    /* Steps instance */
+   //  step = new Step;
+
 class Items {    
     addNewItem(){     
 	$('.ui.mini.modal.listing.terms')
@@ -13118,31 +13553,257 @@ class Items {
     step1(){	
 	console.log('Step 1 clicked');
 	$(".ui.mini.modal.listing")
-	    .modal('hide');
-	
+	    .modal('hide');	
 	$('.start-button')
 	    .hide()
 	;
-
 	$('.details_form')
 	    .show();
 	;
-	
     }
 
+    viewPictures(){
+	$('.ui.fullscreen.modal.viewpictures')
+	    .modal('show')
+	;
+    }
+
+      next(){	
+	console.log('Step 1 clicked');
+	$(".ui.mini.modal.listing")
+	    .modal('hide');	
+	$('.start-button')
+	    .hide()
+	;
+	  $('.details_form')
+	    .show();
+	  ;
+      }
+    
+    checkAccepted() {
+	if ($.cookie('ItemsAcceptTerms')){
+	    this.step1();
+	}
+    }
+    revmovActiveStep() {
+            $('.ui.steps .step').removeClass('active');
+    }
     acceptTerms() {
 	console.log("Accept terms");
-	sessionStorage.setItem('terms', 'terms');
 	$('.ui.mini.modal.listing.terms')
 	    .modal('hide')
 	;
+
+	$.cookie('ItemsAcceptTerms', 'Accept Terms');
 	this.step1();
+    }   
+    step1(){	
+	console.log('Step 1 clicked');
+	$(".ui.mini.modal.listing")
+	    .modal('hide');	
+	$('.start-button')
+	    .hide()
+	;
+	$('.details_form')
+	    .show();
+	;
     }
+    locationListing(){
+	console.log('Form Location clicked');
+	$('.describe.listing')
+	    .show()
+	;
+	$('.facility.listing')
+	    .hide()
+	;
+	$('.steping .description').addClass('teal').removeClass('thin');
+	
+	// move Side Step 
+	$('.ui.steps .step').removeClass('active');
+	$('.steps .step.describe').addClass('active');
+    }
+    facilityListing() {
+	console.log('Form Facility clicked');
+	$('.describe.listing')
+	    .hide()
+	;
+	$('.rule.listing')
+	    .hide()
+	;
+	$('.facility.listing')
+	    .show()
+	;
+	$('.steping .description').addClass('teal').removeClass('thin');
+	
+	// move Side Step 
+	$('.ui.steps .step').removeClass('active');
+	$('.steps .step.facility').addClass('active');
+    }
+    ruleListing() {
+	console.log('Rule Listing clicked');
+	$('.facility.listing')
+	    .hide()
+	;
+	$('.describe.listing')
+	    .hide()
+	;
+	$('.photo.listing')
+	    .hide()
+	;
+	$('.rule.listing')
+	    .show()
+	;
+	$('.steping .facility').addClass('teal').removeClass('thin');
 
+	// move Side Step 
+	$('.ui.steps .step').removeClass('active');
+	$('.steps .step.rule').addClass('active');
+    }
+    photoListing() {
+	console.log('Photo Listing clicked');
+	$('.rule.listing')
+	    .hide()
+	;
+	$('.describe.listing')
+	    .hide()
+	;
+	$('.rule.listing')
+	    .hide()
+	;
+	$('.photo.listing')
+	    .show()
+	;
+	$('.steping .rule').addClass('teal').removeClass('thin');
 
+	// move Side Step 
+	$('.ui.steps .step').removeClass('active');
+	$('.steps .step.photo').addClass('active');
+    }
+    
+    
 }
 
-;
+document.addEventListener('turbolinks:load', () => {
+    
+$('.form.space').form({
+    inline : true,
+    on: 'blur',
+    fields: {
+ 	name: {
+ 	    identifier: 'space[name]',
+ 	    rules: [
+ 		{
+ 		    type   : 'empty',
+ 		    prompt : 'Please enter your name'
+ 		}
+ 	    ]
+ 	},
+ 	description: {
+ 	    identifier: 'space[description]',
+ 	    rules: [
+ 		{
+ 		    type   : 'empty',
+ 		    prompt : 'Please Describe your event space'
+ 		}
+ 	    ]
+ 	},
+ 	location: {
+ 	    identifier: 'space[location]',
+ 	    rules: [
+ 		{
+ 		    type   : 'empty',
+ 		    prompt : 'Please add a location'
+ 		}
+ 	    ]
+ 	},
+ 	fee: {
+ 	    identifier: 'space[fee]',
+ 	    rules: [
+ 		{
+ 		    type   : 'empty',
+ 		    prompt : 'Please enter a fee'
+ 		}
+ 	    ]
+ 	},
+ 	guest_capacity: {
+ 	    identifier: 'space[guest_capacity]',
+ 	    rules: [
+ 		{
+ 		    type   : 'empty',
+ 		    prompt : 'Please enter guest capacity'
+ 		}
+ 	    ]
+ 	},
+	category: {
+ 	    identifier: 'space[category]',
+ 	    rules: [
+ 		{
+ 		    type   : 'empty',
+ 		    prompt : 'Please select Category'
+ 		}
+ 	    ]
+ 	}
+    }
+});
+
+    $('.form.space .submit')
+	.api({
+	    action: 'add space',
+	    method: 'POST',
+	    loadingDuration: 3000,
+	    serializeForm: true,
+	    dataType: 'json',
+	    cache: false,
+	    data: {
+	    },
+	    beforeSend: function(settings) {
+		let capFirstCharacter = (name) => {
+		    name = name.split('');
+		    firstCharacter = name.shift();
+		    name.unshift(firstCharacter.toUpperCase());
+		    name = name.join('');
+		    return name; 
+		}
+
+		// settings.data.space.name = capFirstCharacter(settings.data.space.name).trim();
+		// settings.data.space.location = capFirstCharacter(settings.data.space.location).trim();
+		// settings.data.space.fee = settings.data.space.fee.trim();
+		// settings.data.space.guest_capacity = settings.data.space.guest_capacity.trim();
+		settings.data.space.user_id = currentUser.id;
+		// hard code ID in 
+		settings.data.space.id = 1
+		console.log(settings.data.space.id);
+		console.log(settings.data.space);
+		// console.log(settings.data.space.name);
+		return settings;
+	    },
+	    beforeXHR: function(xhr) {
+		// adjust XHR with additional headers
+		xhr.setRequestHeader ('X-User-Email', currentUser.authentication_token);
+		xhr.setRequestHeader ('X-User-Token', currentUser.email);
+		return xhr;
+	    },
+	    onResponse: function(response) {
+		console.log('Space - Stage1: Stage 1 completed');
+		console.log(response);
+	    },
+	    onSuccess: function(response) {
+		console.log('OnSuccess: ' + response);
+	    },
+	    onFailure: function(json, element, xhr) {
+		console.log('onFailure: ' + json);
+		$(".form.space").form("add errors", [ 'Problem processing you data at this time' ]);
+	    }
+	});    
+});
+/**
+ * Owl Carousel v2.3.0
+ * Copyright 2013-2017 David Deutsch
+ * Licensed under  ()
+ */
+
+!function(a,b,c,d){function e(b,c){this.settings=null,this.options=a.extend({},e.Defaults,c),this.$element=a(b),this._handlers={},this._plugins={},this._supress={},this._current=null,this._speed=null,this._coordinates=[],this._breakpoint=null,this._width=null,this._items=[],this._clones=[],this._mergers=[],this._widths=[],this._invalidated={},this._pipe=[],this._drag={time:null,target:null,pointer:null,stage:{start:null,current:null},direction:null},this._states={current:{},tags:{initializing:["busy"],animating:["busy"],dragging:["interacting"]}},a.each(["onResize","onThrottledResize"],a.proxy(function(b,c){this._handlers[c]=a.proxy(this[c],this)},this)),a.each(e.Plugins,a.proxy(function(a,b){this._plugins[a.charAt(0).toLowerCase()+a.slice(1)]=new b(this)},this)),a.each(e.Workers,a.proxy(function(b,c){this._pipe.push({filter:c.filter,run:a.proxy(c.run,this)})},this)),this.setup(),this.initialize()}e.Defaults={items:3,loop:!1,center:!1,rewind:!1,mouseDrag:!0,touchDrag:!0,pullDrag:!0,freeDrag:!1,margin:0,stagePadding:0,merge:!1,mergeFit:!0,autoWidth:!1,startPosition:0,rtl:!1,smartSpeed:250,fluidSpeed:!1,dragEndSpeed:!1,responsive:{},responsiveRefreshRate:200,responsiveBaseElement:b,fallbackEasing:"swing",info:!1,nestedItemSelector:!1,itemElement:"div",stageElement:"div",refreshClass:"owl-refresh",loadedClass:"owl-loaded",loadingClass:"owl-loading",rtlClass:"owl-rtl",responsiveClass:"owl-responsive",dragClass:"owl-drag",itemClass:"owl-item",stageClass:"owl-stage",stageOuterClass:"owl-stage-outer",grabClass:"owl-grab"},e.Width={Default:"default",Inner:"inner",Outer:"outer"},e.Type={Event:"event",State:"state"},e.Plugins={},e.Workers=[{filter:["width","settings"],run:function(){this._width=this.$element.width()}},{filter:["width","items","settings"],run:function(a){a.current=this._items&&this._items[this.relative(this._current)]}},{filter:["items","settings"],run:function(){this.$stage.children(".cloned").remove()}},{filter:["width","items","settings"],run:function(a){var b=this.settings.margin||"",c=!this.settings.autoWidth,d=this.settings.rtl,e={width:"auto","margin-left":d?b:"","margin-right":d?"":b};!c&&this.$stage.children().css(e),a.css=e}},{filter:["width","items","settings"],run:function(a){var b=(this.width()/this.settings.items).toFixed(3)-this.settings.margin,c=null,d=this._items.length,e=!this.settings.autoWidth,f=[];for(a.items={merge:!1,width:b};d--;)c=this._mergers[d],c=this.settings.mergeFit&&Math.min(c,this.settings.items)||c,a.items.merge=c>1||a.items.merge,f[d]=e?b*c:this._items[d].width();this._widths=f}},{filter:["items","settings"],run:function(){var b=[],c=this._items,d=this.settings,e=Math.max(2*d.items,4),f=2*Math.ceil(c.length/2),g=d.loop&&c.length?d.rewind?e:Math.max(e,f):0,h="",i="";for(g/=2;g>0;)b.push(this.normalize(b.length/2,!0)),h+=c[b[b.length-1]][0].outerHTML,b.push(this.normalize(c.length-1-(b.length-1)/2,!0)),i=c[b[b.length-1]][0].outerHTML+i,g-=1;this._clones=b,a(h).addClass("cloned").appendTo(this.$stage),a(i).addClass("cloned").prependTo(this.$stage)}},{filter:["width","items","settings"],run:function(){for(var a=this.settings.rtl?1:-1,b=this._clones.length+this._items.length,c=-1,d=0,e=0,f=[];++c<b;)d=f[c-1]||0,e=this._widths[this.relative(c)]+this.settings.margin,f.push(d+e*a);this._coordinates=f}},{filter:["width","items","settings"],run:function(){var a=this.settings.stagePadding,b=this._coordinates,c={width:Math.ceil(Math.abs(b[b.length-1]))+2*a,"padding-left":a||"","padding-right":a||""};this.$stage.css(c)}},{filter:["width","items","settings"],run:function(a){var b=this._coordinates.length,c=!this.settings.autoWidth,d=this.$stage.children();if(c&&a.items.merge)for(;b--;)a.css.width=this._widths[this.relative(b)],d.eq(b).css(a.css);else c&&(a.css.width=a.items.width,d.css(a.css))}},{filter:["items"],run:function(){this._coordinates.length<1&&this.$stage.removeAttr("style")}},{filter:["width","items","settings"],run:function(a){a.current=a.current?this.$stage.children().index(a.current):0,a.current=Math.max(this.minimum(),Math.min(this.maximum(),a.current)),this.reset(a.current)}},{filter:["position"],run:function(){this.animate(this.coordinates(this._current))}},{filter:["width","position","items","settings"],run:function(){var a,b,c,d,e=this.settings.rtl?1:-1,f=2*this.settings.stagePadding,g=this.coordinates(this.current())+f,h=g+this.width()*e,i=[];for(c=0,d=this._coordinates.length;d>c;c++)a=this._coordinates[c-1]||0,b=Math.abs(this._coordinates[c])+f*e,(this.op(a,"<=",g)&&this.op(a,">",h)||this.op(b,"<",g)&&this.op(b,">",h))&&i.push(c);this.$stage.children(".active").removeClass("active"),this.$stage.children(":eq("+i.join("), :eq(")+")").addClass("active"),this.$stage.children(".center").removeClass("center"),this.settings.center&&this.$stage.children().eq(this.current()).addClass("center")}}],e.prototype.initialize=function(){if(this.enter("initializing"),this.trigger("initialize"),this.$element.toggleClass(this.settings.rtlClass,this.settings.rtl),this.settings.autoWidth&&!this.is("pre-loading")){var b,c,e;b=this.$element.find("img"),c=this.settings.nestedItemSelector?"."+this.settings.nestedItemSelector:d,e=this.$element.children(c).width(),b.length&&0>=e&&this.preloadAutoWidthImages(b)}this.$element.addClass(this.options.loadingClass),this.$stage=a("<"+this.settings.stageElement+' class="'+this.settings.stageClass+'"/>').wrap('<div class="'+this.settings.stageOuterClass+'"/>'),this.$element.append(this.$stage.parent()),this.replace(this.$element.children().not(this.$stage.parent())),this.$element.is(":visible")?this.refresh():this.invalidate("width"),this.$element.removeClass(this.options.loadingClass).addClass(this.options.loadedClass),this.registerEventHandlers(),this.leave("initializing"),this.trigger("initialized")},e.prototype.setup=function(){var b=this.viewport(),c=this.options.responsive,d=-1,e=null;c?(a.each(c,function(a){b>=a&&a>d&&(d=Number(a))}),e=a.extend({},this.options,c[d]),"function"==typeof e.stagePadding&&(e.stagePadding=e.stagePadding()),delete e.responsive,e.responsiveClass&&this.$element.attr("class",this.$element.attr("class").replace(new RegExp("("+this.options.responsiveClass+"-)\\S+\\s","g"),"$1"+d))):e=a.extend({},this.options),this.trigger("change",{property:{name:"settings",value:e}}),this._breakpoint=d,this.settings=e,this.invalidate("settings"),this.trigger("changed",{property:{name:"settings",value:this.settings}})},e.prototype.optionsLogic=function(){this.settings.autoWidth&&(this.settings.stagePadding=!1,this.settings.merge=!1)},e.prototype.prepare=function(b){var c=this.trigger("prepare",{content:b});return c.data||(c.data=a("<"+this.settings.itemElement+"/>").addClass(this.options.itemClass).append(b)),this.trigger("prepared",{content:c.data}),c.data},e.prototype.update=function(){for(var b=0,c=this._pipe.length,d=a.proxy(function(a){return this[a]},this._invalidated),e={};c>b;)(this._invalidated.all||a.grep(this._pipe[b].filter,d).length>0)&&this._pipe[b].run(e),b++;this._invalidated={},!this.is("valid")&&this.enter("valid")},e.prototype.width=function(a){switch(a=a||e.Width.Default){case e.Width.Inner:case e.Width.Outer:return this._width;default:return this._width-2*this.settings.stagePadding+this.settings.margin}},e.prototype.refresh=function(){this.enter("refreshing"),this.trigger("refresh"),this.setup(),this.optionsLogic(),this.$element.addClass(this.options.refreshClass),this.update(),this.$element.removeClass(this.options.refreshClass),this.leave("refreshing"),this.trigger("refreshed")},e.prototype.onThrottledResize=function(){b.clearTimeout(this.resizeTimer),this.resizeTimer=b.setTimeout(this._handlers.onResize,this.settings.responsiveRefreshRate)},e.prototype.onResize=function(){return this._items.length?this._width===this.$element.width()?!1:this.$element.is(":visible")?(this.enter("resizing"),this.trigger("resize").isDefaultPrevented()?(this.leave("resizing"),!1):(this.invalidate("width"),this.refresh(),this.leave("resizing"),void this.trigger("resized"))):!1:!1},e.prototype.registerEventHandlers=function(){a.support.transition&&this.$stage.on(a.support.transition.end+".owl.core",a.proxy(this.onTransitionEnd,this)),this.settings.responsive!==!1&&this.on(b,"resize",this._handlers.onThrottledResize),this.settings.mouseDrag&&(this.$element.addClass(this.options.dragClass),this.$stage.on("mousedown.owl.core",a.proxy(this.onDragStart,this)),this.$stage.on("dragstart.owl.core selectstart.owl.core",function(){return!1})),this.settings.touchDrag&&(this.$stage.on("touchstart.owl.core",a.proxy(this.onDragStart,this)),this.$stage.on("touchcancel.owl.core",a.proxy(this.onDragEnd,this)))},e.prototype.onDragStart=function(b){var d=null;3!==b.which&&(a.support.transform?(d=this.$stage.css("transform").replace(/.*\(|\)| /g,"").split(","),d={x:d[16===d.length?12:4],y:d[16===d.length?13:5]}):(d=this.$stage.position(),d={x:this.settings.rtl?d.left+this.$stage.width()-this.width()+this.settings.margin:d.left,y:d.top}),this.is("animating")&&(a.support.transform?this.animate(d.x):this.$stage.stop(),this.invalidate("position")),this.$element.toggleClass(this.options.grabClass,"mousedown"===b.type),this.speed(0),this._drag.time=(new Date).getTime(),this._drag.target=a(b.target),this._drag.stage.start=d,this._drag.stage.current=d,this._drag.pointer=this.pointer(b),a(c).on("mouseup.owl.core touchend.owl.core",a.proxy(this.onDragEnd,this)),a(c).one("mousemove.owl.core touchmove.owl.core",a.proxy(function(b){var d=this.difference(this._drag.pointer,this.pointer(b));a(c).on("mousemove.owl.core touchmove.owl.core",a.proxy(this.onDragMove,this)),Math.abs(d.x)<Math.abs(d.y)&&this.is("valid")||(b.preventDefault(),this.enter("dragging"),this.trigger("drag"))},this)))},e.prototype.onDragMove=function(a){var b=null,c=null,d=null,e=this.difference(this._drag.pointer,this.pointer(a)),f=this.difference(this._drag.stage.start,e);this.is("dragging")&&(a.preventDefault(),this.settings.loop?(b=this.coordinates(this.minimum()),c=this.coordinates(this.maximum()+1)-b,f.x=((f.x-b)%c+c)%c+b):(b=this.settings.rtl?this.coordinates(this.maximum()):this.coordinates(this.minimum()),c=this.settings.rtl?this.coordinates(this.minimum()):this.coordinates(this.maximum()),d=this.settings.pullDrag?-1*e.x/5:0,f.x=Math.max(Math.min(f.x,b+d),c+d)),this._drag.stage.current=f,this.animate(f.x))},e.prototype.onDragEnd=function(b){var d=this.difference(this._drag.pointer,this.pointer(b)),e=this._drag.stage.current,f=d.x>0^this.settings.rtl?"left":"right";a(c).off(".owl.core"),this.$element.removeClass(this.options.grabClass),(0!==d.x&&this.is("dragging")||!this.is("valid"))&&(this.speed(this.settings.dragEndSpeed||this.settings.smartSpeed),this.current(this.closest(e.x,0!==d.x?f:this._drag.direction)),this.invalidate("position"),this.update(),this._drag.direction=f,(Math.abs(d.x)>3||(new Date).getTime()-this._drag.time>300)&&this._drag.target.one("click.owl.core",function(){return!1})),this.is("dragging")&&(this.leave("dragging"),this.trigger("dragged"))},e.prototype.closest=function(b,c){var d=-1,e=30,f=this.width(),g=this.coordinates();return this.settings.freeDrag||a.each(g,a.proxy(function(a,h){return"left"===c&&b>h-e&&h+e>b?d=a:"right"===c&&b>h-f-e&&h-f+e>b?d=a+1:this.op(b,"<",h)&&this.op(b,">",g[a+1]||h-f)&&(d="left"===c?a+1:a),-1===d},this)),this.settings.loop||(this.op(b,">",g[this.minimum()])?d=b=this.minimum():this.op(b,"<",g[this.maximum()])&&(d=b=this.maximum())),d},e.prototype.animate=function(b){var c=this.speed()>0;this.is("animating")&&this.onTransitionEnd(),c&&(this.enter("animating"),this.trigger("translate")),a.support.transform3d&&a.support.transition?this.$stage.css({transform:"translate3d("+b+"px,0px,0px)",transition:this.speed()/1e3+"s"}):c?this.$stage.animate({left:b+"px"},this.speed(),this.settings.fallbackEasing,a.proxy(this.onTransitionEnd,this)):this.$stage.css({left:b+"px"})},e.prototype.is=function(a){return this._states.current[a]&&this._states.current[a]>0},e.prototype.current=function(a){if(a===d)return this._current;if(0===this._items.length)return d;if(a=this.normalize(a),this._current!==a){var b=this.trigger("change",{property:{name:"position",value:a}});b.data!==d&&(a=this.normalize(b.data)),this._current=a,this.invalidate("position"),this.trigger("changed",{property:{name:"position",value:this._current}})}return this._current},e.prototype.invalidate=function(b){return"string"===a.type(b)&&(this._invalidated[b]=!0,this.is("valid")&&this.leave("valid")),a.map(this._invalidated,function(a,b){return b})},e.prototype.reset=function(a){a=this.normalize(a),a!==d&&(this._speed=0,this._current=a,this.suppress(["translate","translated"]),this.animate(this.coordinates(a)),this.release(["translate","translated"]))},e.prototype.normalize=function(a,b){var c=this._items.length,e=b?0:this._clones.length;return!this.isNumeric(a)||1>c?a=d:(0>a||a>=c+e)&&(a=((a-e/2)%c+c)%c+e/2),a},e.prototype.relative=function(a){return a-=this._clones.length/2,this.normalize(a,!0)},e.prototype.maximum=function(a){var b,c,d,e=this.settings,f=this._coordinates.length;if(e.loop)f=this._clones.length/2+this._items.length-1;else if(e.autoWidth||e.merge){if(b=this._items.length)for(c=this._items[--b].width(),d=this.$element.width();b--&&(c+=this._items[b].width()+this.settings.margin,!(c>d)););f=b+1}else f=e.center?this._items.length-1:this._items.length-e.items;return a&&(f-=this._clones.length/2),Math.max(f,0)},e.prototype.minimum=function(a){return a?0:this._clones.length/2},e.prototype.items=function(a){return a===d?this._items.slice():(a=this.normalize(a,!0),this._items[a])},e.prototype.mergers=function(a){return a===d?this._mergers.slice():(a=this.normalize(a,!0),this._mergers[a])},e.prototype.clones=function(b){var c=this._clones.length/2,e=c+this._items.length,f=function(a){return a%2===0?e+a/2:c-(a+1)/2};return b===d?a.map(this._clones,function(a,b){return f(b)}):a.map(this._clones,function(a,c){return a===b?f(c):null})},e.prototype.speed=function(a){return a!==d&&(this._speed=a),this._speed},e.prototype.coordinates=function(b){var c,e=1,f=b-1;return b===d?a.map(this._coordinates,a.proxy(function(a,b){return this.coordinates(b)},this)):(this.settings.center?(this.settings.rtl&&(e=-1,f=b+1),c=this._coordinates[b],c+=(this.width()-c+(this._coordinates[f]||0))/2*e):c=this._coordinates[f]||0,c=Math.ceil(c))},e.prototype.duration=function(a,b,c){return 0===c?0:Math.min(Math.max(Math.abs(b-a),1),6)*Math.abs(c||this.settings.smartSpeed)},e.prototype.to=function(a,b){var c=this.current(),d=null,e=a-this.relative(c),f=(e>0)-(0>e),g=this._items.length,h=this.minimum(),i=this.maximum();this.settings.loop?(!this.settings.rewind&&Math.abs(e)>g/2&&(e+=-1*f*g),a=c+e,d=((a-h)%g+g)%g+h,d!==a&&i>=d-e&&d-e>0&&(c=d-e,a=d,this.reset(c))):this.settings.rewind?(i+=1,a=(a%i+i)%i):a=Math.max(h,Math.min(i,a)),this.speed(this.duration(c,a,b)),this.current(a),this.$element.is(":visible")&&this.update()},e.prototype.next=function(a){a=a||!1,this.to(this.relative(this.current())+1,a)},e.prototype.prev=function(a){a=a||!1,this.to(this.relative(this.current())-1,a)},e.prototype.onTransitionEnd=function(a){return a!==d&&(a.stopPropagation(),(a.target||a.srcElement||a.originalTarget)!==this.$stage.get(0))?!1:(this.leave("animating"),void this.trigger("translated"))},e.prototype.viewport=function(){var d;return this.options.responsiveBaseElement!==b?d=a(this.options.responsiveBaseElement).width():b.innerWidth?d=b.innerWidth:c.documentElement&&c.documentElement.clientWidth?d=c.documentElement.clientWidth:console.warn("Can not detect viewport width."),d},e.prototype.replace=function(b){this.$stage.empty(),this._items=[],b&&(b=b instanceof jQuery?b:a(b)),this.settings.nestedItemSelector&&(b=b.find("."+this.settings.nestedItemSelector)),b.filter(function(){return 1===this.nodeType}).each(a.proxy(function(a,b){b=this.prepare(b),this.$stage.append(b),this._items.push(b),this._mergers.push(1*b.find("[data-merge]").addBack("[data-merge]").attr("data-merge")||1)},this)),this.reset(this.isNumeric(this.settings.startPosition)?this.settings.startPosition:0),this.invalidate("items")},e.prototype.add=function(b,c){var e=this.relative(this._current);c=c===d?this._items.length:this.normalize(c,!0),b=b instanceof jQuery?b:a(b),this.trigger("add",{content:b,position:c}),b=this.prepare(b),0===this._items.length||c===this._items.length?(0===this._items.length&&this.$stage.append(b),0!==this._items.length&&this._items[c-1].after(b),this._items.push(b),this._mergers.push(1*b.find("[data-merge]").addBack("[data-merge]").attr("data-merge")||1)):(this._items[c].before(b),this._items.splice(c,0,b),this._mergers.splice(c,0,1*b.find("[data-merge]").addBack("[data-merge]").attr("data-merge")||1)),this._items[e]&&this.reset(this._items[e].index()),this.invalidate("items"),this.trigger("added",{content:b,position:c})},e.prototype.remove=function(a){a=this.normalize(a,!0),a!==d&&(this.trigger("remove",{content:this._items[a],position:a}),this._items[a].remove(),this._items.splice(a,1),this._mergers.splice(a,1),this.invalidate("items"),this.trigger("removed",{content:null,position:a}))},e.prototype.preloadAutoWidthImages=function(b){b.each(a.proxy(function(b,c){this.enter("pre-loading"),c=a(c),a(new Image).one("load",a.proxy(function(a){c.attr("src",a.target.src),c.css("opacity",1),this.leave("pre-loading"),!this.is("pre-loading")&&!this.is("initializing")&&this.refresh()},this)).attr("src",c.attr("src")||c.attr("data-src")||c.attr("data-src-retina"))},this))},e.prototype.destroy=function(){this.$element.off(".owl.core"),this.$stage.off(".owl.core"),a(c).off(".owl.core"),this.settings.responsive!==!1&&(b.clearTimeout(this.resizeTimer),this.off(b,"resize",this._handlers.onThrottledResize));for(var d in this._plugins)this._plugins[d].destroy();this.$stage.children(".cloned").remove(),this.$stage.unwrap(),this.$stage.children().contents().unwrap(),this.$stage.children().unwrap(),this.$stage.remove(),this.$element.removeClass(this.options.refreshClass).removeClass(this.options.loadingClass).removeClass(this.options.loadedClass).removeClass(this.options.rtlClass).removeClass(this.options.dragClass).removeClass(this.options.grabClass).attr("class",this.$element.attr("class").replace(new RegExp(this.options.responsiveClass+"-\\S+\\s","g"),"")).removeData("owl.carousel")},e.prototype.op=function(a,b,c){var d=this.settings.rtl;switch(b){case"<":return d?a>c:c>a;case">":return d?c>a:a>c;case">=":return d?c>=a:a>=c;case"<=":return d?a>=c:c>=a}},e.prototype.on=function(a,b,c,d){a.addEventListener?a.addEventListener(b,c,d):a.attachEvent&&a.attachEvent("on"+b,c)},e.prototype.off=function(a,b,c,d){a.removeEventListener?a.removeEventListener(b,c,d):a.detachEvent&&a.detachEvent("on"+b,c)},e.prototype.trigger=function(b,c,d,f,g){var h={item:{count:this._items.length,index:this.current()}},i=a.camelCase(a.grep(["on",b,d],function(a){return a}).join("-").toLowerCase()),j=a.Event([b,"owl",d||"carousel"].join(".").toLowerCase(),a.extend({relatedTarget:this},h,c));return this._supress[b]||(a.each(this._plugins,function(a,b){b.onTrigger&&b.onTrigger(j)}),this.register({type:e.Type.Event,name:b}),this.$element.trigger(j),this.settings&&"function"==typeof this.settings[i]&&this.settings[i].call(this,j)),j},e.prototype.enter=function(b){a.each([b].concat(this._states.tags[b]||[]),a.proxy(function(a,b){this._states.current[b]===d&&(this._states.current[b]=0),this._states.current[b]++},this))},e.prototype.leave=function(b){a.each([b].concat(this._states.tags[b]||[]),a.proxy(function(a,b){this._states.current[b]--},this))},e.prototype.register=function(b){if(b.type===e.Type.Event){if(a.event.special[b.name]||(a.event.special[b.name]={}),!a.event.special[b.name].owl){var c=a.event.special[b.name]._default;a.event.special[b.name]._default=function(a){return!c||!c.apply||a.namespace&&-1!==a.namespace.indexOf("owl")?a.namespace&&a.namespace.indexOf("owl")>-1:c.apply(this,arguments)},a.event.special[b.name].owl=!0}}else b.type===e.Type.State&&(this._states.tags[b.name]?this._states.tags[b.name]=this._states.tags[b.name].concat(b.tags):this._states.tags[b.name]=b.tags,this._states.tags[b.name]=a.grep(this._states.tags[b.name],a.proxy(function(c,d){return a.inArray(c,this._states.tags[b.name])===d},this)))},e.prototype.suppress=function(b){a.each(b,a.proxy(function(a,b){this._supress[b]=!0},this))},e.prototype.release=function(b){a.each(b,a.proxy(function(a,b){delete this._supress[b]},this))},e.prototype.pointer=function(a){var c={x:null,y:null};return a=a.originalEvent||a||b.event,a=a.touches&&a.touches.length?a.touches[0]:a.changedTouches&&a.changedTouches.length?a.changedTouches[0]:a,a.pageX?(c.x=a.pageX,c.y=a.pageY):(c.x=a.clientX,c.y=a.clientY),c},e.prototype.isNumeric=function(a){return!isNaN(parseFloat(a))},e.prototype.difference=function(a,b){return{x:a.x-b.x,y:a.y-b.y}},a.fn.owlCarousel=function(b){var c=Array.prototype.slice.call(arguments,1);return this.each(function(){var d=a(this),f=d.data("owl.carousel");f||(f=new e(this,"object"==typeof b&&b),d.data("owl.carousel",f),a.each(["next","prev","to","destroy","refresh","replace","add","remove"],function(b,c){f.register({type:e.Type.Event,name:c}),f.$element.on(c+".owl.carousel.core",a.proxy(function(a){a.namespace&&a.relatedTarget!==this&&(this.suppress([c]),f[c].apply(this,[].slice.call(arguments,1)),this.release([c]))},f))})),"string"==typeof b&&"_"!==b.charAt(0)&&f[b].apply(f,c)})},a.fn.owlCarousel.Constructor=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){var e=function(b){this._core=b,this._interval=null,this._visible=null,this._handlers={"initialized.owl.carousel":a.proxy(function(a){a.namespace&&this._core.settings.autoRefresh&&this.watch()},this)},this._core.options=a.extend({},e.Defaults,this._core.options),this._core.$element.on(this._handlers)};e.Defaults={autoRefresh:!0,autoRefreshInterval:500},e.prototype.watch=function(){this._interval||(this._visible=this._core.$element.is(":visible"),this._interval=b.setInterval(a.proxy(this.refresh,this),this._core.settings.autoRefreshInterval))},e.prototype.refresh=function(){this._core.$element.is(":visible")!==this._visible&&(this._visible=!this._visible,this._core.$element.toggleClass("owl-hidden",!this._visible),this._visible&&this._core.invalidate("width")&&this._core.refresh())},e.prototype.destroy=function(){var a,c;b.clearInterval(this._interval);for(a in this._handlers)this._core.$element.off(a,this._handlers[a]);for(c in Object.getOwnPropertyNames(this))"function"!=typeof this[c]&&(this[c]=null)},a.fn.owlCarousel.Constructor.Plugins.AutoRefresh=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){var e=function(b){this._core=b,this._loaded=[],this._handlers={"initialized.owl.carousel change.owl.carousel resized.owl.carousel":a.proxy(function(b){if(b.namespace&&this._core.settings&&this._core.settings.lazyLoad&&(b.property&&"position"==b.property.name||"initialized"==b.type))for(var c=this._core.settings,e=c.center&&Math.ceil(c.items/2)||c.items,f=c.center&&-1*e||0,g=(b.property&&b.property.value!==d?b.property.value:this._core.current())+f,h=this._core.clones().length,i=a.proxy(function(a,b){this.load(b)},this);f++<e;)this.load(h/2+this._core.relative(g)),h&&a.each(this._core.clones(this._core.relative(g)),i),g++},this)},this._core.options=a.extend({},e.Defaults,this._core.options),this._core.$element.on(this._handlers)};e.Defaults={lazyLoad:!1},e.prototype.load=function(c){var d=this._core.$stage.children().eq(c),e=d&&d.find(".owl-lazy");!e||a.inArray(d.get(0),this._loaded)>-1||(e.each(a.proxy(function(c,d){var e,f=a(d),g=b.devicePixelRatio>1&&f.attr("data-src-retina")||f.attr("data-src");this._core.trigger("load",{element:f,url:g},"lazy"),f.is("img")?f.one("load.owl.lazy",a.proxy(function(){f.css("opacity",1),this._core.trigger("loaded",{element:f,url:g},"lazy")},this)).attr("src",g):(e=new Image,e.onload=a.proxy(function(){f.css({"background-image":'url("'+g+'")',opacity:"1"}),this._core.trigger("loaded",{element:f,url:g},"lazy")},this),e.src=g)},this)),this._loaded.push(d.get(0)))},e.prototype.destroy=function(){var a,b;for(a in this.handlers)this._core.$element.off(a,this.handlers[a]);for(b in Object.getOwnPropertyNames(this))"function"!=typeof this[b]&&(this[b]=null)},a.fn.owlCarousel.Constructor.Plugins.Lazy=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){var e=function(b){this._core=b,this._handlers={"initialized.owl.carousel refreshed.owl.carousel":a.proxy(function(a){a.namespace&&this._core.settings.autoHeight&&this.update()},this),"changed.owl.carousel":a.proxy(function(a){a.namespace&&this._core.settings.autoHeight&&"position"==a.property.name&&this.update()},this),"loaded.owl.lazy":a.proxy(function(a){a.namespace&&this._core.settings.autoHeight&&a.element.closest("."+this._core.settings.itemClass).index()===this._core.current()&&this.update()},this)},this._core.options=a.extend({},e.Defaults,this._core.options),this._core.$element.on(this._handlers)};e.Defaults={autoHeight:!1,autoHeightClass:"owl-height"},e.prototype.update=function(){var b=this._core._current,c=b+this._core.settings.items,d=this._core.$stage.children().toArray().slice(b,c),e=[],f=0;a.each(d,function(b,c){e.push(a(c).height())}),f=Math.max.apply(null,e),this._core.$stage.parent().height(f).addClass(this._core.settings.autoHeightClass)},e.prototype.destroy=function(){var a,b;for(a in this._handlers)this._core.$element.off(a,this._handlers[a]);for(b in Object.getOwnPropertyNames(this))"function"!=typeof this[b]&&(this[b]=null)},a.fn.owlCarousel.Constructor.Plugins.AutoHeight=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){var e=function(b){this._core=b,this._videos={},this._playing=null,this._handlers={"initialized.owl.carousel":a.proxy(function(a){a.namespace&&this._core.register({type:"state",name:"playing",tags:["interacting"]})},this),"resize.owl.carousel":a.proxy(function(a){a.namespace&&this._core.settings.video&&this.isInFullScreen()&&a.preventDefault()},this),"refreshed.owl.carousel":a.proxy(function(a){a.namespace&&this._core.is("resizing")&&this._core.$stage.find(".cloned .owl-video-frame").remove()},this),"changed.owl.carousel":a.proxy(function(a){a.namespace&&"position"===a.property.name&&this._playing&&this.stop()},this),"prepared.owl.carousel":a.proxy(function(b){if(b.namespace){var c=a(b.content).find(".owl-video");c.length&&(c.css("display","none"),this.fetch(c,a(b.content)))}},this)},this._core.options=a.extend({},e.Defaults,this._core.options),this._core.$element.on(this._handlers),this._core.$element.on("click.owl.video",".owl-video-play-icon",a.proxy(function(a){this.play(a)},this))};e.Defaults={video:!1,videoHeight:!1,videoWidth:!1},e.prototype.fetch=function(a,b){var c=function(){return a.attr("data-vimeo-id")?"vimeo":a.attr("data-vzaar-id")?"vzaar":"youtube"}(),d=a.attr("data-vimeo-id")||a.attr("data-youtube-id")||a.attr("data-vzaar-id"),e=a.attr("data-width")||this._core.settings.videoWidth,f=a.attr("data-height")||this._core.settings.videoHeight,g=a.attr("href");if(!g)throw new Error("Missing video URL.");if(d=g.match(/(http:|https:|)\/\/(player.|www.|app.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|vzaar\.com)\/(video\/|videos\/|embed\/|channels\/.+\/|groups\/.+\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/),d[3].indexOf("youtu")>-1)c="youtube";else if(d[3].indexOf("vimeo")>-1)c="vimeo";else{if(!(d[3].indexOf("vzaar")>-1))throw new Error("Video URL not supported.");c="vzaar"}d=d[6],this._videos[g]={type:c,id:d,width:e,height:f},b.attr("data-video",g),this.thumbnail(a,this._videos[g])},e.prototype.thumbnail=function(b,c){var d,e,f,g=c.width&&c.height?'style="width:'+c.width+"px;height:"+c.height+'px;"':"",h=b.find("img"),i="src",j="",k=this._core.settings,l=function(a){e='<div class="owl-video-play-icon"></div>',d=k.lazyLoad?'<div class="owl-video-tn '+j+'" '+i+'="'+a+'"></div>':'<div class="owl-video-tn" style="opacity:1;background-image:url('+a+')"></div>',b.after(d),b.after(e)};return b.wrap('<div class="owl-video-wrapper"'+g+"></div>"),this._core.settings.lazyLoad&&(i="data-src",j="owl-lazy"),h.length?(l(h.attr(i)),h.remove(),!1):void("youtube"===c.type?(f="//img.youtube.com/vi/"+c.id+"/hqdefault.jpg",l(f)):"vimeo"===c.type?a.ajax({type:"GET",url:"//vimeo.com/api/v2/video/"+c.id+".json",jsonp:"callback",dataType:"jsonp",success:function(a){f=a[0].thumbnail_large,l(f)}}):"vzaar"===c.type&&a.ajax({type:"GET",url:"//vzaar.com/api/videos/"+c.id+".json",jsonp:"callback",dataType:"jsonp",success:function(a){f=a.framegrab_url,l(f)}}))},e.prototype.stop=function(){this._core.trigger("stop",null,"video"),this._playing.find(".owl-video-frame").remove(),this._playing.removeClass("owl-video-playing"),this._playing=null,this._core.leave("playing"),this._core.trigger("stopped",null,"video")},e.prototype.play=function(b){var c,d=a(b.target),e=d.closest("."+this._core.settings.itemClass),f=this._videos[e.attr("data-video")],g=f.width||"100%",h=f.height||this._core.$stage.height();this._playing||(this._core.enter("playing"),this._core.trigger("play",null,"video"),e=this._core.items(this._core.relative(e.index())),this._core.reset(e.index()),"youtube"===f.type?c='<iframe width="'+g+'" height="'+h+'" src="//www.youtube.com/embed/'+f.id+"?autoplay=1&rel=0&v="+f.id+'" frameborder="0" allowfullscreen></iframe>':"vimeo"===f.type?c='<iframe src="//player.vimeo.com/video/'+f.id+'?autoplay=1" width="'+g+'" height="'+h+'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>':"vzaar"===f.type&&(c='<iframe frameborder="0"height="'+h+'"width="'+g+'" allowfullscreen mozallowfullscreen webkitAllowFullScreen src="//view.vzaar.com/'+f.id+'/player?autoplay=true"></iframe>'),a('<div class="owl-video-frame">'+c+"</div>").insertAfter(e.find(".owl-video")),this._playing=e.addClass("owl-video-playing"))},e.prototype.isInFullScreen=function(){var b=c.fullscreenElement||c.mozFullScreenElement||c.webkitFullscreenElement;return b&&a(b).parent().hasClass("owl-video-frame")},e.prototype.destroy=function(){var a,b;this._core.$element.off("click.owl.video");for(a in this._handlers)this._core.$element.off(a,this._handlers[a]);for(b in Object.getOwnPropertyNames(this))"function"!=typeof this[b]&&(this[b]=null)},a.fn.owlCarousel.Constructor.Plugins.Video=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){var e=function(b){this.core=b,this.core.options=a.extend({},e.Defaults,this.core.options),this.swapping=!0,this.previous=d,this.next=d,this.handlers={"change.owl.carousel":a.proxy(function(a){a.namespace&&"position"==a.property.name&&(this.previous=this.core.current(),this.next=a.property.value)},this),"drag.owl.carousel dragged.owl.carousel translated.owl.carousel":a.proxy(function(a){a.namespace&&(this.swapping="translated"==a.type)},this),"translate.owl.carousel":a.proxy(function(a){a.namespace&&this.swapping&&(this.core.options.animateOut||this.core.options.animateIn)&&this.swap()},this)},this.core.$element.on(this.handlers)};e.Defaults={animateOut:!1,animateIn:!1},e.prototype.swap=function(){if(1===this.core.settings.items&&a.support.animation&&a.support.transition){this.core.speed(0);var b,c=a.proxy(this.clear,this),d=this.core.$stage.children().eq(this.previous),e=this.core.$stage.children().eq(this.next),f=this.core.settings.animateIn,g=this.core.settings.animateOut;this.core.current()!==this.previous&&(g&&(b=this.core.coordinates(this.previous)-this.core.coordinates(this.next),d.one(a.support.animation.end,c).css({left:b+"px"}).addClass("animated owl-animated-out").addClass(g)),f&&e.one(a.support.animation.end,c).addClass("animated owl-animated-in").addClass(f))}},e.prototype.clear=function(b){a(b.target).css({left:""}).removeClass("animated owl-animated-out owl-animated-in").removeClass(this.core.settings.animateIn).removeClass(this.core.settings.animateOut),this.core.onTransitionEnd()},e.prototype.destroy=function(){var a,b;for(a in this.handlers)this.core.$element.off(a,this.handlers[a]);for(b in Object.getOwnPropertyNames(this))"function"!=typeof this[b]&&(this[b]=null);
+},a.fn.owlCarousel.Constructor.Plugins.Animate=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){var e=function(b){this._core=b,this._call=null,this._time=0,this._timeout=0,this._paused=!0,this._handlers={"changed.owl.carousel":a.proxy(function(a){a.namespace&&"settings"===a.property.name?this._core.settings.autoplay?this.play():this.stop():a.namespace&&"position"===a.property.name&&this._paused&&(this._time=0)},this),"initialized.owl.carousel":a.proxy(function(a){a.namespace&&this._core.settings.autoplay&&this.play()},this),"play.owl.autoplay":a.proxy(function(a,b,c){a.namespace&&this.play(b,c)},this),"stop.owl.autoplay":a.proxy(function(a){a.namespace&&this.stop()},this),"mouseover.owl.autoplay":a.proxy(function(){this._core.settings.autoplayHoverPause&&this._core.is("rotating")&&this.pause()},this),"mouseleave.owl.autoplay":a.proxy(function(){this._core.settings.autoplayHoverPause&&this._core.is("rotating")&&this.play()},this),"touchstart.owl.core":a.proxy(function(){this._core.settings.autoplayHoverPause&&this._core.is("rotating")&&this.pause()},this),"touchend.owl.core":a.proxy(function(){this._core.settings.autoplayHoverPause&&this.play()},this)},this._core.$element.on(this._handlers),this._core.options=a.extend({},e.Defaults,this._core.options)};e.Defaults={autoplay:!1,autoplayTimeout:5e3,autoplayHoverPause:!1,autoplaySpeed:!1},e.prototype._next=function(d){this._call=b.setTimeout(a.proxy(this._next,this,d),this._timeout*(Math.round(this.read()/this._timeout)+1)-this.read()),this._core.is("busy")||this._core.is("interacting")||c.hidden||this._core.next(d||this._core.settings.autoplaySpeed)},e.prototype.read=function(){return(new Date).getTime()-this._time},e.prototype.play=function(c,d){var e;this._core.is("rotating")||this._core.enter("rotating"),c=c||this._core.settings.autoplayTimeout,e=Math.min(this._time%(this._timeout||c),c),this._paused?(this._time=this.read(),this._paused=!1):b.clearTimeout(this._call),this._time+=this.read()%c-e,this._timeout=c,this._call=b.setTimeout(a.proxy(this._next,this,d),c-e)},e.prototype.stop=function(){this._core.is("rotating")&&(this._time=0,this._paused=!0,b.clearTimeout(this._call),this._core.leave("rotating"))},e.prototype.pause=function(){this._core.is("rotating")&&!this._paused&&(this._time=this.read(),this._paused=!0,b.clearTimeout(this._call))},e.prototype.destroy=function(){var a,b;this.stop();for(a in this._handlers)this._core.$element.off(a,this._handlers[a]);for(b in Object.getOwnPropertyNames(this))"function"!=typeof this[b]&&(this[b]=null)},a.fn.owlCarousel.Constructor.Plugins.autoplay=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){"use strict";var e=function(b){this._core=b,this._initialized=!1,this._pages=[],this._controls={},this._templates=[],this.$element=this._core.$element,this._overrides={next:this._core.next,prev:this._core.prev,to:this._core.to},this._handlers={"prepared.owl.carousel":a.proxy(function(b){b.namespace&&this._core.settings.dotsData&&this._templates.push('<div class="'+this._core.settings.dotClass+'">'+a(b.content).find("[data-dot]").addBack("[data-dot]").attr("data-dot")+"</div>")},this),"added.owl.carousel":a.proxy(function(a){a.namespace&&this._core.settings.dotsData&&this._templates.splice(a.position,0,this._templates.pop())},this),"remove.owl.carousel":a.proxy(function(a){a.namespace&&this._core.settings.dotsData&&this._templates.splice(a.position,1)},this),"changed.owl.carousel":a.proxy(function(a){a.namespace&&"position"==a.property.name&&this.draw()},this),"initialized.owl.carousel":a.proxy(function(a){a.namespace&&!this._initialized&&(this._core.trigger("initialize",null,"navigation"),this.initialize(),this.update(),this.draw(),this._initialized=!0,this._core.trigger("initialized",null,"navigation"))},this),"refreshed.owl.carousel":a.proxy(function(a){a.namespace&&this._initialized&&(this._core.trigger("refresh",null,"navigation"),this.update(),this.draw(),this._core.trigger("refreshed",null,"navigation"))},this)},this._core.options=a.extend({},e.Defaults,this._core.options),this.$element.on(this._handlers)};e.Defaults={nav:!1,navText:['<span aria-label="prev">&#x2039;</span>','<span aria-label="next">&#x203a;</span>'],navSpeed:!1,navElement:'button role="presentation"',navContainer:!1,navContainerClass:"owl-nav",navClass:["owl-prev","owl-next"],slideBy:1,dotClass:"owl-dot",dotsClass:"owl-dots",dots:!0,dotsEach:!1,dotsData:!1,dotsSpeed:!1,dotsContainer:!1},e.prototype.initialize=function(){var b,c=this._core.settings;this._controls.$relative=(c.navContainer?a(c.navContainer):a("<div>").addClass(c.navContainerClass).appendTo(this.$element)).addClass("disabled"),this._controls.$previous=a("<"+c.navElement+">").addClass(c.navClass[0]).html(c.navText[0]).prependTo(this._controls.$relative).on("click",a.proxy(function(a){this.prev(c.navSpeed)},this)),this._controls.$next=a("<"+c.navElement+">").addClass(c.navClass[1]).html(c.navText[1]).appendTo(this._controls.$relative).on("click",a.proxy(function(a){this.next(c.navSpeed)},this)),c.dotsData||(this._templates=[a("<button>").addClass(c.dotClass).append(a("<span>")).prop("outerHTML")]),this._controls.$absolute=(c.dotsContainer?a(c.dotsContainer):a("<div>").addClass(c.dotsClass).appendTo(this.$element)).addClass("disabled"),this._controls.$absolute.on("click","button",a.proxy(function(b){var d=a(b.target).parent().is(this._controls.$absolute)?a(b.target).index():a(b.target).parent().index();b.preventDefault(),this.to(d,c.dotsSpeed)},this));for(b in this._overrides)this._core[b]=a.proxy(this[b],this)},e.prototype.destroy=function(){var a,b,c,d;for(a in this._handlers)this.$element.off(a,this._handlers[a]);for(b in this._controls)"$relative"===b&&settings.navContainer?this._controls[b].html(""):this._controls[b].remove();for(d in this.overides)this._core[d]=this._overrides[d];for(c in Object.getOwnPropertyNames(this))"function"!=typeof this[c]&&(this[c]=null)},e.prototype.update=function(){var a,b,c,d=this._core.clones().length/2,e=d+this._core.items().length,f=this._core.maximum(!0),g=this._core.settings,h=g.center||g.autoWidth||g.dotsData?1:g.dotsEach||g.items;if("page"!==g.slideBy&&(g.slideBy=Math.min(g.slideBy,g.items)),g.dots||"page"==g.slideBy)for(this._pages=[],a=d,b=0,c=0;e>a;a++){if(b>=h||0===b){if(this._pages.push({start:Math.min(f,a-d),end:a-d+h-1}),Math.min(f,a-d)===f)break;b=0,++c}b+=this._core.mergers(this._core.relative(a))}},e.prototype.draw=function(){var b,c=this._core.settings,d=this._core.items().length<=c.items,e=this._core.relative(this._core.current()),f=c.loop||c.rewind;this._controls.$relative.toggleClass("disabled",!c.nav||d),c.nav&&(this._controls.$previous.toggleClass("disabled",!f&&e<=this._core.minimum(!0)),this._controls.$next.toggleClass("disabled",!f&&e>=this._core.maximum(!0))),this._controls.$absolute.toggleClass("disabled",!c.dots||d),c.dots&&(b=this._pages.length-this._controls.$absolute.children().length,c.dotsData&&0!==b?this._controls.$absolute.html(this._templates.join("")):b>0?this._controls.$absolute.append(new Array(b+1).join(this._templates[0])):0>b&&this._controls.$absolute.children().slice(b).remove(),this._controls.$absolute.find(".active").removeClass("active"),this._controls.$absolute.children().eq(a.inArray(this.current(),this._pages)).addClass("active"))},e.prototype.onTrigger=function(b){var c=this._core.settings;b.page={index:a.inArray(this.current(),this._pages),count:this._pages.length,size:c&&(c.center||c.autoWidth||c.dotsData?1:c.dotsEach||c.items)}},e.prototype.current=function(){var b=this._core.relative(this._core.current());return a.grep(this._pages,a.proxy(function(a,c){return a.start<=b&&a.end>=b},this)).pop()},e.prototype.getPosition=function(b){var c,d,e=this._core.settings;return"page"==e.slideBy?(c=a.inArray(this.current(),this._pages),d=this._pages.length,b?++c:--c,c=this._pages[(c%d+d)%d].start):(c=this._core.relative(this._core.current()),d=this._core.items().length,b?c+=e.slideBy:c-=e.slideBy),c},e.prototype.next=function(b){a.proxy(this._overrides.to,this._core)(this.getPosition(!0),b)},e.prototype.prev=function(b){a.proxy(this._overrides.to,this._core)(this.getPosition(!1),b)},e.prototype.to=function(b,c,d){var e;!d&&this._pages.length?(e=this._pages.length,a.proxy(this._overrides.to,this._core)(this._pages[(b%e+e)%e].start,c)):a.proxy(this._overrides.to,this._core)(b,c)},a.fn.owlCarousel.Constructor.Plugins.Navigation=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){"use strict";var e=function(c){this._core=c,this._hashes={},this.$element=this._core.$element,this._handlers={"initialized.owl.carousel":a.proxy(function(c){c.namespace&&"URLHash"===this._core.settings.startPosition&&a(b).trigger("hashchange.owl.navigation")},this),"prepared.owl.carousel":a.proxy(function(b){if(b.namespace){var c=a(b.content).find("[data-hash]").addBack("[data-hash]").attr("data-hash");if(!c)return;this._hashes[c]=b.content}},this),"changed.owl.carousel":a.proxy(function(c){if(c.namespace&&"position"===c.property.name){var d=this._core.items(this._core.relative(this._core.current())),e=a.map(this._hashes,function(a,b){return a===d?b:null}).join();if(!e||b.location.hash.slice(1)===e)return;b.location.hash=e}},this)},this._core.options=a.extend({},e.Defaults,this._core.options),this.$element.on(this._handlers),a(b).on("hashchange.owl.navigation",a.proxy(function(a){var c=b.location.hash.substring(1),e=this._core.$stage.children(),f=this._hashes[c]&&e.index(this._hashes[c]);f!==d&&f!==this._core.current()&&this._core.to(this._core.relative(f),!1,!0)},this))};e.Defaults={URLhashListener:!1},e.prototype.destroy=function(){var c,d;a(b).off("hashchange.owl.navigation");for(c in this._handlers)this._core.$element.off(c,this._handlers[c]);for(d in Object.getOwnPropertyNames(this))"function"!=typeof this[d]&&(this[d]=null)},a.fn.owlCarousel.Constructor.Plugins.Hash=e}(window.Zepto||window.jQuery,window,document),function(a,b,c,d){function e(b,c){var e=!1,f=b.charAt(0).toUpperCase()+b.slice(1);return a.each((b+" "+h.join(f+" ")+f).split(" "),function(a,b){return g[b]!==d?(e=c?b:!0,!1):void 0}),e}function f(a){return e(a,!0)}var g=a("<support>").get(0).style,h="Webkit Moz O ms".split(" "),i={transition:{end:{WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd",transition:"transitionend"}},animation:{end:{WebkitAnimation:"webkitAnimationEnd",MozAnimation:"animationend",OAnimation:"oAnimationEnd",animation:"animationend"}}},j={csstransforms:function(){return!!e("transform")},csstransforms3d:function(){return!!e("perspective")},csstransitions:function(){return!!e("transition")},cssanimations:function(){return!!e("animation")}};j.csstransitions()&&(a.support.transition=new String(f("transition")),a.support.transition.end=i.transition.end[a.support.transition]),j.cssanimations()&&(a.support.animation=new String(f("animation")),a.support.animation.end=i.animation.end[a.support.animation]),j.csstransforms()&&(a.support.transform=new String(f("transform")),a.support.transform3d=j.csstransforms3d())}(window.Zepto||window.jQuery,window,document);
 
 (function() {
 
@@ -16164,6 +16825,59 @@ class Items {
 
 
 }).call(this);
+
+/* cookie based step */
+
+class Step {
+    /* initialize cookie */
+    constructor(no, name) {
+    }
+
+    /* Holds the ID of the current step */
+    // Returns the step ID
+    current(){
+	// use as a refrence point for next and prevoius
+    }
+    // Moves the step count 
+    goToStem(){	
+    }
+    /* gets the ID of the Next step */
+    next(){
+	// checks if the is an extra step from the constrcttor initialization and 
+	// set cookie of the current step
+	// returns the ID of the next step 
+    }
+    /* return the ID of the Previous step */
+    prev(){
+	// checks if a cookie step is save and Goes to it
+	// returns the ID of the previous step 
+    }
+    onStepComplete(){
+	// callback for a single completed step
+    }
+    onComplete(){
+	// Callback to call if All steps is completed. 
+    }
+    
+    onCancel(){
+	/* Callback that Clears all previous cookies */
+	this.destroy();
+    }
+    onSkip(){
+	// Skip an optional Step
+	currentStep = this.current();
+	goToStem(currentStep.next());
+    }
+
+    destroy(){
+    }
+    
+}
+;
+(function() {
+
+
+}).call(this);
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -16176,6 +16890,9 @@ class Items {
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+
+
 
 
 

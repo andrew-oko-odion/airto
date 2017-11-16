@@ -1,9 +1,10 @@
 
-/* Remember DOM manipulation is not to be done here. For a clean and decoupled Design, DOM manipulations like
-   DOM node show or hide that accompany Auth, should be done where the instance of this class  is called */
+/* 
+   Remember DOM manipulation is not to be done here. For a clean and decoupled Design, DOM manipulations like
+   DOM node show or hide that accompany Auth, should be done where the instance of this class  is called 
+*/
 
 class Auth {
-
     /* checks if user is signed in */
     /* returns true if user is signed in or false if otherwise */
     isSignedIn(){	

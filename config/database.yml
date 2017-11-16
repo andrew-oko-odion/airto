@@ -84,9 +84,13 @@ test:
 #
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
-#
+# 
 production:
   <<: *default
   database: ives_production
-  username: ives
-  password: <%= ENV['IVES_DATABASE_PASSWORD'] %>
+  # username: ives
+  # password: <%= ENV['IVES_DATABASE_PASSWORD'] %>
+  username: postgres
+  password: postgres
+  host: localhost
+  port: 5432

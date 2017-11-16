@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :spaces
   get 'profiles/service'
   get 'profiles/user'
   get 'profiles/rental'

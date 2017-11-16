@@ -5,6 +5,7 @@
     <button onClick='item.addNewItem()' class="ui teal button "> Start <i class="angle right icon"></i> </button>    
 </div>
 
+
 <div class="ui container grid details_form" style="display: none">
     <div class="row">
 	<div class="centered column">
@@ -15,13 +16,19 @@
 	<div class="five wide column">
 	    <%= render 'steps' %>
 	</div>
-	<div class="eight wide centered column">
+	<div class="eleven wide centered column">
 	    <%= render 'items/form/details_form' %>
+	    <%= render 'items/form/facility' %>
+	    <%= render 'items/form/rule' %>
+	    <%= render 'items/form/photo' %>
 	</div>
     </div>
     <div class="mobile only row">
 	<div class="sixteen wide column">
 	    <%= render 'items/form/details_form' %>
+	    <%= render 'items/form/facility' %>
+	    <%= render 'items/form/rule' %>
+	    <%= render 'items/form/photo' %>
 	</div>
     </div>
 </div>

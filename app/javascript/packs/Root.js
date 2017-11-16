@@ -5,7 +5,6 @@ import Carousel from 'nuka-carousel'
 import Decorators from 'nuka-carousel'
 
 class Root extends React.Component {
-
     constructor(props){
 	super(props);
     }

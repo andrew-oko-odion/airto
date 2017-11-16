@@ -12,6 +12,7 @@
 //
 //= require turbolinks
 //= require jquery
+//= require jquery_cookie
 //= require jquery_ujs
 //= require jquery.serialize-object
 //= require auth
