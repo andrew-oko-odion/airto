@@ -265,7 +265,101 @@ document.addEventListener('turbolinks:load', () => {
         $(this).addClass('active');
     });
 
+
+    $('.index.owl-carousel').owlCarousel({
+	loop:true,
+	margin:10,
+	// stagePadding: 10,
+	responsiveClass:true,
+	responsive:{
+            0:{
+		items:2,
+		nav:false,
+		dots: false,
+		loop: false,
+		margin: 10,
+            },
+            600:{
+		items:3,
+		nav:true,
+		dots:false,
+		loop:false
+            },
+            1000:{
+		items:4,
+		nav:true,
+		dots:false,
+		loop:false,
+		navText: ["<i class='big white chevron left icon'></i>","<i class='big white chevron right icon'></i>"]
+            }
+	}
+    });
+
+
+
+    $('.category.owl-carousel').owlCarousel({
+	loop:true,
+	margin:10,
+	// stagePadding: 10,
+	responsiveClass:true,
+	responsive:{
+            0:{
+		items:2,
+		nav:false,
+		dots: false,
+		loop: false,
+		margin: 10,
+            },
+            600:{
+		items:3,
+		nav:true,
+		dots:false,
+		loop:false
+            },
+            1000:{
+		items:5,
+		nav:true,
+		dots:false,
+		loop:false,
+		navText: ["<i class='big white chevron left icon'></i>","<i class='big white chevron right icon'></i>"]
+            }
+	}
+    });
+
+   
+    $('.viewpictures.owl-carousel').owlCarousel({
+	loop:true,
+	margin:10,
+	// stagePadding: 10,
+	responsiveClass:true,
+	responsive:{
+            0:{
+		items:2,
+		nav:false,
+		dots: true,
+		loop: false,
+		margin: 10,
+            },
+            600:{
+		items:3,
+		nav:true,
+		dots:true,
+		loop:false
+            },
+            1000:{
+		items:2,
+		nav:true,
+		dots:true,
+		loop:false,
+		navText: ["<i class='big white chevron left icon'></i>","<i class='big white chevron right icon'></i>"]
+            }
+	}
+    });
+
+
     
+    
+    // Login Form initialization
     $('.form.loginform').form({
 	inline : true,
 	on: 'blur',
