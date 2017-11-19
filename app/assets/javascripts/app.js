@@ -198,7 +198,9 @@ let login_user = () => {
       );	
 }
 
-document.addEventListener('turbolinks:load', () => {    
+document.addEventListener('turbolinks:load', () => {
+// $(document).ready( () => {
+    
     $.fn.api.settings.api = {
 	'signin user'   : "/users/sign_in",
 	'signout user'  : '/users/delete',
@@ -294,6 +296,18 @@ document.addEventListener('turbolinks:load', () => {
             }
 	}
     });
+     // function callBack(){
+     //      if($('.owl-carousel .owl-item').last().hasClass('active')){
+     //            $('.owl-next').hide();
+     //            $('.owl-prev').show(); 
+     //            console.log('true');
+     //         }else if($('.owl-carousel .owl-item').first().hasClass('active')){
+     //            $('.owl-prev').hide(); 
+     //            $('.owl-next').show();
+     //            console.log('false');
+     //         }
+     //    }
+     //    $('#owlCarousel .owl-prev').hide();
 
 
 
@@ -350,6 +364,36 @@ document.addEventListener('turbolinks:load', () => {
 		items:2,
 		nav:true,
 		dots:true,
+		loop:false,
+		navText: ["<i class='big white chevron left icon'></i>","<i class='big white chevron right icon'></i>"]
+            }
+	}
+    });
+
+
+    $('.similarlisting.owl-carousel').owlCarousel({
+	loop:true,
+	margin:10,
+	// stagePadding: 10,
+	responsiveClass:true,
+	responsive:{
+            0:{
+		items:2,
+		nav:false,
+		dots: true,
+		loop: false,
+		margin: 10,
+            },
+            600:{
+		items:3,
+		nav:true,
+		dots:true,
+		loop:false
+            },
+            1000:{
+		items:5,
+		nav:true,
+		dots:false,
 		loop:false,
 		navText: ["<i class='big white chevron left icon'></i>","<i class='big white chevron right icon'></i>"]
             }

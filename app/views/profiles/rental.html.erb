@@ -1,18 +1,17 @@
 
 <style>
  .cover {
-     background-image: url("/assets/background1"); height: 23em !important; background-repeat: no-repeat !important; background-size: cover !important; background-position: 50% 50% !important;"
+     background-image: url("/assets/background1"); height: 23em !important; background-repeat: no-repeat !important; background-size: cover !important; background-position: 50% 50% !important; cursor: pointer;"
  }
 </style>
 
 
 <div class="ui grid">
     <div class="sixteen wide column">	
-	<div class="cover" href="#">
-	    <div >
+	<div class="cover" onClick='item.viewPictures()'>
+	    <div>
 		<!-- <div class="ui button" style="background-color: white;  margin-top: 2em; margin-left: 80em; padding-left:2em; padding-right: 2em"> Add to Party list </div>
 		     </div> -->
-
 
 		<!-- <div class="ui  button" style="background-color: white; margin-top: 7em !important; margin-left:3em; padding-left:2em; padding-right: 2em"> Share </div> -->
 		<div class="ui icon button" style="background-color: white;  margin-top: 17em !important; margin-left: 3em; padding-left:1.8em; padding-right: 1.8em" data-turbolinks="false" onClick='item.viewPictures()' >
@@ -23,34 +22,28 @@
 	</div>
     </div>
 </div>
-
-<div class="ui grid container">
-    <div class="ten wide column">
-	<div class="ui large secondary pointing menu">
-	    <a class="active item">
-		Overview
-	    </a>
-	    <a class="item">
-		Reviews
-	    </a>
-	    <a class="item">
-		Cost per event
-	    </a>
-	    <a class="ui item">
-		Logout
-	    </a>
-	    <a class="ui item">
-		Money
-	    </a>
-	</div>
-    </div>
-</div>
-
 <div class="ui stackable very relaxed grid container">
     <div class="row">
 	<div class="ten wide column">
+	    <div class="ui large secondary pointing menu">
+		<a class="active item">
+		    Overview
+		</a>
+		<a class="item">
+		    Reviews
+		</a>
+		<a class="item">
+		    Cost per event
+		</a>
+		<a class="ui item">
+		    Logout
+		</a>
+		<a class="ui item">
+		    Money
+		</a>
+	    </div>
 	    <!-- Info about the Event Space like amenities etc -->
-	    <h1 class="ui teal header"> Hike with me for a Yoga treat </h1>
+	    <h1 class="ui header"> Hike with me for a Yoga treat </h1>
 	    <p> Get Hooked to the world of Fun with Me and my
 		Yoga friends
 	    </p>
@@ -124,16 +117,17 @@
 	    <%= image_tag "matthew", class: "ui tiny circular image", style: "float: right" %>
 	    <h3 class="ui header">Listed By Mattew </h3>
 	    <p> Yaba, Lagos, Nigeria - Joined in June 2016 </p>
-
-	    <!-- Map of the Location if it is a Rental -->
-	    
+	    <!-- Map of the Location if it is a Rental -->  
 	</div>
 	
 	<div class="six wide computer tablet only column">
-	    <div class="ui top attached black message"> <!-- set color to dark teal color. -->
-		<div class="header"> From N100k per Day </div>
-	    </div>
-	    <div class="ui attached padded raised segment">
+	    <div class="ui very padded raised segment" style="border-radius: 0px">
+		<div>
+		    <h3 class="ui  header">N100k<span> per Event </span></h3>
+		    <div class="ui mini star rating" data-rating="4">></div>
+		    <span>255</span>
+		</div>
+		<div class="ui divider"></div>
 		<form class="ui form">
 		    <div class="field">
 			<label> Date </label>
@@ -157,30 +151,63 @@
 
 </div>
 
-<div class="ui grid container">
-    <div class="ui images">
-	<h1 class="ui header">  Similar Listings </h1>
-	<%= image_tag "background1", class: "ui medium image" %>
-	<%= image_tag "background1", class: "ui medium image" %>
-	<%= image_tag "background1", class: "ui medium image" %>
+<div class="ui container">
+    <h1 class="ui header">  Similar Listings </h1>
+    <div class="similarlisting owl-carousel owl-theme">
+
+	<div class="ui image">
+	    <img src="/assets/matthew">
+	    Your Content
+	</div>
+
+	<div class="ui image">
+	    <img src="/assets/jenny"/>
+	    <div> All event centers that are the most awesome and cool ...</div>
+	</div>
+
+
+	<div class="ui image">
+	    <img src="/assets/background1"/ >
+	    <div> All event centers that are the most awesome and cool ...</div>
+	</div>
+
+
+	<div class="ui image">
+	    <img src="/assets/stevie"/>
+	    <div> All event centers that are the most awesome and cool ...</div>
+	</div>
+
+
+	<div class="ui image">
+	    <img src="/assets/stevie"/>
+	    <div> All event centers that are the most awesome and cool ...</div>
+	</div>
+
+	<div class="ui image">
+	    <img src="/assets/stevie"/>
+	    <div> All event centers that are the most awesome and cool ...</div>
+	</div>
+	
     </div>
 </div>
 
-
-
 <!-- View Pictures Modal -->
-<div class="ui small basic modal viewpictures">
+<div class="ui small modal viewpictures">
+    <i class="close icon"></i>
+    <div class="header">
+	Picture Roll
+    </div>
     <div class="ui text container">
 	<div class="viewpictures owl-carousel owl-theme">
-		<div class="ui image">
+		<a  class="ui image">
 		    <img src="/assets/matthew">
-		</div>
-		<div class="ui image">
+		</a>
+		<a class="ui image">
 		    <img src="/assets/jenny"/>
-		</div>
-		<div class="ui image">
+		</a>
+		<a class="ui image">
 		    <img src="/assets/background1"/ >
-		</div>
+		</a>
 		<div class="ui image">
 		    <img src="/assets/stevie"/>
 		</div>
@@ -195,4 +222,5 @@
 		</div>
 	</div>
     </div>
+    <div class="actions"> </div>
 </div>

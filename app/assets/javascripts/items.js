@@ -29,7 +29,11 @@ class Items {
     }
 
     viewPictures(){
-	$('.ui.fullscreen.modal.viewpictures')
+	$('.ui.small.modal.viewpictures')
+	    // .modal({inverted: true})
+	    .modal({
+	    	blurring: true
+	    })
 	    .modal('show')
 	;
     }

@@ -1,3 +1,19 @@
 // Place all the styles related to the Items controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.owl-carousel {
+     position: relative;
+ }
+ .owl-prev,
+ .owl-next {
+     position: absolute;
+     top: 40%;
+     margin-top: -10px; /* Half of the prev/next buttons height here in negatives to center them perfectly */
+ }
+ .owl-prev {
+     left: 0;
+ }
+ .owl-next {
+     right: 0;
+ }
