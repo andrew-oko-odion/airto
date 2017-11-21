@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @event_space.location %>
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  <%= @event_space.rate %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event_space.description %>
+</p>
+
+<p>
+  <strong>Amenity:</strong>
+  <%= @event_space.amenity %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @event_space.user %>
+</p>
+
+<%= link_to 'Edit', edit_event_space_path(@event_space) %> |
+<%= link_to 'Back', event_spaces_path %>

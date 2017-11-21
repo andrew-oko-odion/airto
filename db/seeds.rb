@@ -6,4 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Category.create([{name: 'Office space', active: true}, {name: 'Home space', active: true}, {name: 'Rooftop', active: true} ])
+# Start Seed Database
+puts "Start seeding database with defaults ... loading........" 
+#Category.create([{name: 'Office space', active: true}, {name: 'Home space', active: true}, {name: 'Rooftop', active: true} ])
+# Amenity.create([{name: 'Toilet', active: true}, {name: 'Chairs', active: true}, {name: 'Tables', active: true} ])

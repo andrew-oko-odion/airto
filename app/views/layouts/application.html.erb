@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <!-- Disable turbolinks caching -->
-    <meta name="turbolinks-cache-control" content="no-cache">
     <%= csrf_meta_tags %>
+    <meta name="turbolinks-cache-control" content="no-cache">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     
@@ -29,7 +29,15 @@
 	  <div class="ui top attached demo mobile tablet only grid menu">
 	      <a class="item" href="/">
 		  <i class="big yahoo icon" style="color: #fd5c63" data-turbolinks="false"> </i>
-	      </a>	
+	      </a>
+	      <div class="ui fluid category search item">
+		  <div class="ui icon input">
+		      <input class="prompt" type="text" placeholder="Yaba, Lagos 2000 Guest" >
+		      <i class="search icon"></i>
+		  </div>
+		  <div class="results"></div>
+	      </div>
+	      
 	      <a class="right item">
 		  <i class="sidebar icon"></i>
 	      </a>
@@ -38,8 +46,6 @@
 	      <%= render 'layouts/flash_messages' %>
 	      <%= render 'layouts/mobile_topnav' %>
 	      <%= render 'layouts/topnav' %>
-	      
-
 	      <div class="pusher" style="padding-bottom: 2em;">
 		  <%= yield %>
 	      </div>

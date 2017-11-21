@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :event_spaces
   resources :spaces
   get 'profiles/service'
   get 'profiles/user'

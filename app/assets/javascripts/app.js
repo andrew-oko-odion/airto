@@ -276,22 +276,22 @@ document.addEventListener('turbolinks:load', () => {
 	responsive:{
             0:{
 		items:2,
-		nav:false,
+		nav: false,
 		dots: false,
 		loop: false,
 		margin: 10,
             },
             600:{
 		items:3,
-		nav:true,
-		dots:false,
-		loop:false
+		nav: false,
+		dots: false,
+		loop: false
             },
             1000:{
 		items:4,
-		nav:true,
-		dots:false,
-		loop:false,
+		nav: true,
+		dots: false,
+		loop: false,
 		navText: ["<i class='big white chevron left icon'></i>","<i class='big white chevron right icon'></i>"]
             }
 	}
